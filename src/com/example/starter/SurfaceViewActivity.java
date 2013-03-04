@@ -31,6 +31,7 @@ public class SurfaceViewActivity extends Activity {
 	}
 	
 	private void setUpListeners() {
+		//this is a comment.
 		model.addObserver(view);
 		controller.addObserver(model);
 	}
