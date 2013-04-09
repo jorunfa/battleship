@@ -13,4 +13,8 @@ public class SomeTest extends AndroidTestCase {
     public void testSomethingElse() throws Throwable {
        Assert.assertNotSame(1 + 1, 3);
     }
+    
+    public void testSomethingElse2() throws Throwable {
+        Assert.assertNotSame(1 + 1, 2);
+     }
 }

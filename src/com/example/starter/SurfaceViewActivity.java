@@ -1,6 +1,9 @@
 package com.example.starter;
 
+import java.util.Observer;
+
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 
@@ -26,8 +29,13 @@ public class SurfaceViewActivity extends Activity {
         setContentView(view);
     }
 
+	private void setContentView(View view2) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void instantiateClasses() {
-		controller = new TouchController();
+		controller = new TouchController(0, 0);
 		view = new CanvasView();
 		model = new ArrayGameModel();
 	}

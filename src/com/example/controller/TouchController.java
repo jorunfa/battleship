@@ -2,7 +2,7 @@ package com.example.controller;
 
 import com.example.model.Position;
 
-public class TouchController implements Controller {
+public class TouchController extends Controller {
 	
 	/*
 	 * TODO:

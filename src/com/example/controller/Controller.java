@@ -1,7 +1,7 @@
 package com.example.controller;
 
-public interface Controller {
-	
-	
+import java.util.Observable;
+
+public abstract class Controller extends Observable {
 
 }
