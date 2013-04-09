@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.bouncingball"
+    package="com.example.battleship"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -13,6 +13,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <uses-library android:name="android.test.runner" />
         <activity
             android:name="com.example.starter.SurfaceViewActivity"
             android:label="@string/app_name" >
@@ -23,5 +24,6 @@
             </intent-filter>
         </activity>
     </application>
-
+	<instrumentation android:name="android.test.InstrumentationTestRunner"
+       android:targetPackage="com.example.battleship" android:label="Tests for My App" />
 </manifest>
