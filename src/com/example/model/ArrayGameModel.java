@@ -21,6 +21,10 @@ public class ArrayGameModel extends Model {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public int testTester(int i){
+		return i;
+	}
 
 
 }
