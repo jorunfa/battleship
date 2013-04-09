@@ -2,6 +2,7 @@ package com.example.starter;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Display;
 
 import com.example.controller.Controller;
 import com.example.controller.TouchController;
@@ -20,6 +21,7 @@ public class SurfaceViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         instantiateClasses();
         setUpListeners();
+        setUpDisplaySize();
 
         setContentView(view);
     }
@@ -34,5 +36,13 @@ public class SurfaceViewActivity extends Activity {
 		//this is a comment.
 		model.addObserver(view);
 		controller.addObserver(model);
+	}
+	
+	private void setUpDisplaySize(){
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
 	}
 }
