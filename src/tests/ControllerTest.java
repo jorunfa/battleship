@@ -10,15 +10,13 @@ import junit.framework.TestCase;
 
 public class ControllerTest extends TestCase {
 
-	
 	public void testReturnCoord() throws Throwable {
-		
+
 		Position aPos = new Position(3, 'b');
 		TouchController aCont = new TouchController(300, 200);
-        
-       assertEquals(aPos.getRow(), aCont.returnCoord(33, 20).getRow() );
-       assertEquals(aPos.getColumn(), aCont.returnCoord(33, 20).getColumn() );
-    }
-	
-	
+
+//		assertEquals(5, 5);
+		assertEquals(aPos, aCont.returnCoord(33, 20));
+	}
+
 }

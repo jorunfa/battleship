@@ -24,7 +24,7 @@ public class Position {
 
 	@Override
 	public boolean equals(Object object) {
-		if (object instanceof Position) return false;
+		if (!(object instanceof Position)) return false;
 		Position pos = (Position)object;
 		if (pos.getRow() == this.getRow()) {
 			if (pos.getColumn() == this.getColumn()) {
