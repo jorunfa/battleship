@@ -5,9 +5,11 @@ import junit.framework.TestCase;
 
 import com.example.model.ArrayGameModel;
 import com.example.model.Boat;
+import com.example.model.BoatType;
 import com.example.model.Direction;
 import com.example.model.ModelStage;
 import com.example.model.ModelTurn;
+import com.example.model.Player;
 import com.example.model.Position;
 
 public class ModelTest extends TestCase {
@@ -20,6 +22,17 @@ public class ModelTest extends TestCase {
 	
 	public void testAllBoatsShouldBeCreatedInTheStart() throws Throwable {
 		ArrayGameModel model = new ArrayGameModel();
+		assertEquals(BoatType.AIRCRAFT_CARRIER, model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1).getType());
+		assertEquals(BoatType.BATTLESHIP, model.getBoat(BoatType.BATTLESHIP, Player.PLAYER1).getType());
+		assertEquals(BoatType.SUBMARINE, model.getBoat(BoatType.SUBMARINE, Player.PLAYER1).getType());
+		assertEquals(BoatType.DESTROYER, model.getBoat(BoatType.DESTROYER, Player.PLAYER1).getType());
+		assertEquals(BoatType.PATROL_BOAT, model.getBoat(BoatType.PATROL_BOAT, Player.PLAYER1).getType());
+		
+		assertEquals(BoatType.AIRCRAFT_CARRIER, model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER2).getType());
+		assertEquals(BoatType.BATTLESHIP, model.getBoat(BoatType.BATTLESHIP, Player.PLAYER2).getType());
+		assertEquals(BoatType.SUBMARINE, model.getBoat(BoatType.SUBMARINE, Player.PLAYER2).getType());
+		assertEquals(BoatType.DESTROYER, model.getBoat(BoatType.DESTROYER, Player.PLAYER2).getType());
+		assertEquals(BoatType.PATROL_BOAT, model.getBoat(BoatType.PATROL_BOAT, Player.PLAYER2).getType());
 	}
 	
 	public void testThereShouldBeNoBoatsPlacedInTheStart() throws Throwable {
@@ -28,6 +41,7 @@ public class ModelTest extends TestCase {
 			assertSame(null, boat.getPosition());
 		}
 	}
+<<<<<<< HEAD
 	
 	// TODO This test is not finished.
 	public void testPlacingABoatShouldPlaceABoatInTheModel() throws Throwable {
@@ -35,4 +49,6 @@ public class ModelTest extends TestCase {
         Position pos = new Position(5, 'e');
 //        model.gameboardPressed(pos, Direction.RIGHT);
     }
+=======
+>>>>>>> 0c9ab28effbe04f930e62a57ecfdd1d8a3b7670b
 }

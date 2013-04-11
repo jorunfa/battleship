@@ -2,6 +2,8 @@ package com.example.model;
 
 public class Boat {
 	
+	private Position position;
+	private Direction direction;
 	private BoatType type;
 	private Player owner;
 	
@@ -11,7 +13,7 @@ public class Boat {
 	}
 	
 	public Position getPosition() {
-		return null;
+		return position;
 	}
 	
 	public BoatType getType() {
@@ -24,6 +26,19 @@ public class Boat {
 
 	public int getLength() {
 		return type.getLength();
+	}
+
+	public void placeBoat(Position position, Direction direction) {
+		this.position = position;
+		this.direction = direction;
+	}
+
+	public boolean legalPlacementOfBoat(Position pos, Direction direction) {
+		return false;
+	}
+
+	public Direction getDirection() {
+		return direction;
 	}
 
 }
