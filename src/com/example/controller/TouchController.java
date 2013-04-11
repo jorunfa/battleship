@@ -23,6 +23,12 @@ public class TouchController extends Controller {
 	}
 	
 	
+	public void viewSwitchButtonPressed() {
+		
+		//TODO: Send statechange to model.
+		
+	}
+	
 	//Must be from touch listener in Activity
 	public void gotTouched(int x, int y){
 		double realX = (x/windowWidth)*100;
