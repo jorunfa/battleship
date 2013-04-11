@@ -1,8 +1,19 @@
 package com.example.model;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 public class ArrayGameModel extends Model {
+	
+	private ModelTurn turn;
+	private ModelStage stage;
+	private ArrayList<Boat> boats;
+	
+	public ArrayGameModel() {
+		turn = ModelTurn.PLAYER1;
+		stage = ModelStage.PLACE_BOATS;
+		boats = new ArrayList<Boat>();
+	}
 
 	@Override
 	public void update(Observable observable, Object data) {
@@ -11,7 +22,7 @@ public class ArrayGameModel extends Model {
 	}
 
 	@Override
-	public void gameboardPressed(Position pos) {
+	public void gameboardPressed(Position pos, Direction direction) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -21,10 +32,16 @@ public class ArrayGameModel extends Model {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public int testTester(int i){
-		return i;
+
+	public ModelTurn getTurn() {
+		return turn;
 	}
 
+	public ModelStage getStage() {
+		return stage;
+	}
 
+	public ArrayList<Boat> getBoats() {
+		return boats;
+	}
 }
