@@ -22,7 +22,7 @@ public class ModelTest extends TestCase {
 		ArrayGameModel model = new ArrayGameModel();
 	}
 	
-	public void testThereShouldBeNoBoatsInTheStart() throws Throwable {
+	public void testThereShouldBeNoBoatsPlacedInTheStart() throws Throwable {
 		ArrayGameModel model = new ArrayGameModel();
 		for (Boat boat : model.getBoats()) {
 			assertSame(null, boat.getPosition());

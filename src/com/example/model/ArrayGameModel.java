@@ -35,18 +35,6 @@ public class ArrayGameModel extends Model {
 		
 	}
 
-	@Override
-	public void gameboardPressed(Position pos, Direction boatDirection) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void pressedButton(int b) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public ModelTurn getTurn() {
 		return turn;
 	}
