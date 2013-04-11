@@ -13,6 +13,20 @@ public class ArrayGameModel extends Model {
 		turn = ModelTurn.PLAYER1;
 		stage = ModelStage.PLACE_BOATS;
 		boats = new ArrayList<Boat>();
+		makeAllBoatsAndAddThemToBoatsArrayList();
+	}
+	
+	public void makeAllBoatsAndAddThemToBoatsArrayList() {
+		makeAllBoatsForPlayer(Player.PLAYER1);
+		makeAllBoatsForPlayer(Player.PLAYER2);
+	}
+	
+	public void makeAllBoatsForPlayer(Player player) {
+		boats.add(new Boat(BoatType.AIRCRAFT_CARRIER, player));
+		boats.add(new Boat(BoatType.BATTLESHIP, player));
+		boats.add(new Boat(BoatType.SUBMARINE, player));
+		boats.add(new Boat(BoatType.DESTROYER, player));
+		boats.add(new Boat(BoatType.PATROL_BOAT, player));
 	}
 
 	@Override
@@ -22,7 +36,7 @@ public class ArrayGameModel extends Model {
 	}
 
 	@Override
-	public void gameboardPressed(Position pos, Direction direction) {
+	public void gameboardPressed(Position pos, Direction boatDirection) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -43,5 +57,14 @@ public class ArrayGameModel extends Model {
 
 	public ArrayList<Boat> getBoats() {
 		return boats;
+	}
+
+	public Boat getBoat(BoatType boatType, Player player) {
+		for (Boat boat : boats) {
+			if (boat.getType() == boatType && boat.getPlayer() == player) {
+				return boat;
+			}
+		}
+		return null;
 	}
 }
