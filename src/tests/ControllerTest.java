@@ -13,7 +13,7 @@ public class ControllerTest extends TestCase {
 	public void testReturnCoord() throws Throwable {
 
 		Position aPos = new Position(3, 'b');
-		TouchController aCont = new TouchController(300, 200);
+		TouchController aCont = new TouchController();
 
 //		assertEquals(5, 5);
 		assertEquals(aPos, aCont.returnCoord(33, 20));

@@ -1,5 +1,10 @@
 package com.example.controller;
 
+import android.content.Context;
+import android.graphics.Point;
+import android.view.Display;
+import android.view.WindowManager;
+
 import com.example.model.Position;
 
 public class TouchController extends Controller {
@@ -8,18 +13,26 @@ public class TouchController extends Controller {
 	 * TODO: -Make method for calulating coordinates - CHECK ? -Scale with
 	 * buttons -Handle touch on buttons
 	 */
+	Context ctx;
 	private double windowWidth;
 	private double windowHeight;
 
 	/*
 	 * window values from Activity
 	 */
-	public TouchController(double windowWidth, double windowHeight) {
-		this.windowWidth = windowWidth;
-		this.windowHeight = windowHeight;
+	public TouchController() {
+		WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		this.windowWidth = display.getWidth();
+		this.windowHeight = display.getHeight();
 		System.out.println("Window width: " + windowWidth + "Window height: "
 				+ windowHeight);
+		
+		
+		
 	}
+	
+	
 
 	public void viewSwitchButtonPressed() {
 		
@@ -33,6 +46,9 @@ public class TouchController extends Controller {
 		double realY = (y / windowHeight) * 100;
 		System.out.println("RealX: " + realX + "RealY: " + realY);
 		
+		/*
+		 * sends the Position that was touched to the Model
+		 */
 		notifyObservers(returnCoord(realX, realY));
 	}
 
@@ -87,6 +103,10 @@ public class TouchController extends Controller {
 		return new Position(row, column);
 	}
 
+	
+	public static void main(String[] args) {
+		new TouchController();
+	}
 	// double windowWidth = getWindow().getDecorView().getWidth();
 	// double windowHeight = getWindow().getDecorView().getHeight();
 	// float xDensity = x;

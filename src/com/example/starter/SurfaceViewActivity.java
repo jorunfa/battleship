@@ -22,9 +22,9 @@ public class SurfaceViewActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpDisplaySize();
         instantiateClasses();
         setUpListeners();
-        setUpDisplaySize();
 
         setContentView(view);
     }
@@ -35,7 +35,7 @@ public class SurfaceViewActivity extends Activity {
 	}
 
 	private void instantiateClasses() {
-		controller = new TouchController(0, 0);
+		controller = new TouchController();
 		view = new CanvasView();
 		model = new ArrayGameModel();
 	}
