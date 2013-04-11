@@ -35,7 +35,7 @@ public class ModelTest extends TestCase {
 		assertEquals(BoatType.PATROL_BOAT, model.getBoat(BoatType.PATROL_BOAT, Player.PLAYER2).getType());
 	}
 	
-	public void testThereShouldBeNoBoatsInTheStart() throws Throwable {
+	public void testThereShouldBeNoBoatsPlacedInTheStart() throws Throwable {
 		ArrayGameModel model = new ArrayGameModel();
 		for (Boat boat : model.getBoats()) {
 			assertSame(null, boat.getPosition());

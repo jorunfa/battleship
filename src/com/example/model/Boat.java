@@ -22,4 +22,8 @@ public class Boat {
 		return owner;
 	}
 
+	public int getLength() {
+		return type.getLength();
+	}
+
 }
