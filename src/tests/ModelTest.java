@@ -41,14 +41,5 @@ public class ModelTest extends TestCase {
 			assertSame(null, boat.getPosition());
 		}
 	}
-<<<<<<< HEAD
-	
-	// TODO This test is not finished.
-	public void testPlacingABoatShouldPlaceABoatInTheModel() throws Throwable {
-        ArrayGameModel model = new ArrayGameModel();
-        Position pos = new Position(5, 'e');
-//        model.gameboardPressed(pos, Direction.RIGHT);
-    }
-=======
->>>>>>> 0c9ab28effbe04f930e62a57ecfdd1d8a3b7670b
+
 }
