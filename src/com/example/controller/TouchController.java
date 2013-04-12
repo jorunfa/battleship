@@ -21,15 +21,13 @@ public class TouchController extends Controller {
 	 * window values from Activity
 	 */
 	public TouchController() {
+		System.out.println("In TouchController constructor JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		this.windowWidth = display.getWidth();
 		this.windowHeight = display.getHeight();
 		System.out.println("Window width: " + windowWidth + "Window height: "
 				+ windowHeight);
-		
-		
-		
 	}
 	
 	
