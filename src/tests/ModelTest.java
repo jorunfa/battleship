@@ -41,5 +41,4 @@ public class ModelTest extends TestCase {
 			assertSame(null, boat.getPosition());
 		}
 	}
-
 }
