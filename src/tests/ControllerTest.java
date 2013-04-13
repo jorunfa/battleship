@@ -15,7 +15,6 @@ public class ControllerTest extends TestCase {
 		Position aPos = new Position(3, 'b');
 		TouchController aCont = new TouchController();
 
-//		assertEquals(5, 5);
 		assertEquals(aPos, aCont.returnCoord(33, 20));
 	}
 

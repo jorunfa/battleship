@@ -1,12 +1,9 @@
 package com.example.starter;
 
-import java.util.Observer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.view.Display;
 
 import com.example.controller.Controller;
 import com.example.controller.TouchController;
@@ -25,7 +22,6 @@ public class SurfaceViewActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
-        setUpDisplaySize();
         instantiateClasses();
         setUpListeners();
 
@@ -49,21 +45,7 @@ public class SurfaceViewActivity extends Activity {
 		controller.addObserver(model);
 	}
 	
-	private void setUpDisplaySize(){
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		int width = size.x;
-		int height = size.y;
-	}
-
 	public static Context getAppContext() {
 		return context;
 	}
-
-//	public void setContext(Context context) {
-//		context = getApplicationContext();
-//	}
-	
-	
 }

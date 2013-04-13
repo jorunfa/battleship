@@ -1,10 +1,7 @@
 package com.example.controller;
 
-import javax.activity.ActivityCompletedException;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -25,9 +22,6 @@ public class TouchController extends Controller {
 	 * window values from Activity
 	 */
 	public TouchController() {
-		System.out.println("In TouchController constructor JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		
-
 		WindowManager wm = (WindowManager) SurfaceViewActivity.getAppContext().getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		this.windowWidth = display.getWidth();
@@ -106,16 +100,4 @@ public class TouchController extends Controller {
 		}
 		return new Position(row, column);
 	}
-
-	
-	public static void main(String[] args) {
-//		new TouchController();
-	}
-	// double windowWidth = getWindow().getDecorView().getWidth();
-	// double windowHeight = getWindow().getDecorView().getHeight();
-	// float xDensity = x;
-	// double x = (xDensity / windowWidth) * 100;
-	// float yDensity = x;
-	// double y = (yDensity / windowHeight) * 100;
-
 }
