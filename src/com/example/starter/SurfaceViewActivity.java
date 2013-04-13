@@ -3,6 +3,7 @@ package com.example.starter;
 import java.util.Observer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -18,6 +19,7 @@ public class SurfaceViewActivity extends Activity {
     Model model;
     View view;
     Controller controller;
+    Context cont =this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,5 +54,9 @@ public class SurfaceViewActivity extends Activity {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
+	}
+	
+	public Context getContext(){
+		return this.cont;
 	}
 }

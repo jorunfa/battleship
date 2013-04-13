@@ -6,6 +6,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.example.model.Position;
+import com.example.starter.SurfaceViewActivity;
 
 public class TouchController extends Controller {
 
@@ -13,7 +14,7 @@ public class TouchController extends Controller {
 	 * TODO: -Make method for calulating coordinates - CHECK ? -Scale with
 	 * buttons -Handle touch on buttons
 	 */
-	Context ctx;
+	private Context ctx;
 	private double windowWidth;
 	private double windowHeight;
 
@@ -22,10 +23,12 @@ public class TouchController extends Controller {
 	 */
 	public TouchController() {
 		System.out.println("In TouchController constructor JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		this.windowWidth = display.getWidth();
-		this.windowHeight = display.getHeight();
+		
+//		ctx = 
+//		WindowManager wm = (WindowManager) SurfaceViewActivity.getContext().getSystemService(Context.WINDOW_SERVICE);
+//		Display display = wm.getDefaultDisplay();
+//		this.windowWidth = display.getWidth();
+//		this.windowHeight = display.getHeight();
 		System.out.println("Window width: " + windowWidth + "Window height: "
 				+ windowHeight);
 	}
