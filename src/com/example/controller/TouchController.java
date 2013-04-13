@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import javax.activity.ActivityCompletedException;
+
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.view.Display;
@@ -12,9 +15,9 @@ public class TouchController extends Controller {
 
 	/*
 	 * TODO: -Make method for calulating coordinates - CHECK ? -Scale with
-	 * buttons -Handle touch on buttons
+	 * buttons 
+	 * -Handle touch on buttons
 	 */
-	private Context ctx;
 	private double windowWidth;
 	private double windowHeight;
 
@@ -24,11 +27,11 @@ public class TouchController extends Controller {
 	public TouchController() {
 		System.out.println("In TouchController constructor JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		
-//		ctx = 
-//		WindowManager wm = (WindowManager) SurfaceViewActivity.getContext().getSystemService(Context.WINDOW_SERVICE);
-//		Display display = wm.getDefaultDisplay();
-//		this.windowWidth = display.getWidth();
-//		this.windowHeight = display.getHeight();
+
+		WindowManager wm = (WindowManager) SurfaceViewActivity.getAppContext().getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		this.windowWidth = display.getWidth();
+		this.windowHeight = display.getHeight();
 		System.out.println("Window width: " + windowWidth + "Window height: "
 				+ windowHeight);
 	}
@@ -106,7 +109,7 @@ public class TouchController extends Controller {
 
 	
 	public static void main(String[] args) {
-		new TouchController();
+//		new TouchController();
 	}
 	// double windowWidth = getWindow().getDecorView().getWidth();
 	// double windowHeight = getWindow().getDecorView().getHeight();

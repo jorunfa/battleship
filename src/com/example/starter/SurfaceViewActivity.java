@@ -19,11 +19,12 @@ public class SurfaceViewActivity extends Activity {
     Model model;
     View view;
     Controller controller;
-    Context cont =this;
+    private static Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
         setUpDisplaySize();
         instantiateClasses();
         setUpListeners();
@@ -55,8 +56,14 @@ public class SurfaceViewActivity extends Activity {
 		int width = size.x;
 		int height = size.y;
 	}
-	
-	public Context getContext(){
-		return this.cont;
+
+	public static Context getAppContext() {
+		return context;
 	}
+
+//	public void setContext(Context context) {
+//		context = getApplicationContext();
+//	}
+	
+	
 }
