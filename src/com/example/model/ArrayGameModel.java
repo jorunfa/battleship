@@ -8,11 +8,13 @@ public class ArrayGameModel extends Model {
 	private ModelTurn turn;
 	private ModelStage stage;
 	private ArrayList<Boat> boats;
+	private BoatCollisionChecker boatCollisionChecker;
 	
 	public ArrayGameModel() {
 		turn = ModelTurn.PLAYER1;
 		stage = ModelStage.PLACE_BOATS;
 		boats = new ArrayList<Boat>();
+		boatCollisionChecker = new BoatCollisionChecker();
 		makeAllBoatsAndAddThemToBoatsArrayList();
 	}
 	
@@ -34,7 +36,6 @@ public class ArrayGameModel extends Model {
 		if (data instanceof Position) {
 			
 		}
-		
 	}
 
 	public ModelTurn getTurn() {
@@ -56,5 +57,9 @@ public class ArrayGameModel extends Model {
 			}
 		}
 		return null;
+	}
+
+	public boolean legalPlacementOfBoat(Boat boatToPlace, Orientation orientation) {
+		return false;
 	}
 }
