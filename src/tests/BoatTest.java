@@ -57,4 +57,13 @@ public class BoatTest extends TestCase {
 	        Boat testBoat = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
 	        assertFalse(testBoat.legalPlacementOfBoat(orientation));
 		}
+	
+	public void testLegalPlacementOfBoatShouldReturnTrueIfBoatIsPlacedLegally() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+        Position pos = new Position(5, 'e');
+        Direction direction = Direction.RIGHT;
+        Orientation orientation = new Orientation(pos, direction);
+        Boat testBoat = model.getBoat(BoatType.PATROL_BOAT, Player.PLAYER1);
+        assertTrue(testBoat.legalPlacementOfBoat(orientation));
+	}
 }
