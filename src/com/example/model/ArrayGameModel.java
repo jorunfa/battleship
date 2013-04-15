@@ -34,7 +34,8 @@ public class ArrayGameModel extends Model {
 	@Override
 	public void update(Observable observable, Object data) {
 		if (data instanceof Position) {
-			
+			System.out.println(((Position) data).getColumn());
+			System.out.println(((Position) data).getRow());
 		}
 	}
 

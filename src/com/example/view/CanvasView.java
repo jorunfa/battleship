@@ -2,6 +2,9 @@ package com.example.view;
 
 import java.util.Observable;
 
+import android.view.MotionEvent;
+import android.view.View.OnTouchListener;
+
 public class CanvasView implements View {
 
 	@Override
