@@ -41,4 +41,21 @@ public class BoatCollisionCheckerTest extends TestCase {
         
         assertTrue(model.legalPlacementOfBoat(secondBoat, orientationBoat2));
     }
+	
+	public void testLegalPlacementOfBoatShouldReturnFalseIfPlacingABoatAndTheyCrossEachother() throws Throwable {
+        ArrayGameModel model = new ArrayGameModel();
+        Position pos1 = new Position(5, 'e');
+        Position pos2 = new Position(6, 'f');
+        Direction direction1 = Direction.RIGHT;
+        Direction direction2 = Direction.UP;
+        Orientation orientation1 = new Orientation(pos1, direction1);
+        Orientation orientation2 = new Orientation(pos2, direction2);
+        Boat testBoat = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
+        testBoat.placeBoat(orientation1);
+        
+        Boat secondBoat = model.getBoat(BoatType.BATTLESHIP, Player.PLAYER1);
+        
+        assertFalse(model.legalPlacementOfBoat(secondBoat, orientation2));
+    }
+	
 }
