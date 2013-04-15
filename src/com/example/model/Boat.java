@@ -5,10 +5,12 @@ public class Boat {
 	private Orientation orientation;
 	private BoatType type;
 	private Player owner;
+	private boolean placed;
 	
 	public Boat (BoatType type, Player owner) {
 		this.type = type;
 		this.owner = owner;
+		placed = false;
 	}
 	
 	public Position getPosition() {
@@ -29,6 +31,11 @@ public class Boat {
 
 	public void placeBoat(Orientation orientation) {
 		this.orientation = orientation;
+		placed = true;
+	}
+
+	public boolean isPlaced() {
+		return placed;
 	}
 
 	public boolean legalPlacementOfBoat(Orientation orientation) {
