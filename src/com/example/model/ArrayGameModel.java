@@ -58,7 +58,12 @@ public class ArrayGameModel extends Model {
 		}
 		return null;
 	}
-
+	
+	public void attemptToPlaceBoat(Boat boatToPlace, Orientation orientation) {
+		if (legalPlacementOfBoat(boatToPlace, orientation))
+			boatToPlace.placeBoat(orientation); 
+	}
+	
 	public boolean legalPlacementOfBoat(Boat boatToPlace, Orientation orientation) {
 		if (!boatToPlace.legalPlacementOfBoat(orientation)) return false;
 		if (!boatCollisionChecker.leagalPlacementOfBoat(boatToPlace, orientation)) return false;

@@ -9,6 +9,7 @@ import com.example.model.BoatType;
 import com.example.model.Direction;
 import com.example.model.ModelStage;
 import com.example.model.ModelTurn;
+import com.example.model.Orientation;
 import com.example.model.Player;
 import com.example.model.Position;
 
@@ -40,5 +41,14 @@ public class ModelTest extends TestCase {
 		for (Boat boat : model.getBoats()) {
 			assertSame(null, boat.getOrientation());
 		}
+	}
+	
+	public void testAttemptToPlaceBoatShouldWork() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		Boat boat = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
+		Position pos = new Position(5, 'e');
+		Orientation orientation = new Orientation(pos, Direction.RIGHT);
+		model.attemptToPlaceBoat(boat, orientation);
+		assertTrue(boat.isPlaced());
 	}
 }
