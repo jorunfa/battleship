@@ -28,9 +28,6 @@ public class TouchController extends Controller {
 		this.windowHeight = display.getHeight();
 		System.out.println("Window width: " + windowWidth + "Window height: "
 				+ windowHeight);
-		
-		int nr = this.countObservers();
-		System.out.println(nr + " Dette er antall observers...");
 	}
 	
 	
@@ -50,7 +47,12 @@ public class TouchController extends Controller {
 		/*
 		 * sends the Position that was touched to the Model
 		 */
-		notifyObservers(returnCoord(realX, realY));
+		int nr = this.countObservers();
+		System.out.println(nr + " Dette er antall observers...");
+		
+		this.setChanged();
+		this.notifyObservers(returnCoord(realX, realY));
+		System.out.println("etter notify");
 	}
 
 	public Position returnCoord(double realX, double realY) {

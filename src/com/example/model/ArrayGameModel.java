@@ -31,7 +31,7 @@ public class ArrayGameModel extends Model {
 
 	@Override
 	public void update(Observable observable, Object data) {
-		if(data instanceof Position){
+		if (data instanceof Position) {
 			
 		}
 		
