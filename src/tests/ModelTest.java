@@ -38,7 +38,7 @@ public class ModelTest extends TestCase {
 	public void testThereShouldBeNoBoatsPlacedInTheStart() throws Throwable {
 		ArrayGameModel model = new ArrayGameModel();
 		for (Boat boat : model.getBoats()) {
-			assertSame(null, boat.getPosition());
+			assertSame(null, boat.getOrientation());
 		}
 	}
 }

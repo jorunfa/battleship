@@ -57,4 +57,8 @@ public class ArrayGameModel extends Model {
 		}
 		return null;
 	}
+
+	public boolean legalPlacementOfBoat(Boat boatToPlace, Orientation orientation) {
+		return false;
+	}
 }
