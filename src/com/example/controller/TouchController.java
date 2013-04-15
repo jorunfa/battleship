@@ -47,12 +47,8 @@ public class TouchController extends Controller {
 		/*
 		 * sends the Position that was touched to the Model
 		 */
-		int nr = this.countObservers();
-		System.out.println(nr + " Dette er antall observers...");
-		
-		this.setChanged();
-		this.notifyObservers(returnCoord(realX, realY));
-		System.out.println("etter notify");
+		setChanged();
+		notifyObservers(returnCoord(realX, realY));
 	}
 
 	public Position returnCoord(double realX, double realY) {

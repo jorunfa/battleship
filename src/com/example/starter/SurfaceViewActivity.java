@@ -4,6 +4,8 @@ package com.example.starter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View.OnTouchListener;
 
 import com.example.controller.Controller;
 import com.example.controller.TouchController;
@@ -12,7 +14,7 @@ import com.example.model.Model;
 import com.example.view.CanvasView;
 import com.example.view.View;
 
-public class SurfaceViewActivity extends Activity {
+public class SurfaceViewActivity extends Activity implements OnTouchListener{
     Model model;
     View view;
     Controller controller;
@@ -37,6 +39,9 @@ public class SurfaceViewActivity extends Activity {
 		controller = new TouchController();
 		view = new CanvasView();
 		model = new ArrayGameModel();
+		
+		
+		
 	}
 	
 	private void setUpListeners() {
@@ -52,5 +57,12 @@ public class SurfaceViewActivity extends Activity {
 	
 	public static Context getAppContext() {
 		return context;
+	}
+
+	@Override
+	public boolean onTouch(android.view.View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		
+		return false;
 	}
 }
