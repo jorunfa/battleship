@@ -28,6 +28,9 @@ public class TouchController extends Controller {
 		this.windowHeight = display.getHeight();
 		System.out.println("Window width: " + windowWidth + "Window height: "
 				+ windowHeight);
+		
+		int nr = this.countObservers();
+		System.out.println(nr + " Dette er antall observers...");
 	}
 	
 	
