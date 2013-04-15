@@ -24,7 +24,7 @@ public class SurfaceViewActivity extends Activity {
         context = getApplicationContext();
         instantiateClasses();
         setUpListeners();
-
+        test();
         setContentView(view);
     }
 
@@ -43,6 +43,11 @@ public class SurfaceViewActivity extends Activity {
 		//this is a comment.
 		model.addObserver(view);
 		controller.addObserver(model);
+		
+	}
+	
+	private void test(){
+		controller.gridGotTouched(230, 430);
 	}
 	
 	public static Context getAppContext() {
