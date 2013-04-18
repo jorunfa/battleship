@@ -3,8 +3,8 @@ package tests;
 import com.example.controller.Controller;
 import com.example.controller.TouchController;
 import com.example.model.ArrayGameModel;
-import com.example.model.ModelStage;
-import com.example.model.ModelTurn;
+import com.example.model.Stage;
+import com.example.model.Turn;
 import com.example.model.Position;
 import com.example.starter.SurfaceViewActivity;
 

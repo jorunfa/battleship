@@ -5,15 +5,15 @@ import java.util.Observable;
 
 public class ArrayGameModel extends Model {
 	
-	private ModelTurn turn;
-	private ModelStage stage;
+	private Turn turn;
+	private Stage stage;
 	private Boats boats;
 	private BoatCollisionChecker boatCollisionChecker;
 	private Direction direction;
 	
 	public ArrayGameModel() {
-		turn = ModelTurn.PLAYER1;
-		stage = ModelStage.PLACE_BOATS;
+		turn = Turn.PLAYER1;
+		stage = Stage.PLACE_BOATS;
 		boats = new Boats();
 		boatCollisionChecker = new BoatCollisionChecker(this);
 		direction = Direction.RIGHT;
@@ -26,7 +26,7 @@ public class ArrayGameModel extends Model {
 			System.out.println(((Position) data).getRow());
 		}
 		else if (data instanceof Button) {
-			if ((Button) data == Button.ChangeDirection) {
+			if ((Button) data == Button.CHANGE_DIRECTION) {
 				flipDirection();
 			}
 		}
@@ -41,11 +41,11 @@ public class ArrayGameModel extends Model {
 		}
 	}
 
-	public ModelTurn getTurn() {
+	public Turn getTurn() {
 		return turn;
 	}
 
-	public ModelStage getStage() {
+	public Stage getStage() {
 		return stage;
 	}
 
@@ -74,5 +74,9 @@ public class ArrayGameModel extends Model {
 
 	public Boat getNextBoatToPlace() {
 		return boats.getNextBoatToPlace();
+	}
+
+	public boolean showPauseScreen() {
+		return false;
 	}
 }

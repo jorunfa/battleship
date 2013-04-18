@@ -7,8 +7,8 @@ import com.example.model.Boat;
 import com.example.model.BoatType;
 import com.example.model.Button;
 import com.example.model.Direction;
-import com.example.model.ModelStage;
-import com.example.model.ModelTurn;
+import com.example.model.Stage;
+import com.example.model.Turn;
 import com.example.model.Orientation;
 import com.example.model.Player;
 import com.example.model.Position;
@@ -17,8 +17,8 @@ public class ModelTest extends TestCase {
 
 	public void testShouldBePlayer1sTurnAndPlaceBoatStageWhenStartingNewGame() throws Throwable {
         ArrayGameModel model = new ArrayGameModel();
-        assertEquals(ModelTurn.PLAYER1, model.getTurn());
-        assertEquals(ModelStage.PLACE_BOATS, model.getStage());   
+        assertEquals(Turn.PLAYER1, model.getTurn());
+        assertEquals(Stage.PLACE_BOATS, model.getStage());   
     }
 	
 	public void testAllBoatsShouldBeCreatedInTheStart() throws Throwable {
@@ -54,7 +54,7 @@ public class ModelTest extends TestCase {
 	
 	public void testUpdatingWithChangeDirectionButtonShouldUpdateTheModel() throws Throwable {
 		ArrayGameModel model = new ArrayGameModel();
-		Button button = Button.ChangeDirection;
+		Button button = Button.CHANGE_DIRECTION;
 		Direction originalDirection = model.getDirection();
 		
 		model.update(null, button);
@@ -73,5 +73,11 @@ public class ModelTest extends TestCase {
 			boatToPlace.placeBoat(orientation);
 			assertNotSame(boatToPlace, model.getNextBoatToPlace());
 		}
+	}
+	
+	public void testButtonPauseScreenNextUpdateShouldSetShowPauseScreenFalse() {
+		ArrayGameModel model = new ArrayGameModel();
+		model.update(null, Button.PAUSESCREEN_NEXT);
+		assertFalse(model.showPauseScreen());
 	}
 }
