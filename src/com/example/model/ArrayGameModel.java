@@ -92,6 +92,9 @@ public class ArrayGameModel extends Model {
 	}
 
 	public Boat getNextBoatToPlace() {
+		for (Boat boat : getBoats()) {
+			if (boat.isPlaced()) return boat;
+		}
 		return null;
 	}
 }
