@@ -9,6 +9,7 @@ public class ArrayGameModel extends Model {
 	private ModelStage stage;
 	private ArrayList<Boat> boats;
 	private BoatCollisionChecker boatCollisionChecker;
+	private Direction direction;
 	
 	public ArrayGameModel() {
 		turn = ModelTurn.PLAYER1;
@@ -16,6 +17,7 @@ public class ArrayGameModel extends Model {
 		boats = new ArrayList<Boat>();
 		boatCollisionChecker = new BoatCollisionChecker(this);
 		makeAllBoatsAndAddThemToBoatsArrayList();
+		direction = Direction.RIGHT;
 	}
 	
 	public void makeAllBoatsAndAddThemToBoatsArrayList() {
@@ -36,6 +38,20 @@ public class ArrayGameModel extends Model {
 		if (data instanceof Position) {
 			System.out.println(((Position) data).getColumn());
 			System.out.println(((Position) data).getRow());
+		}
+		else if (data instanceof Button) {
+			if ((Button) data == Button.ChangeDirection) {
+				flipDirection();
+			}
+		}
+	}
+
+	private void flipDirection() {
+		if (direction == Direction.RIGHT) {
+			direction = Direction.UP;
+		}
+		else {
+			direction = Direction.RIGHT;
 		}
 	}
 
@@ -69,5 +85,9 @@ public class ArrayGameModel extends Model {
 		if (!boatToPlace.legalPlacementOfBoat(orientation)) return false;
 		if (!boatCollisionChecker.leagalPlacementOfBoat(boatToPlace, orientation)) return false;
 		return true;
+	}
+
+	public Direction getDirection() {
+		return direction;
 	}
 }

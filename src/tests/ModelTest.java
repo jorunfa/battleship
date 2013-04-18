@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 import com.example.model.ArrayGameModel;
 import com.example.model.Boat;
 import com.example.model.BoatType;
+import com.example.model.Button;
 import com.example.model.Direction;
 import com.example.model.ModelStage;
 import com.example.model.ModelTurn;
@@ -50,5 +51,16 @@ public class ModelTest extends TestCase {
 		Orientation orientation = new Orientation(pos, Direction.RIGHT);
 		model.attemptToPlaceBoat(boat, orientation);
 		assertTrue(boat.isPlaced());
+	}
+	
+	public void testUpdatingWithChangeDirectionButtonShouldUpdateTheModel() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		Button button = Button.ChangeDirection;
+		Direction originalDirection = model.getDirection();
+		
+		model.update(null, button);
+		
+		Direction maybeChangedDirection = model.getDirection();
+		assertNotSame(originalDirection, maybeChangedDirection);
 	}
 }
