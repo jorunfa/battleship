@@ -1,6 +1,5 @@
 package tests;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import com.example.model.ArrayGameModel;
@@ -8,8 +7,8 @@ import com.example.model.Boat;
 import com.example.model.BoatType;
 import com.example.model.Button;
 import com.example.model.Direction;
-import com.example.model.ModelStage;
-import com.example.model.ModelTurn;
+import com.example.model.Stage;
+import com.example.model.Turn;
 import com.example.model.Orientation;
 import com.example.model.Player;
 import com.example.model.Position;
@@ -18,8 +17,8 @@ public class ModelTest extends TestCase {
 
 	public void testShouldBePlayer1sTurnAndPlaceBoatStageWhenStartingNewGame() throws Throwable {
         ArrayGameModel model = new ArrayGameModel();
-        assertEquals(ModelTurn.PLAYER1, model.getTurn());
-        assertEquals(ModelStage.PLACE_BOATS, model.getStage());   
+        assertEquals(Turn.PLAYER1, model.getTurn());
+        assertEquals(Stage.PLACE_BOATS, model.getStage());   
     }
 	
 	public void testAllBoatsShouldBeCreatedInTheStart() throws Throwable {
@@ -55,12 +54,43 @@ public class ModelTest extends TestCase {
 	
 	public void testUpdatingWithChangeDirectionButtonShouldUpdateTheModel() throws Throwable {
 		ArrayGameModel model = new ArrayGameModel();
-		Button button = Button.ChangeDirection;
+		Button button = Button.CHANGE_DIRECTION;
 		Direction originalDirection = model.getDirection();
 		
 		model.update(null, button);
 		
 		Direction maybeChangedDirection = model.getDirection();
 		assertNotSame(originalDirection, maybeChangedDirection);
+	}
+	
+	public void testGetNextBoatToPlaceShouldReturnNextBoatWhenBoatsArePlaced() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		Position pos = new Position(5, 'e');
+		Orientation orientation = new Orientation(pos, Direction.RIGHT);
+		Boat boatToPlace;
+		while (model.getNextBoatToPlace() != null) {
+			boatToPlace = model.getNextBoatToPlace();
+			boatToPlace.placeBoat(orientation);
+			assertNotSame(boatToPlace, model.getNextBoatToPlace());
+		}
+	}
+	
+	public void testButtonPauseScreenNextUpdateShouldSetShowPauseScreenFalse() {
+		ArrayGameModel model = new ArrayGameModel();
+		model.update(null, Button.PAUSESCREEN_NEXT);
+		assertFalse(model.showPauseScreen());
+	}
+	
+	public void testUpdateWithAPositionShouldWorkAccordingToCurrentState() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		Position pos1 = new Position(1, 'a');
+		model.update(null, pos1);
+		Boat boat1 = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
+		assertTrue(boat1.isPlaced());
+		
+		Position pos2 = new Position(5, 'e');
+		model.update(null, pos2);
+		Boat boat2 = model.getBoat(BoatType.BATTLESHIP, Player.PLAYER1);
+		assertTrue(boat2.isPlaced());
 	}
 }

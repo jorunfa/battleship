@@ -1,5 +1,5 @@
 package com.example.model;
 
-public enum ModelTurn {
+public enum Turn {
 	PLAYER1, PLAYER2
 }
