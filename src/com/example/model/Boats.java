@@ -35,7 +35,7 @@ public class Boats {
 	
 	public Boat getNextBoatToPlace() {
 		for (Boat boat : boats) {
-			if (boat.isPlaced()) return boat;
+			if (!boat.isPlaced()) return boat;
 		}
 		return null;
 	}

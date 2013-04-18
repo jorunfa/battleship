@@ -80,4 +80,17 @@ public class ModelTest extends TestCase {
 		model.update(null, Button.PAUSESCREEN_NEXT);
 		assertFalse(model.showPauseScreen());
 	}
+	
+	public void testUpdateWithAPositionShouldWorkAccordingToCurrentState() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		Position pos1 = new Position(1, 'a');
+		model.update(null, pos1);
+		Boat boat1 = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
+		assertTrue(boat1.isPlaced());
+		
+		Position pos2 = new Position(5, 'e');
+		model.update(null, pos2);
+		Boat boat2 = model.getBoat(BoatType.BATTLESHIP, Player.PLAYER1);
+		assertTrue(boat2.isPlaced());
+	}
 }

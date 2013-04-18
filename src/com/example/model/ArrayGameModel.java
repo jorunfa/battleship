@@ -22,8 +22,8 @@ public class ArrayGameModel extends Model {
 	@Override
 	public void update(Observable observable, Object data) {
 		if (data instanceof Position) {
-			System.out.println(((Position) data).getColumn());
-			System.out.println(((Position) data).getRow());
+			Orientation orientation = new Orientation((Position) data, direction);
+			attemptToPlaceBoat(getNextBoatToPlace(), orientation);
 		}
 		else if (data instanceof Button) {
 			if ((Button) data == Button.CHANGE_DIRECTION) {
