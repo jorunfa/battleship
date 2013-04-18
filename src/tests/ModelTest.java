@@ -1,5 +1,7 @@
 package tests;
 
+import java.util.ArrayList;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -62,5 +64,17 @@ public class ModelTest extends TestCase {
 		
 		Direction maybeChangedDirection = model.getDirection();
 		assertNotSame(originalDirection, maybeChangedDirection);
+	}
+	
+	public void testGetNextBoatToPlaceShouldReturnNextBoatWhenBoatsArePlaced() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		Position pos = new Position(5, 'e');
+		Orientation orientation = new Orientation(pos, Direction.RIGHT);
+		Boat boatToPlace;
+		while (model.getNextBoatToPlace() != null) {
+			boatToPlace = model.getNextBoatToPlace();
+			boatToPlace.placeBoat(orientation);
+			assertNotSame(boatToPlace, model.getNextBoatToPlace());
+		}
 	}
 }

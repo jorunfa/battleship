@@ -90,4 +90,8 @@ public class ArrayGameModel extends Model {
 	public Direction getDirection() {
 		return direction;
 	}
+
+	public Boat getNextBoatToPlace() {
+		return null;
+	}
 }
