@@ -26,7 +26,6 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
         context = getApplicationContext();
         instantiateClasses();
         setUpListeners();
-        test();
         setContentView(view);
     }
 
@@ -50,11 +49,7 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 		controller.addObserver(model);
 		
 	}
-	
-	private void test(){
-		controller.gridGotTouched(230, 430);
-	}
-	
+		
 	public static Context getAppContext() {
 		return context;
 	}
