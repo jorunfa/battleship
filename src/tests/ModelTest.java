@@ -75,10 +75,10 @@ public class ModelTest extends TestCase {
 		}
 	}
 	
-	public void testButtonPauseScreenNextUpdateShouldSetShowPauseScreenFalse() {
+	public void testButtonChangingPlayersPauseScreenUpdateShouldSetShowChangingPlayersScreenFalse() {
 		ArrayGameModel model = new ArrayGameModel();
-		model.update(null, Button.PAUSESCREEN_NEXT);
-		assertFalse(model.showPauseScreen());
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		assertFalse(model.showChangingPlayersScreen());
 	}
 	
 	public void testUpdateWithAPositionShouldWorkAccordingToCurrentState() throws Throwable {
@@ -92,5 +92,24 @@ public class ModelTest extends TestCase {
 		model.update(null, pos2);
 		Boat boat2 = model.getBoat(BoatType.BATTLESHIP, Player.PLAYER1);
 		assertTrue(boat2.isPlaced());
+	}
+	
+	public void testPlacingThroughUpdateAllPlayerOneBoatsShouldChangeTurnToPlayerTwo() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		assertEquals(Turn.PLAYER2, model.getTurn());
+	}
+
+	private void sendUpdateOnFiveDifferentPlacesOnGrid(ArrayGameModel model) {
+		Position p1 = new Position(1, 'j');
+		Position p2 = new Position(2, 'i');
+		Position p3 = new Position(3, 'h');
+		Position p4 = new Position(4, 'g');
+		Position p5 = new Position(5, 'f');
+		model.update(null, p1);
+		model.update(null, p2);
+		model.update(null, p3);
+		model.update(null, p4);
+		model.update(null, p5);
 	}
 }

@@ -7,6 +7,7 @@ public class ArrayGameModel extends Model {
 	
 	private Turn turn;
 	private Stage stage;
+	private boolean showChangingPlayersScreen;
 	private Boats boats;
 	private BoatCollisionChecker boatCollisionChecker;
 	private Direction direction;
@@ -17,6 +18,7 @@ public class ArrayGameModel extends Model {
 		boats = new Boats();
 		boatCollisionChecker = new BoatCollisionChecker(this);
 		direction = Direction.RIGHT;
+		showChangingPlayersScreen = false;
 	}
 
 	@Override
@@ -30,6 +32,7 @@ public class ArrayGameModel extends Model {
 				flipDirection();
 			}
 		}
+		setCorrectState();
 	}
 
 	private void flipDirection() {
@@ -38,6 +41,18 @@ public class ArrayGameModel extends Model {
 		}
 		else {
 			direction = Direction.RIGHT;
+		}
+	}
+	
+	private void setCorrectState() {
+		Stage stage = getStage();
+		Turn turn = getTurn();
+		if (stage == Stage.PLACE_BOATS && turn == Turn.PLAYER1) {
+			if (boats.allBoatsPlacedForPlayer(Player.PLAYER1)) {
+				this.turn = Turn.PLAYER2;
+				showChangingPlayersScreen = true;
+				setChanged();
+			}
 		}
 	}
 
@@ -54,8 +69,10 @@ public class ArrayGameModel extends Model {
 	}
 	
 	public void attemptToPlaceBoat(Boat boatToPlace, Orientation orientation) {
-		if (legalPlacementOfBoat(boatToPlace, orientation))
-			boatToPlace.placeBoat(orientation); 
+		if (legalPlacementOfBoat(boatToPlace, orientation)) {
+			boatToPlace.placeBoat(orientation);
+			setChanged();
+		}
 	}
 	
 	public boolean legalPlacementOfBoat(Boat boatToPlace, Orientation orientation) {
@@ -76,7 +93,7 @@ public class ArrayGameModel extends Model {
 		return boats.getNextBoatToPlace();
 	}
 
-	public boolean showPauseScreen() {
-		return false;
+	public boolean showChangingPlayersScreen() {
+		return showChangingPlayersScreen;
 	}
 }

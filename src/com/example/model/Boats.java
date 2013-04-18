@@ -43,4 +43,12 @@ public class Boats {
 	public ArrayList<Boat> getBoats() {
 		return boats;
 	}
+
+	public boolean allBoatsPlacedForPlayer(Player player) {
+		for (Boat boat : getBoats()) {
+			if (boat.getPlayer() != player) break;
+			if (!boat.isPlaced()) return false;
+		}
+		return true;
+	}
 }
