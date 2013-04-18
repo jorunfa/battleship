@@ -46,7 +46,7 @@ public class Boats {
 
 	public boolean allBoatsPlacedForPlayer(Player player) {
 		for (Boat boat : getBoats()) {
-			if (boat.getPlayer() != player) break;
+			if (boat.getPlayer() != player) continue;
 			if (!boat.isPlaced()) return false;
 		}
 		return true;

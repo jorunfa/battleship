@@ -1,14 +1,10 @@
 package tests;
 
+import junit.framework.TestCase;
+
 import com.example.controller.Controller;
 import com.example.controller.TouchController;
-import com.example.model.ArrayGameModel;
-import com.example.model.Stage;
-import com.example.model.Turn;
 import com.example.model.Position;
-import com.example.starter.SurfaceViewActivity;
-
-import junit.framework.TestCase;
 
 public class ControllerTest extends TestCase {
 

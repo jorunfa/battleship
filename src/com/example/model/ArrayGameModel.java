@@ -5,7 +5,7 @@ import java.util.Observable;
 
 public class ArrayGameModel extends Model {
 	
-	private Turn turn;
+	private Player turn;
 	private Stage stage;
 	private boolean showChangingPlayersScreen;
 	private Boats boats;
@@ -13,7 +13,7 @@ public class ArrayGameModel extends Model {
 	private Direction direction;
 	
 	public ArrayGameModel() {
-		turn = Turn.PLAYER1;
+		turn = Player.PLAYER1;
 		stage = Stage.PLACE_BOATS;
 		boats = new Boats();
 		boatCollisionChecker = new BoatCollisionChecker(this);
@@ -28,11 +28,19 @@ public class ArrayGameModel extends Model {
 			attemptToPlaceBoat(getNextBoatToPlace(), orientation);
 		}
 		else if (data instanceof Button) {
-			if ((Button) data == Button.CHANGE_DIRECTION) {
+			Button button = (Button) data;
+			if (button == Button.CHANGE_DIRECTION) {
 				flipDirection();
+			}
+			else if (button == Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT) {
+				System.out.println("lol");
+				showChangingPlayersScreen = false;
+				System.out.println(showChangingPlayersScreen());
+				setChanged();
 			}
 		}
 		setCorrectState();
+		System.out.println(showChangingPlayersScreen());
 	}
 
 	private void flipDirection() {
@@ -45,18 +53,32 @@ public class ArrayGameModel extends Model {
 	}
 	
 	private void setCorrectState() {
-		Stage stage = getStage();
-		Turn turn = getTurn();
-		if (stage == Stage.PLACE_BOATS && turn == Turn.PLAYER1) {
-			if (boats.allBoatsPlacedForPlayer(Player.PLAYER1)) {
-				this.turn = Turn.PLAYER2;
-				showChangingPlayersScreen = true;
-				setChanged();
-			}
+		if (playerFinishedPlacingBoats(Player.PLAYER1)) {
+			transitToPlayerTwosTurnToPlaceBoats();
+		}
+		else if (playerFinishedPlacingBoats(Player.PLAYER2)) {
+			transitToPlayerOnesTurnToPlaceBombs();
 		}
 	}
 
-	public Turn getTurn() {
+	private boolean playerFinishedPlacingBoats(Player player) {
+		return ((turn == player) && (boats.allBoatsPlacedForPlayer(player)) && (stage == Stage.PLACE_BOATS));
+	}
+	
+	private void transitToPlayerTwosTurnToPlaceBoats() {
+		this.turn = Player.PLAYER2;
+		showChangingPlayersScreen = true;
+		setChanged();
+	}
+	
+	private void transitToPlayerOnesTurnToPlaceBombs() {
+		this.stage = Stage.PLACE_BOMB;
+		this.turn = Player.PLAYER1;
+		showChangingPlayersScreen = true;
+		setChanged();
+	}
+
+	public Player getTurn() {
 		return turn;
 	}
 

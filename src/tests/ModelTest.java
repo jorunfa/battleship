@@ -8,7 +8,6 @@ import com.example.model.BoatType;
 import com.example.model.Button;
 import com.example.model.Direction;
 import com.example.model.Stage;
-import com.example.model.Turn;
 import com.example.model.Orientation;
 import com.example.model.Player;
 import com.example.model.Position;
@@ -17,7 +16,7 @@ public class ModelTest extends TestCase {
 
 	public void testShouldBePlayer1sTurnAndPlaceBoatStageWhenStartingNewGame() throws Throwable {
         ArrayGameModel model = new ArrayGameModel();
-        assertEquals(Turn.PLAYER1, model.getTurn());
+        assertEquals(Player.PLAYER1, model.getTurn());
         assertEquals(Stage.PLACE_BOATS, model.getStage());   
     }
 	
@@ -75,12 +74,6 @@ public class ModelTest extends TestCase {
 		}
 	}
 	
-	public void testButtonChangingPlayersPauseScreenUpdateShouldSetShowChangingPlayersScreenFalse() {
-		ArrayGameModel model = new ArrayGameModel();
-		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
-		assertFalse(model.showChangingPlayersScreen());
-	}
-	
 	public void testUpdateWithAPositionShouldWorkAccordingToCurrentState() throws Throwable {
 		ArrayGameModel model = new ArrayGameModel();
 		Position pos1 = new Position(1, 'a');
@@ -97,9 +90,9 @@ public class ModelTest extends TestCase {
 	public void testPlacingThroughUpdateAllPlayerOneBoatsShouldChangeTurnToPlayerTwo() throws Throwable {
 		ArrayGameModel model = new ArrayGameModel();
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
-		assertEquals(Turn.PLAYER2, model.getTurn());
+		assertEquals(Player.PLAYER2, model.getTurn());
 	}
-
+	
 	private void sendUpdateOnFiveDifferentPlacesOnGrid(ArrayGameModel model) {
 		Position p1 = new Position(1, 'j');
 		Position p2 = new Position(2, 'i');
@@ -111,5 +104,27 @@ public class ModelTest extends TestCase {
 		model.update(null, p3);
 		model.update(null, p4);
 		model.update(null, p5);
+	}
+	
+	public void testPlacingThroughUpdateAllPlayerOneBoatsShouldSetShowChangingPlayersScreenToTrue() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		assertEquals(true, model.showChangingPlayersScreen());
+	}
+	
+	public void testButtonChangingPlayersPauseScreenUpdateShouldSetShowChangingPlayersScreenFalse() {
+		ArrayGameModel model = new ArrayGameModel();
+		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		assertTrue(model.showChangingPlayersScreen());
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		assertFalse(model.showChangingPlayersScreen());
+	}
+	
+	public void testPlacingAllBoatsShouldSetStageToPlaceBombs() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		assertEquals(Stage.PLACE_BOMB, model.getStage());
 	}
 }
