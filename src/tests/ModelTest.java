@@ -1,8 +1,5 @@
 package tests;
 
-import java.util.ArrayList;
-
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import com.example.model.ArrayGameModel;

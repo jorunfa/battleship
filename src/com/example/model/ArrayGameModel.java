@@ -7,30 +7,16 @@ public class ArrayGameModel extends Model {
 	
 	private ModelTurn turn;
 	private ModelStage stage;
-	private ArrayList<Boat> boats;
+	private Boats boats;
 	private BoatCollisionChecker boatCollisionChecker;
 	private Direction direction;
 	
 	public ArrayGameModel() {
 		turn = ModelTurn.PLAYER1;
 		stage = ModelStage.PLACE_BOATS;
-		boats = new ArrayList<Boat>();
+		boats = new Boats();
 		boatCollisionChecker = new BoatCollisionChecker(this);
-		makeAllBoatsAndAddThemToBoatsArrayList();
 		direction = Direction.RIGHT;
-	}
-	
-	public void makeAllBoatsAndAddThemToBoatsArrayList() {
-		makeAllBoatsForPlayer(Player.PLAYER1);
-		makeAllBoatsForPlayer(Player.PLAYER2);
-	}
-	
-	public void makeAllBoatsForPlayer(Player player) {
-		boats.add(new Boat(BoatType.AIRCRAFT_CARRIER, player));
-		boats.add(new Boat(BoatType.BATTLESHIP, player));
-		boats.add(new Boat(BoatType.SUBMARINE, player));
-		boats.add(new Boat(BoatType.DESTROYER, player));
-		boats.add(new Boat(BoatType.PATROL_BOAT, player));
 	}
 
 	@Override
@@ -63,17 +49,8 @@ public class ArrayGameModel extends Model {
 		return stage;
 	}
 
-	public ArrayList<Boat> getBoats() {
-		return boats;
-	}
-
 	public Boat getBoat(BoatType boatType, Player player) {
-		for (Boat boat : boats) {
-			if (boat.getType() == boatType && boat.getPlayer() == player) {
-				return boat;
-			}
-		}
-		return null;
+		return boats.getBoat(boatType, player);
 	}
 	
 	public void attemptToPlaceBoat(Boat boatToPlace, Orientation orientation) {
@@ -91,10 +68,11 @@ public class ArrayGameModel extends Model {
 		return direction;
 	}
 
+	public ArrayList<Boat> getBoats() {
+		return boats.getBoats();
+	}
+
 	public Boat getNextBoatToPlace() {
-		for (Boat boat : getBoats()) {
-			if (boat.isPlaced()) return boat;
-		}
-		return null;
+		return boats.getNextBoatToPlace();
 	}
 }
