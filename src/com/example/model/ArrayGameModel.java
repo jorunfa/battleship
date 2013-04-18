@@ -33,14 +33,11 @@ public class ArrayGameModel extends Model {
 				flipDirection();
 			}
 			else if (button == Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT) {
-				System.out.println("lol");
 				showChangingPlayersScreen = false;
-				System.out.println(showChangingPlayersScreen());
 				setChanged();
 			}
 		}
 		setCorrectState();
-		System.out.println(showChangingPlayersScreen());
 	}
 
 	private void flipDirection() {

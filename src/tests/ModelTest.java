@@ -127,4 +127,12 @@ public class ModelTest extends TestCase {
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
 		assertEquals(Stage.PLACE_BOMB, model.getStage());
 	}
+	
+	public void testPlacingAllBoatsShouldSetTurnToPlayerOne() throws Throwable {
+		ArrayGameModel model = new ArrayGameModel();
+		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		assertEquals(Player.PLAYER1, model.getTurn());
+	}
 }
