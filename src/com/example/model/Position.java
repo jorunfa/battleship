@@ -1,13 +1,24 @@
 package com.example.model;
 
 public class Position {
-	
+
 	private int column;
 	private char row;
-	public Position(int column, char row){
-		this.setRow(row);
-		this.setColumn(column);
-		
+	
+	public Position(int column, char row) {
+		if (leagalValues(column, row)) {
+			this.setRow(row);
+			this.setColumn(column);
+		}
+		else {
+			throw new IndexOutOfBoundsException("IndexOutOfBoundsException");
+		}
+
+	}
+
+	private boolean leagalValues(int column, char row) {
+		if (column >= 1 && column <= 10 && row >= 'a' && row <= 'j') return true;
+		else return false;
 	}
 
 	@Override
@@ -37,5 +48,5 @@ public class Position {
 	public void setRow(char row) {
 		this.row = row;
 	}
-	
+
 }
