@@ -3,7 +3,7 @@ package com.example.model;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class ArrayGameModel extends Model {
+public class ModelImplementation extends Model {
 	
 	private Player turn;
 	private Stage stage;
@@ -12,7 +12,7 @@ public class ArrayGameModel extends Model {
 	private BoatCollisionChecker boatCollisionChecker;
 	private Direction direction;
 	
-	public ArrayGameModel() {
+	public ModelImplementation() {
 		turn = Player.PLAYER1;
 		stage = Stage.PLACE_BOATS;
 		boats = new Boats();

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class BoatCollisionChecker {
 	
-	ArrayGameModel model;
+	ModelImplementation model;
 	
-	public BoatCollisionChecker(ArrayGameModel model) {
+	public BoatCollisionChecker(ModelImplementation model) {
 		this.model = model;
 	}
 	

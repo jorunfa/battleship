@@ -2,7 +2,7 @@ package tests;
 
 import junit.framework.TestCase;
 
-import com.example.model.ArrayGameModel;
+import com.example.model.ModelImplementation;
 import com.example.model.Boat;
 import com.example.model.BoatType;
 import com.example.model.Direction;
@@ -27,7 +27,7 @@ public class BoatTest extends TestCase {
 	}
 	
 	public void testPlacingABoatShouldPlaceABoatInTheModel() throws Throwable {
-        ArrayGameModel model = new ArrayGameModel();
+        ModelImplementation model = new ModelImplementation();
         Position pos = new Position(5, 'e');
         Direction direction = Direction.RIGHT;
         Orientation orientation = new Orientation(pos, direction);
@@ -40,7 +40,7 @@ public class BoatTest extends TestCase {
 	
 	public void testLegalPlacementOfBoatShouldReturnFalseIfPlacingABoatAtTheRightEdgeOfTheGridAndBoatDirectionIsRightBecauseOfSpaceLimitations()
 		throws Throwable {
-			ArrayGameModel model = new ArrayGameModel();
+			ModelImplementation model = new ModelImplementation();
 	        Position pos = new Position(10, 'e');
 	        Direction direction = Direction.RIGHT;
 	        Orientation orientation = new Orientation(pos, direction);
@@ -50,7 +50,7 @@ public class BoatTest extends TestCase {
 	
 	public void testLegalPlacementOfBoatShouldReturnFalseIfPlacingABoatAtTheTopOfTheGridAndBoatDirectionIsUpBecauseOfSpaceLimitations()
 		throws Throwable {
-			ArrayGameModel model = new ArrayGameModel();
+			ModelImplementation model = new ModelImplementation();
 	        Position pos = new Position(10, 'a');
 	        Direction direction = Direction.UP;
 	        Orientation orientation = new Orientation(pos, direction);
@@ -59,7 +59,7 @@ public class BoatTest extends TestCase {
 		}
 	
 	public void testLegalPlacementOfBoatShouldReturnTrueIfBoatIsPlacedLegally() throws Throwable {
-		ArrayGameModel model = new ArrayGameModel();
+		ModelImplementation model = new ModelImplementation();
         Position pos = new Position(5, 'e');
         Direction direction = Direction.RIGHT;
         Orientation orientation = new Orientation(pos, direction);

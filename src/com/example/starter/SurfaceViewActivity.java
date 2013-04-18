@@ -9,7 +9,7 @@ import android.view.View.OnTouchListener;
 
 import com.example.controller.Controller;
 import com.example.controller.TouchController;
-import com.example.model.ArrayGameModel;
+import com.example.model.ModelImplementation;
 import com.example.model.Model;
 import com.example.view.CanvasView;
 import com.example.view.View;
@@ -40,7 +40,7 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 	private void instantiateClasses() {
 		controller = new TouchController();
 		view = new CanvasView(getApplicationContext());
-		model = new ArrayGameModel();
+		model = new ModelImplementation();
 		
 		
 		
