@@ -16,7 +16,7 @@ import com.example.view.View;
 
 public class SurfaceViewActivity extends Activity implements OnTouchListener{
     Model model;
-    View view;
+    CanvasView view;
     Controller controller;
     private static Context context;
 
@@ -29,17 +29,10 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
         setContentView(view);
     }
 
-	
-
-	private void setContentView(View view2) {
-		
-	}
-
-
 
 	private void instantiateClasses() {
 		controller = new TouchController();
-		view = new CanvasView(getApplicationContext());
+		view = new CanvasView();
 		model = new ArrayGameModel();
 		
 		

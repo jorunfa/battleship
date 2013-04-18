@@ -28,6 +28,9 @@ public class TouchController extends Controller {
 			this.windowWidth = display.getWidth();
 			this.windowHeight = display.getHeight();
 		} catch (Exception e) {
+			/*
+			 * This is for making the test able to run..
+			 */
 			this.windowWidth = 480;
 			this.windowHeight = 800;
 		}
