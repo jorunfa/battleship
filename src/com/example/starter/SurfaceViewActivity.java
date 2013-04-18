@@ -29,14 +29,17 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
         setContentView(view);
     }
 
+	
+
 	private void setContentView(View view2) {
-		// TODO Auto-generated method stub
 		
 	}
 
+
+
 	private void instantiateClasses() {
 		controller = new TouchController();
-		view = new CanvasView();
+		view = new CanvasView(getApplicationContext());
 		model = new ArrayGameModel();
 		
 		
@@ -59,5 +62,9 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 		// TODO Auto-generated method stub
 		
 		return false;
+	}
+	
+	public Controller getController(){
+		return this.controller;
 	}
 }
