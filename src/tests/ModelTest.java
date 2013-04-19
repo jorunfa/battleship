@@ -113,7 +113,7 @@ public class ModelTest extends TestCase {
 		assertEquals(true, model.showChangingPlayersScreen());
 	}
 	
-	public void testButtonChangingPlayersPauseScreenUpdateShouldSetShowChangingPlayersScreenFalse() {
+	public void testUpdateWithButtonChangingPlayersPauseScreenNextShouldSetShowChangingPlayersScreenFalse() {
 		ModelImplementation model = new ModelImplementation();
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
 		assertTrue(model.showChangingPlayersScreen());
@@ -141,6 +141,9 @@ public class ModelTest extends TestCase {
 		Position p1 = new Position(1, 'j');
 		model.update(null, p1);
 		assertEquals(Player.PLAYER2, model.getTurn());
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		model.update(null, p1);
+		assertEquals(Player.PLAYER1, model.getTurn());
 	}
 
 	private void goToBombingFace(Model model) {
