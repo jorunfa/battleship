@@ -58,11 +58,11 @@ public class StateLogic {
 		else if (playerFinishedPlacingBoats(Player.PLAYER2)) {
 			transitToPlayerOnesTurnToPlaceBombs();
 		}
-		else if (isPlayerTwosTurnToPlaceBomb()) {
-			transitToPlayerTwosTurnToPlaceBobms();
+		else if (isPlayersTurnToPlaceBomb(Player.PLAYER2)) {
+			transitToPlayersTurn(Player.PLAYER2);
 		}
-		else if (isPlayerOnesTurnToPlaceBomb()) {
-			transitToPlayerOnesTurnToPlaceBobms();
+		else if (isPlayersTurnToPlaceBomb(Player.PLAYER1)) {
+			transitToPlayersTurn(Player.PLAYER1);
 		}
 	}
 
@@ -87,31 +87,17 @@ public class StateLogic {
 		setShowChangingPlayersScreen();
 	}
 
-	private boolean isPlayerTwosTurnToPlaceBomb() {
+	private boolean isPlayersTurnToPlaceBomb(Player player) {
 		if (stage == Stage.PLACE_BOMB) {
-			if (turn == Player.PLAYER1) {
-				if (bombsHandler.lastBombPlacedBy() == Player.PLAYER1) return true;
+			if (!(turn == player)) {
+				if (!(bombsHandler.lastBombPlacedBy() == player)) return true;
 			}
 		}
 		return false;
 	}
-	
-	private void transitToPlayerTwosTurnToPlaceBobms() {
-		this.turn = Player.PLAYER2;
-		setShowChangingPlayersScreen();
-	}
-	
-	private boolean isPlayerOnesTurnToPlaceBomb() {
-		if (stage == Stage.PLACE_BOMB) {
-			if (turn == Player.PLAYER2) {
-				if (bombsHandler.lastBombPlacedBy() == Player.PLAYER2) return true;
-			}
-		}
-		return false;
-	}
-	
-	private void transitToPlayerOnesTurnToPlaceBobms() {
-		this.turn = Player.PLAYER1;
+
+	private void transitToPlayersTurn(Player player) {
+		this.turn = player;
 		setShowChangingPlayersScreen();
 	}
 
