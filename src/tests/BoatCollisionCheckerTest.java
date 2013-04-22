@@ -2,7 +2,7 @@ package tests;
 
 import junit.framework.TestCase;
 
-import com.example.model.ArrayGameModel;
+import com.example.model.ModelImplementation;
 import com.example.model.Boat;
 import com.example.model.BoatType;
 import com.example.model.Direction;
@@ -13,7 +13,7 @@ import com.example.model.Position;
 public class BoatCollisionCheckerTest extends TestCase {
 
 	public void testLegalPlacementOfBoatShouldReturnFalseIfPlacingABoatOnTopOfAnother() throws Throwable {
-        ArrayGameModel model = new ArrayGameModel();
+        ModelImplementation model = new ModelImplementation();
         Position pos = new Position(5, 'e');
         Direction direction = Direction.RIGHT;
         Orientation orientation = new Orientation(pos, direction);
@@ -26,7 +26,7 @@ public class BoatCollisionCheckerTest extends TestCase {
     }
 	
 	public void testLegalPlacementOfBoatShouldReturnTrueWhenPlacingTwoBoatsLegally() throws Throwable {
-        ArrayGameModel model = new ArrayGameModel();
+        ModelImplementation model = new ModelImplementation();
         Position positionBoat1 = new Position(5, 'e');
         Direction right = Direction.RIGHT;
         Orientation orientationBoat1 = new Orientation(positionBoat1, right);
@@ -43,7 +43,7 @@ public class BoatCollisionCheckerTest extends TestCase {
     }
 	
 	public void testLegalPlacementOfBoatShouldReturnFalseIfPlacingABoatAndTheyCrossEachother() throws Throwable {
-        ArrayGameModel model = new ArrayGameModel();
+        ModelImplementation model = new ModelImplementation();
         Position pos1 = new Position(5, 'e');
         Position pos2 = new Position(6, 'f');
         Direction direction1 = Direction.RIGHT;

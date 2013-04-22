@@ -1,5 +1,5 @@
 package com.example.model;
 
 public enum Button {
-	ChangeDirection;
+	CHANGE_DIRECTION, CHANGING_PLAYERS_PAUSESCREEN_NEXT;
 }

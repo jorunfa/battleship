@@ -9,14 +9,14 @@ import android.view.View.OnTouchListener;
 
 import com.example.controller.Controller;
 import com.example.controller.TouchController;
-import com.example.model.ArrayGameModel;
+import com.example.model.ModelImplementation;
 import com.example.model.Model;
 import com.example.view.CanvasView;
 import com.example.view.View;
 
 public class SurfaceViewActivity extends Activity implements OnTouchListener{
     Model model;
-    View view;
+    CanvasView view;
     Controller controller;
     private static Context context;
 
@@ -29,18 +29,11 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
         setContentView(view);
     }
 
-	private void setContentView(View view2) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	private void instantiateClasses() {
 		controller = new TouchController();
 		view = new CanvasView();
-		model = new ArrayGameModel();
-		
-		
-		
+		model = new ModelImplementation();
 	}
 	
 	private void setUpListeners() {
@@ -59,5 +52,9 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 		// TODO Auto-generated method stub
 		
 		return false;
+	}
+	
+	public Controller getController(){
+		return this.controller;
 	}
 }
