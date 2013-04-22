@@ -1,5 +1,7 @@
 package com.example.model;
 
+import java.util.ArrayList;
+
 public class Boat {
 	
 	private Orientation orientation;
@@ -75,6 +77,21 @@ public class Boat {
 		if (direction == Direction.RIGHT) return row;
 		else return (char) (row - boatLength - 1);
 	}
+	
+	public ArrayList<Position> getBoatPositions() {
+		ArrayList<Position> ret = new ArrayList<Position>();
+		if (getDirection() == Direction.RIGHT) {
+			for (int i = 0; i < getLength(); i++) {
+				ret.add(new Position(getPosition().getColumn()+i, getPosition().getRow()));
+			}
+		}
+		else {
+			for (int i = 0; i < getLength(); i++) {
+				ret.add(new Position(getPosition().getColumn(), (char) (getPosition().getRow()-i)));
+			}
+		}
+		return ret;
+	}
 
 	public Direction getDirection() {
 		return orientation.getDirection();
@@ -83,5 +100,12 @@ public class Boat {
 	public Orientation getOrientation() {
 		return orientation;
 	}
-
+	
+	@Override
+	public String toString() {
+		if (isPlaced())
+			return owner + ", " + orientation + ", " + type;
+		else
+			return owner + ", " + "not placed" + ", " + type;
+	}
 }

@@ -16,5 +16,10 @@ public class Orientation {
 	public Direction getDirection() {
 		return direction;
 	}
+	
+	@Override
+	public String toString() {
+		return pos.toString() + ", " + direction.toString();
+	}
 
 }

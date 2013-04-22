@@ -32,6 +32,11 @@ public class Position {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return "" + column + ", " + row + ".";
+	}
 
 	public int getColumn() {
 		return column;

@@ -2,15 +2,16 @@ package tests;
 
 import junit.framework.TestCase;
 
-import com.example.model.ModelImplementation;
 import com.example.model.Boat;
 import com.example.model.BoatType;
 import com.example.model.Button;
 import com.example.model.Direction;
-import com.example.model.Stage;
+import com.example.model.Model;
+import com.example.model.ModelImplementation;
 import com.example.model.Orientation;
 import com.example.model.Player;
 import com.example.model.Position;
+import com.example.model.Stage;
 
 public class ModelTest extends TestCase {
 
@@ -93,7 +94,7 @@ public class ModelTest extends TestCase {
 		assertEquals(Player.PLAYER2, model.getTurn());
 	}
 	
-	private void sendUpdateOnFiveDifferentPlacesOnGrid(ModelImplementation model) {
+	private void sendUpdateOnFiveDifferentPlacesOnGrid(Model model) {
 		Position p1 = new Position(1, 'j');
 		Position p2 = new Position(2, 'i');
 		Position p3 = new Position(3, 'h');
@@ -112,7 +113,7 @@ public class ModelTest extends TestCase {
 		assertEquals(true, model.showChangingPlayersScreen());
 	}
 	
-	public void testButtonChangingPlayersPauseScreenUpdateShouldSetShowChangingPlayersScreenFalse() {
+	public void testUpdateWithButtonChangingPlayersPauseScreenNextShouldSetShowChangingPlayersScreenFalse() {
 		ModelImplementation model = new ModelImplementation();
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
 		assertTrue(model.showChangingPlayersScreen());
@@ -122,10 +123,14 @@ public class ModelTest extends TestCase {
 	
 	public void testPlacingAllBoatsShouldSetStageToPlaceBombs() throws Throwable {
 		ModelImplementation model = new ModelImplementation();
+		goToBombingFace(model);
+		assertEquals(Stage.PLACE_BOMB, model.getStage());
+	}
+	
+	private void goToBombingFace(Model model) {
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
 		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
-		assertEquals(Stage.PLACE_BOMB, model.getStage());
 	}
 	
 	public void testPlacingAllBoatsShouldSetTurnToPlayerOne() throws Throwable {
@@ -133,6 +138,35 @@ public class ModelTest extends TestCase {
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
 		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		assertEquals(Player.PLAYER1, model.getTurn());
+	}
+	
+	public void testStageShouldTransitToGameOverWhenGameOverReturnsTrue() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		goToBombingFace(model);
+		
+		// this bombs everything, for both players
+		char[] rows = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+		Position pos;
+		for (char row : rows) {
+			for (int column = 1; column < 11; column++) {
+				pos = new Position(column, row);
+				model.update(null, pos);
+				model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+				model.update(null, pos);
+			}
+		}
+		assertSame(Stage.GAME_OVER, model.getStage());
+	}
+	
+	public void testPlacingABombShouldChangeWhichPlayersTurnItIs() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		goToBombingFace(model);
+		Position p1 = new Position(1, 'j');
+		model.update(null, p1);
+		assertEquals(Player.PLAYER2, model.getTurn());
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		model.update(null, p1);
 		assertEquals(Player.PLAYER1, model.getTurn());
 	}
 }

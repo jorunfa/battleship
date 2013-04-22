@@ -11,12 +11,12 @@ public class Boats {
 		makeAllBoatsAndAddThemToBoatsArrayList();
 	}
 	
-	public void makeAllBoatsAndAddThemToBoatsArrayList() {
+	private void makeAllBoatsAndAddThemToBoatsArrayList() {
 		makeAllBoatsForPlayer(Player.PLAYER1);
 		makeAllBoatsForPlayer(Player.PLAYER2);
 	}
 	
-	public void makeAllBoatsForPlayer(Player player) {
+	private void makeAllBoatsForPlayer(Player player) {
 		boats.add(new Boat(BoatType.AIRCRAFT_CARRIER, player));
 		boats.add(new Boat(BoatType.BATTLESHIP, player));
 		boats.add(new Boat(BoatType.SUBMARINE, player));
