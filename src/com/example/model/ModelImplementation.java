@@ -25,6 +25,7 @@ public class ModelImplementation extends Model {
 	public void update(Observable observable, Object data) {
 		if (data instanceof Position) {
 			Orientation orientation = new Orientation((Position) data, direction);
+			System.out.println("Column: " + orientation.getPosistion().getColumn() + " Row: " + orientation.getPosistion().getRow());
 			attemptToPlaceBoat(getNextBoatToPlace(), orientation);
 		}
 		else if (data instanceof Button) {

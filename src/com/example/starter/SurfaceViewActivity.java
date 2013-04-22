@@ -1,10 +1,13 @@
 package com.example.starter;
 
 
+import com.example.battleship.R;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 
 import com.example.controller.Controller;
@@ -19,6 +22,7 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
     CanvasView view;
     Controller controller;
     private static Context context;
+   
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +30,7 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
         context = getApplicationContext();
         instantiateClasses();
         setUpListeners();
-        setContentView(view);
+        setContentView(view);	   
     }
 
 
@@ -47,14 +51,26 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 		return context;
 	}
 
-	@Override
-	public boolean onTouch(android.view.View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-		
-		return false;
-	}
+	
 	
 	public Controller getController(){
 		return this.controller;
+	}
+
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		
+		System.out.println("From event: " + "x: " + event.getX() + " y: " + event.getY());
+		controller.gridGotTouched((int)event.getX(), (int)event.getY() - 110);
+		return false;
+	}
+
+	
+
+	@Override
+	public boolean onTouch(android.view.View v, MotionEvent event) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

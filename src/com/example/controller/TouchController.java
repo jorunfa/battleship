@@ -15,8 +15,8 @@ public class TouchController extends Controller {
 	 * buttons 
 	 * -Handle touch on buttons
 	 */
-	private double windowWidth;
-	private double windowHeight;
+	private double gridWidth;
+	private double gridHeight;
 
 	/*
 	 * window values from Activity
@@ -25,17 +25,17 @@ public class TouchController extends Controller {
 		try {			
 			WindowManager wm = (WindowManager) SurfaceViewActivity.getAppContext().getSystemService(Context.WINDOW_SERVICE);
 			Display display = wm.getDefaultDisplay();
-			this.windowWidth = display.getWidth();
-			this.windowHeight = display.getHeight();
+			this.gridWidth = display.getWidth();
+			this.gridHeight = display.getWidth();
 		} catch (Exception e) {
 			/*
 			 * This is for making the test able to run..
 			 */
-			this.windowWidth = 480;
-			this.windowHeight = 800;
+			this.gridWidth = 480;
+			this.gridHeight = 480;
 		}
-		System.out.println("Window width: " + windowWidth + "Window height: "
-				+ windowHeight);
+		System.out.println("Window width: " + gridWidth + "Window height: "
+				+ gridHeight);
 	}
 	
 	
@@ -48,15 +48,20 @@ public class TouchController extends Controller {
 
 	// Must be from touch listener in Activity
 	public void gridGotTouched(int x, int y) {
-		double realX = (x / windowWidth) * 100;
-		double realY = (y / windowHeight) * 100;
-		System.out.println("RealX: " + realX + "RealY: " + realY);
+		double realX = (x / gridWidth) * 100;
+		double realY = (y / gridHeight) * 100;
+		System.out.println("RealX: " + realX + " RealY: " + realY);
 		
 		/*
 		 * sends the Position that was touched to the Model
 		 */
-		setChanged();
-		notifyObservers(returnCoord(realX, realY));
+		if(realY <=100){
+			setChanged();
+			notifyObservers(returnCoord(realX, realY));
+		}
+		else{
+			System.out.println("Noe fornuftig");
+		}
 	}
 
 	public Position returnCoord(double realX, double realY) {
@@ -65,25 +70,25 @@ public class TouchController extends Controller {
 		
 
 		if (realX >= 0 && realX <= 10) {
-			row = 0;
-		} else if (realX > 10 && realX <= 20) {
 			row = 1;
-		} else if (realX > 20 && realX <= 30) {
+		} else if (realX > 10 && realX <= 20) {
 			row = 2;
-		} else if (realX > 30 && realX <= 40) {
+		} else if (realX > 20 && realX <= 30) {
 			row = 3;
-		} else if (realX > 40 && realX <= 50) {
+		} else if (realX > 30 && realX <= 40) {
 			row = 4;
-		} else if (realX > 50 && realX <= 60) {
+		} else if (realX > 40 && realX <= 50) {
 			row = 5;
-		} else if (realX > 60 && realX <= 70) {
+		} else if (realX > 50 && realX <= 60) {
 			row = 6;
-		} else if (realX > 70 && realX <= 80) {
+		} else if (realX > 60 && realX <= 70) {
 			row = 7;
-		} else if (realX > 80 && realX <= 90) {
+		} else if (realX > 70 && realX <= 80) {
 			row = 8;
-		} else if (realX > 90 && realX <= 100) {
+		} else if (realX > 80 && realX <= 90) {
 			row = 9;
+		} else if (realX > 90 && realX <= 100) {
+			row = 10;
 		}
 
 		if (realY >= 0 && realY <= 10) {

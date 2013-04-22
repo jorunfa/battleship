@@ -9,19 +9,41 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View.OnTouchListener;
+import android.view.WindowManager;
 
 public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callback, Runnable {
 	
 	SurfaceHolder surface;
 	static Context context = SurfaceViewActivity.getAppContext();
+	
+	Paint paint = new Paint();
+	private float dispWidth;
+	public float m_width;
+    public float m_Height;
+    public float m_NoOfRows;
+    public float m_NoOfCols;
+    public float m_XOffset;
+    public float m_YOffset;
+    public static final float DEFAULT_X_OFFSET= 0;
+    public static final float DEFAULT_Y_OFFSET= 0;
+    public static final float DEFAULT_NO_ROWS = 10;
+    public static final float DEFAULT_NO_COLS=  10;
+    
 	public CanvasView(){
 		super(context);
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display disp = wm.getDefaultDisplay();
+		dispWidth = disp.getWidth();
+		m_width = dispWidth/10;
+		m_Height = dispWidth/10;
 		surface = this.getHolder();
 		getHolder().addCallback(this);
+		InitializeValues();
 		System.out.println("Er i canvas view");
 	}
 	
@@ -76,14 +98,46 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	
 	int x = 10;
 	public void draw(Canvas canvas){
-		System.out.println("Paa toppen av onDraw");
-		canvas.drawColor(Color.BLACK);
 		
-	    Paint p = new Paint();
-	    p.setColor(Color.RED);
-	    canvas.drawCircle(x, 150, 10, p);
-	    x += 10;
-	    System.out.println("Paa bunn av onDraw");
+		paint.setColor(Color.RED);
+        float X=DEFAULT_X_OFFSET;
+        float Y=DEFAULT_Y_OFFSET;
+        //Draw The rows
+        for(float iRow=0;iRow<=m_NoOfRows;iRow++)
+        {
+                canvas.drawLine(X, Y,X+ this.m_width* this.m_NoOfCols,Y, paint);
+                Y=Y+ m_Height;
+
+        }
+        
+
+        //Draw The Cols
+        X=DEFAULT_X_OFFSET;
+        Y=DEFAULT_Y_OFFSET;
+        for(float iColumn=0;iColumn<=m_NoOfCols;iColumn++)
+        {
+                canvas.drawLine(X, Y,X,Y+this.m_Height*this.m_NoOfRows,paint );
+                X=X+ this.m_width;
+        }
+		
+//		System.out.println("Paa toppen av onDraw");
+//		canvas.drawColor(Color.BLACK);
+//		
+//	    Paint p = new Paint();
+//	    p.setColor(Color.RED);
+//	    canvas.drawCircle(x, 150, 10, p);
+//	    x += 10;
+//	    System.out.println("Paa bunn av onDraw");
 	}
+	
+	private void InitializeValues()
+    {
+         //Put all the default values
+        m_NoOfRows=DEFAULT_NO_ROWS;
+        m_NoOfCols=DEFAULT_NO_COLS;
+        m_XOffset=DEFAULT_X_OFFSET;
+        m_YOffset=DEFAULT_Y_OFFSET;
+    }
+
 
 }
