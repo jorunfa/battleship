@@ -2,18 +2,20 @@ package tests;
 
 import junit.framework.TestCase;
 
-import com.example.model.ModelImplementation;
 import com.example.model.Boat;
 import com.example.model.BoatType;
 import com.example.model.Direction;
+import com.example.model.ModelImplementation;
 import com.example.model.Orientation;
 import com.example.model.Player;
 import com.example.model.Position;
+import com.example.model.StateLogic;
 
 public class BoatCollisionCheckerTest extends TestCase {
 
 	public void testLegalPlacementOfBoatShouldReturnFalseIfPlacingABoatOnTopOfAnother() throws Throwable {
         ModelImplementation model = new ModelImplementation();
+        StateLogic stateLogic = new StateLogic(model);
         Position pos = new Position(5, 'e');
         Direction direction = Direction.RIGHT;
         Orientation orientation = new Orientation(pos, direction);
@@ -22,11 +24,12 @@ public class BoatCollisionCheckerTest extends TestCase {
         
         Boat secondBoat = model.getBoat(BoatType.BATTLESHIP, Player.PLAYER1);
         
-        assertFalse(model.legalPlacementOfBoat(secondBoat, orientation));
+        assertFalse(stateLogic.legalPlacementOfBoat(secondBoat, orientation));
     }
 	
 	public void testLegalPlacementOfBoatShouldReturnTrueWhenPlacingTwoBoatsLegally() throws Throwable {
-        ModelImplementation model = new ModelImplementation();
+		ModelImplementation model = new ModelImplementation();
+        StateLogic stateLogic = new StateLogic(model);
         Position positionBoat1 = new Position(5, 'e');
         Direction right = Direction.RIGHT;
         Orientation orientationBoat1 = new Orientation(positionBoat1, right);
@@ -39,11 +42,12 @@ public class BoatCollisionCheckerTest extends TestCase {
         
         Boat secondBoat = model.getBoat(BoatType.BATTLESHIP, Player.PLAYER1);
         
-        assertTrue(model.legalPlacementOfBoat(secondBoat, orientationBoat2));
+        assertTrue(stateLogic.legalPlacementOfBoat(secondBoat, orientationBoat2));
     }
 	
 	public void testLegalPlacementOfBoatShouldReturnFalseIfPlacingABoatAndTheyCrossEachother() throws Throwable {
-        ModelImplementation model = new ModelImplementation();
+		ModelImplementation model = new ModelImplementation();
+        StateLogic stateLogic = new StateLogic(model);
         Position pos1 = new Position(5, 'e');
         Position pos2 = new Position(6, 'f');
         Direction direction1 = Direction.RIGHT;
@@ -55,7 +59,7 @@ public class BoatCollisionCheckerTest extends TestCase {
         
         Boat secondBoat = model.getBoat(BoatType.BATTLESHIP, Player.PLAYER1);
         
-        assertFalse(model.legalPlacementOfBoat(secondBoat, orientation2));
+        assertFalse(stateLogic.legalPlacementOfBoat(secondBoat, orientation2));
     }
 	
 }

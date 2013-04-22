@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class BoatCollisionChecker {
 	
-	ModelImplementation model;
+	private StateLogic stateLogic;
 	
-	public BoatCollisionChecker(ModelImplementation model) {
-		this.model = model;
+	public BoatCollisionChecker(StateLogic stateLogic) {
+		this.stateLogic = stateLogic;
 	}
 	
 	public boolean leagalPlacementOfBoat(Boat boatToCheck, Orientation orientation) {
 		Boat testBoat = new Boat(boatToCheck.getType(), boatToCheck.getPlayer());
 		testBoat.placeBoat(orientation);
-		for (Boat boat : model.getBoats()) {
+		for (Boat boat : stateLogic.getBoats()) {
 			if (!boat.isPlaced()) break;
 			if (testBoat.getPlayer() != boat.getPlayer()) break;
 			if (areColliding(testBoat, boat)) return false;
