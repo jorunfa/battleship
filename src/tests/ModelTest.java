@@ -127,6 +127,12 @@ public class ModelTest extends TestCase {
 		assertEquals(Stage.PLACE_BOMB, model.getStage());
 	}
 	
+	private void goToBombingFace(Model model) {
+		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+	}
+	
 	public void testPlacingAllBoatsShouldSetTurnToPlayerOne() throws Throwable {
 		ModelImplementation model = new ModelImplementation();
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
@@ -144,11 +150,5 @@ public class ModelTest extends TestCase {
 		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 		model.update(null, p1);
 		assertEquals(Player.PLAYER1, model.getTurn());
-	}
-
-	private void goToBombingFace(Model model) {
-		sendUpdateOnFiveDifferentPlacesOnGrid(model);
-		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
-		sendUpdateOnFiveDifferentPlacesOnGrid(model);
 	}
 }

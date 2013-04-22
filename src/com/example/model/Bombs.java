@@ -19,4 +19,8 @@ public class Bombs {
 		Bomb testBomb = new Bomb(position, player);
 		return !bombs.contains(testBomb);
 	}
+	
+	public ArrayList<Bomb> getBombs() {
+		return bombs;
+	}
 }

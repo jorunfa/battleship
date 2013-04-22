@@ -2,8 +2,8 @@ package com.example.model;
 
 public class BombsHandler {
 	
-	Bombs bombs;
-	Player lastBombPlacedBy;
+	private Bombs bombs;
+	private Player lastBombPlacedBy;
 	
 	public BombsHandler() {
 		bombs = new Bombs();

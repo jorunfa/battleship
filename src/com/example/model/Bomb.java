@@ -19,6 +19,11 @@ public class Bomb {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return position.toString() + ", " + playerFiredAt.toString();
+	}
+	
 	public Position getPosition() {
 		return position;
 	}
