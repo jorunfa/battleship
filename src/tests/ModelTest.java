@@ -184,4 +184,20 @@ public class ModelTest extends TestCase {
 		model.update(null, p1);
 		assertEquals(Player.PLAYER1, model.getTurn());
 	}
+	
+	public void testLegalPlacementOfBoatShouldConciderBothOverlappingBoatsAndWalls() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		Position p1 = new Position(1, 'j');
+		Position tooCloseToCarrier = new Position(5, 'j');
+		Position tooCloseToWall = new Position(9, 'j');
+		Player player = Player.PLAYER1;
+		model.update(null, p1);
+		Boat aircraftCarrier = model.getBoat(BoatType.AIRCRAFT_CARRIER, player);
+		assertTrue(aircraftCarrier.isPlaced());
+		model.update(null, tooCloseToCarrier);
+		Boat battleship = model.getBoat(BoatType.BATTLESHIP, player);
+		assertFalse(battleship.isPlaced());
+		model.update(null, tooCloseToWall);
+		assertFalse(battleship.isPlaced());
+	}
 }
