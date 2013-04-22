@@ -169,4 +169,19 @@ public class ModelTest extends TestCase {
 		model.update(null, p1);
 		assertEquals(Player.PLAYER1, model.getTurn());
 	}
+	
+	public void testFailingToPlacingABombShouldNotChangeWhichPlayersTurnItIs() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		goToBombingFace(model);
+		Position p1 = new Position(1, 'j');
+		assertEquals(Player.PLAYER1, model.getTurn());
+		model.update(null, p1);
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		assertEquals(Player.PLAYER2, model.getTurn());
+		model.update(null, p1);
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		assertEquals(Player.PLAYER1, model.getTurn());
+		model.update(null, p1);
+		assertEquals(Player.PLAYER1, model.getTurn());
+	}
 }
