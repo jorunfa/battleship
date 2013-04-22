@@ -16,11 +16,8 @@ public class GameOverChecker {
 
 	private boolean allPlayersBoatsAreSunk(Player player) {
 		for (Boat boat : boats.getBoats()) {
-			System.out.println("player " + player);
 			if (boat.getPlayer() != player) continue;
-			System.out.println("boat.isPlaced() " + boat.isPlaced());
 			if (!boat.isPlaced()) return false;
-			System.out.println("boatIsSunk(boat) " + boatIsSunk(boat));
 			if (!boatIsSunk(boat)) return false;
 		}
 		return true;
@@ -29,8 +26,6 @@ public class GameOverChecker {
 	private boolean boatIsSunk(Boat boat) {
 		Player player = boat.getPlayer();
 		for (Position position : boat.getBoatPositions()) {
-			System.out.println("position " + position);
-			System.out.println("player " + player);
 			if (!thereExistsABombAtThisPositionBelongingToPlayer(position, player)) return false;	
 		}
 		return true;

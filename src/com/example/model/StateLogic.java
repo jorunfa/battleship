@@ -11,6 +11,7 @@ public class StateLogic {
 	private Stage stage;
 	private Direction direction;
 	private boolean showChangingPlayersScreen;
+	private GameOverChecker gameOverChecker;
 	
 	public StateLogic(ModelImplementation modelImplementation, Boats boats, BombsHandler bombsHandler) {
 		this.model = modelImplementation;
@@ -20,6 +21,7 @@ public class StateLogic {
 		stage = Stage.PLACE_BOATS;
 		showChangingPlayersScreen = false;
 		direction = Direction.RIGHT;
+		gameOverChecker = new GameOverChecker(bombsHandler.getBombs(), boats);
 	}
 	
 	public void update(Observable observable, Object data) {
@@ -64,6 +66,7 @@ public class StateLogic {
 		else if (isPlayersTurnToPlaceBomb(Player.PLAYER1)) {
 			transitToPlayersTurn(Player.PLAYER1);
 		}
+		else if (gameIsOver()) transitToGameOver();
 	}
 
 	private boolean playerFinishedPlacingBoats(Player player) {
@@ -101,6 +104,14 @@ public class StateLogic {
 		setShowChangingPlayersScreen();
 	}
 
+	private boolean gameIsOver() {
+		return gameOverChecker.gameIsOver();
+	}
+	
+	private void transitToGameOver() {
+		this.stage = Stage.GAME_OVER;	
+	}
+	
 	public Player getTurn() {
 		return turn;
 	}

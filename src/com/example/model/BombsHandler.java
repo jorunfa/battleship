@@ -21,4 +21,8 @@ public class BombsHandler {
 	public Player lastBombPlacedBy() {
 		return lastBombPlacedBy;
 	}
+	
+	public Bombs getBombs() {
+		return bombs;
+	}
 }

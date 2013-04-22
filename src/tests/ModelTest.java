@@ -2,16 +2,16 @@ package tests;
 
 import junit.framework.TestCase;
 
-import com.example.model.Model;
-import com.example.model.ModelImplementation;
 import com.example.model.Boat;
 import com.example.model.BoatType;
 import com.example.model.Button;
 import com.example.model.Direction;
-import com.example.model.Stage;
+import com.example.model.Model;
+import com.example.model.ModelImplementation;
 import com.example.model.Orientation;
 import com.example.model.Player;
 import com.example.model.Position;
+import com.example.model.Stage;
 
 public class ModelTest extends TestCase {
 
@@ -139,6 +139,24 @@ public class ModelTest extends TestCase {
 		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
 		assertEquals(Player.PLAYER1, model.getTurn());
+	}
+	
+	public void testStageShouldTransitToGameOverWhenGameOverReturnsTrue() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		goToBombingFace(model);
+		
+		// this bombs everything, for both players
+		char[] rows = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+		Position pos;
+		for (char row : rows) {
+			for (int column = 1; column < 11; column++) {
+				pos = new Position(column, row);
+				model.update(null, pos);
+				model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+				model.update(null, pos);
+			}
+		}
+		assertSame(Stage.GAME_OVER, model.getStage());
 	}
 	
 	public void testPlacingABombShouldChangeWhichPlayersTurnItIs() throws Throwable {

@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 
 import com.example.model.Boat;
 import com.example.model.Boats;
-import com.example.model.Bomb;
 import com.example.model.Bombs;
 import com.example.model.Direction;
 import com.example.model.GameOverChecker;
@@ -36,7 +35,6 @@ public class GameOverCheckerTest extends TestCase {
 	}
 	
 	public void testGameShouldBeOverWhenAllBoatsOfOnePlayerAreSunk() throws Throwable {
-		System.out.println("testGameShouldBeOverWhenAllBoatsOfOnePlayerAreSunk");
 		GameOverChecker gameOverChecker = getGameOverGameOverCheckerWithWinner(Player.PLAYER2);
 		assertTrue(gameOverChecker.gameIsOver());
 	}
@@ -77,16 +75,6 @@ public class GameOverCheckerTest extends TestCase {
 		for (int i = 1; i < 10; i++) {
 			pos = new Position(i, 'j');
 			bombs.placeBomb(pos, toBombPlayer);
-		}
-		
-		System.out.println("boats:");
-		for (Boat boat : boats.getBoats()) {
-			System.out.println("boat.toString() " + boat.toString());
-		}
-		
-		System.out.println("bombs:");
-		for (Bomb bomb : bombs.getBombs()) {
-			System.out.println("bomb.toString() " + bomb.toString());
 		}
 		
 		return gameOverChecker;
