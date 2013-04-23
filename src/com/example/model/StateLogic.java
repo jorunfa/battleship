@@ -44,7 +44,7 @@ public class StateLogic {
 	private void handleUpdateTypePosistion(Position position) {
 		if (stage == Stage.PLACE_BOATS) {
 			Orientation orientation = new Orientation(position, direction);
-			attemptToPlaceBoat(model.getNextBoatToPlace(), orientation);
+			attemptToPlaceBoat(getNextBoatToPlace(), orientation);
 		}
 		else if (stage == Stage.PLACE_BOMB) {
 			attemptToPlaceBomb(position);
@@ -60,6 +60,7 @@ public class StateLogic {
 		}
 		else if (button == Button.RESTART) {
 			initializeEverythingToStart();
+			model.setStateChanged();
 		}
 	}
 
