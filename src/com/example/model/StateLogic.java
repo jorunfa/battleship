@@ -1,5 +1,6 @@
 package com.example.model;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 public class StateLogic {
@@ -12,18 +13,24 @@ public class StateLogic {
 	private Direction direction;
 	private boolean showChangingPlayersScreen;
 	private GameOverChecker gameOverChecker;
+	private BoatCollisionChecker boatCollisionChecker;
 	
-	public StateLogic(ModelImplementation modelImplementation, Boats boats, BombsHandler bombsHandler) {
-		this.model = modelImplementation;
-		this.boats = boats;
-		this.bombsHandler = bombsHandler;
-		turn = Player.PLAYER1;
-		stage = Stage.PLACE_BOATS;
-		showChangingPlayersScreen = false;
-		direction = Direction.RIGHT;
-		gameOverChecker = new GameOverChecker(bombsHandler.getBombs(), boats);
+	public StateLogic(ModelImplementation model) {
+		this.model = model;
+		initializeEverythingToStart();
 	}
 	
+	private void initializeEverythingToStart() {
+		boats = new Boats();
+		bombsHandler = new BombsHandler();
+		turn = Player.PLAYER1;
+		stage = Stage.PLACE_BOATS;
+		direction = Direction.RIGHT;
+		showChangingPlayersScreen = false;
+		gameOverChecker = new GameOverChecker(bombsHandler.getBombs(), boats);
+		boatCollisionChecker = new BoatCollisionChecker(this);
+	}
+
 	public void update(Observable observable, Object data) {
 		if (data instanceof Position) {
 			handleUpdateTypePosistion((Position) data);
@@ -40,10 +47,10 @@ public class StateLogic {
 	private void handleUpdateTypePosistion(Position position) {
 		if (stage == Stage.PLACE_BOATS) {
 			Orientation orientation = new Orientation(position, direction);
-			model.attemptToPlaceBoat(model.getNextBoatToPlace(), orientation);
+			attemptToPlaceBoat(model.getNextBoatToPlace(), orientation);
 		}
 		else if (stage == Stage.PLACE_BOMB) {
-			model.attemptToPlaceBomb(position);
+			attemptToPlaceBomb(position);
 		}
 	}
 	
@@ -53,6 +60,9 @@ public class StateLogic {
 		}
 		else if (button == Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT) {
 			showChangingPlayersScreen = false;
+		}
+		else if (button == Button.RESTART) {
+			initializeEverythingToStart();
 		}
 	}
 
@@ -134,10 +144,50 @@ public class StateLogic {
 		else {
 			direction = Direction.RIGHT;
 		}
+		model.setStateChanged();
 	}
 	
 	public Direction getDirection() {
 		return direction;
 	}
 
+	public Boat getBoat(BoatType boatType, Player player) {
+		return boats.getBoat(boatType, player);
+	}
+	
+	public void attemptToPlaceBoat(Boat boatToPlace, Orientation orientation) {
+		if (legalPlacementOfBoat(boatToPlace, orientation)) {
+			boatToPlace.placeBoat(orientation);
+			model.setStateChanged();
+		}
+	}
+	
+	public boolean legalPlacementOfBoat(Boat boatToPlace, Orientation orientation) {
+		if (!boatToPlace.legalPlacementOfBoat(orientation)) return false;
+		if (!boatCollisionChecker.leagalPlacementOfBoat(boatToPlace, orientation)) return false;
+		return true;
+	}
+	
+	public void attemptToPlaceBomb(Position position) {
+		if (legalPlacementOfBomb(position)) {
+			placeBomb(position);
+			model.setStateChanged();
+		}
+	}
+
+	public boolean legalPlacementOfBomb(Position position) {
+		return bombsHandler.leagalPlacementOfBomb(position, getTurn());
+	}
+
+	private void placeBomb(Position position) {
+		bombsHandler.placeBomb(position, getTurn());
+	}
+
+	public ArrayList<Boat> getBoats() {
+		return boats.getBoats();
+	}
+
+	public Boat getNextBoatToPlace() {
+		return boats.getNextBoatToPlace();
+	}
 }

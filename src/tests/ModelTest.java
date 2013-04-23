@@ -43,15 +43,6 @@ public class ModelTest extends TestCase {
 		}
 	}
 	
-	public void testAttemptToPlaceBoatShouldWork() throws Throwable {
-		ModelImplementation model = new ModelImplementation();
-		Boat boat = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
-		Position pos = new Position(5, 'e');
-		Orientation orientation = new Orientation(pos, Direction.RIGHT);
-		model.attemptToPlaceBoat(boat, orientation);
-		assertTrue(boat.isPlaced());
-	}
-	
 	public void testUpdatingWithChangeDirectionButtonShouldUpdateTheModel() throws Throwable {
 		ModelImplementation model = new ModelImplementation();
 		Button button = Button.CHANGE_DIRECTION;
@@ -168,5 +159,49 @@ public class ModelTest extends TestCase {
 		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 		model.update(null, p1);
 		assertEquals(Player.PLAYER1, model.getTurn());
+	}
+	
+	public void testFailingToPlacingABombShouldNotChangeWhichPlayersTurnItIs() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		goToBombingFace(model);
+		Position p1 = new Position(1, 'j');
+		assertEquals(Player.PLAYER1, model.getTurn());
+		model.update(null, p1);
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		assertEquals(Player.PLAYER2, model.getTurn());
+		model.update(null, p1);
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		assertEquals(Player.PLAYER1, model.getTurn());
+		model.update(null, p1);
+		assertEquals(Player.PLAYER1, model.getTurn());
+	}
+	
+	public void testLegalPlacementOfBoatShouldConciderBothOverlappingBoatsAndWalls() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		Position aircraftCarrierPosition = new Position(1, 'j');
+		Position tooCloseToCarrier = new Position(5, 'j');
+		Position tooCloseToWall = new Position(9, 'j');
+		Player player = Player.PLAYER1;
+		model.update(null, aircraftCarrierPosition);
+		Boat aircraftCarrier = model.getBoat(BoatType.AIRCRAFT_CARRIER, player);
+		assertTrue(aircraftCarrier.isPlaced());
+		model.update(null, tooCloseToCarrier);
+		Boat battleship = model.getBoat(BoatType.BATTLESHIP, player);
+		assertFalse(battleship.isPlaced());
+		model.update(null, tooCloseToWall);
+		assertFalse(battleship.isPlaced());
+	}
+	
+	public void testRestartButtonShouldRestartTheGame() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		Position aircraftCarrierPosition = new Position(1, 'j');
+		Boat aircraftCarrier = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
+		assertFalse(aircraftCarrier.isPlaced());
+		model.update(null, aircraftCarrierPosition);
+		assertTrue(aircraftCarrier.isPlaced());
+		
+		model.update(null, Button.RESTART);
+		
+		assertFalse(aircraftCarrier.isPlaced());
 	}
 }
