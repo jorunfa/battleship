@@ -27,6 +27,9 @@ public class StateLogic {
 	public void update(Observable observable, Object data) {
 		if (data instanceof Position) {
 			handleUpdateTypePosistion((Position) data);
+			for (Boat boat : model.getBoats()) {
+				System.out.println(boat);
+			}
 		}
 		else if (data instanceof Button) {
 			handleUpdateTypeButton((Button) data);

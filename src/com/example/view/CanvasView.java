@@ -57,8 +57,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Changed...");
 	}
 
 	@Override
@@ -96,7 +95,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	    }	
 	}
 	
-	int x = 10;
 	public void draw(Canvas canvas){
 		
 		paint.setColor(Color.RED);
@@ -120,14 +118,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
                 X=X+ this.m_width;
         }
 		
-//		System.out.println("Paa toppen av onDraw");
-//		canvas.drawColor(Color.BLACK);
-//		
-//	    Paint p = new Paint();
-//	    p.setColor(Color.RED);
-//	    canvas.drawCircle(x, 150, 10, p);
-//	    x += 10;
-//	    System.out.println("Paa bunn av onDraw");
 	}
 	
 	private void InitializeValues()
