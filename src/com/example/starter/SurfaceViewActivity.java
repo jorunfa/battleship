@@ -36,8 +36,8 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 
 	private void instantiateClasses() {
 		controller = new TouchController();
-		view = new CanvasView();
 		model = new ModelImplementation();
+		view = new CanvasView((ModelImplementation) model);
 	}
 	
 	private void setUpListeners() {
@@ -62,7 +62,7 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 	public boolean onTouchEvent(MotionEvent event) {
 		
 		System.out.println("From event: " + "x: " + event.getX() + " y: " + event.getY());
-		controller.gridGotTouched((int)event.getX(), (int)event.getY() - 110);
+		controller.gridGotTouched((int)event.getX(), (int)event.getY() - 40);
 		return false;
 	}
 
