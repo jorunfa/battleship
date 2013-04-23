@@ -45,7 +45,12 @@ public class ModelImplementation extends Model {
 	}
 
 	public void setStateChanged() {
+		System.out.println("baat plassert");
 		setChanged();
 		notifyObservers();
+	}
+	
+	public StateLogic getStageLogic(){
+		return this.stateLogic;
 	}
 }

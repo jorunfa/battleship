@@ -2,6 +2,11 @@ package com.example.view;
 
 import java.util.Observable;
 
+import com.example.model.Model;
+import com.example.model.ModelImplementation;
+import com.example.model.Player;
+import com.example.model.Position;
+import com.example.model.Stage;
 import com.example.starter.SurfaceViewActivity;
 
 import android.content.Context;
@@ -22,9 +27,11 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	static Context context = SurfaceViewActivity.getAppContext();
 	
 	Paint paint = new Paint();
+	ModelImplementation model;
+	private Display disp;
 	private float dispWidth;
-	public float m_width;
-    public float m_Height;
+	public float m_GridWidth;
+    public float m_GridHeight;
     public float m_NoOfRows;
     public float m_NoOfCols;
     public float m_XOffset;
@@ -34,30 +41,42 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
     public static final float DEFAULT_NO_ROWS = 10;
     public static final float DEFAULT_NO_COLS=  10;
     
-	public CanvasView(){
+    public CanvasView(ModelImplementation model){
 		super(context);
+		this.model = model;
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		Display disp = wm.getDefaultDisplay();
+		disp = wm.getDefaultDisplay();
 		dispWidth = disp.getWidth();
-		m_width = dispWidth/10;
-		m_Height = dispWidth/10;
+		m_GridWidth = dispWidth/10;
+		m_GridHeight = dispWidth/10;
 		surface = this.getHolder();
 		getHolder().addCallback(this);
 		InitializeValues();
 		System.out.println("Er i canvas view");
+		
+		
 	}
 	
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-
+		if (model.getStage() == Stage.PLACE_BOATS) {
+			if(model.getTurn() == Player.PLAYER1){
+				System.out.println("PLAYER ONES TUUUURN");
+			}
+			else if (model.getTurn() == Player.PLAYER2) {
+				System.out.println("PLAYER TWOS TUUUUUURN");
+			}
+		}
+		else System.out.println("DIDNT WORK");
 	}
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
 		System.out.println("Changed...");
+		
+		
 	}
 
 	@Override
@@ -72,6 +91,80 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void getCorrectGridCoordinates(Position position){
+		int coordX;
+		int coordY;
+		switch (position.getColumn()) {
+		case 1:
+			coordX = 0;
+			break;
+		case 2:
+			coordX = (int) m_GridWidth;
+			break;
+		case 3:
+			coordX = (int) (m_GridWidth*2);
+			break;
+		case 4:
+			coordX = (int) (m_GridWidth*3);
+			break;
+		case 5:
+			coordX = (int) (m_GridWidth*4);
+			break;
+		case 6:
+			coordX = (int) (m_GridWidth*5);
+			break;
+		case 7:
+			coordX = (int) (m_GridWidth*6);
+			break;
+		case 8:
+			coordX = (int) (m_GridWidth*7);
+			break;
+		case 9:
+			coordX = (int) (m_GridWidth*8);
+			break;
+		case 10:
+			coordX = (int) (m_GridWidth*9);
+			break;
+		default:
+			break;
+		}
+		
+		switch (position.getRow()) {
+		case 'a':
+			coordY = 0;
+			break;
+		case 'b':
+			coordY = (int) m_GridHeight;
+			break;
+		case 'c':
+			coordY = (int) (m_GridHeight*2);
+			break;
+		case 'd':
+			coordY = (int) (m_GridHeight*3);
+			break;
+		case 'e':
+			coordY = (int) (m_GridHeight*4);
+			break;
+		case 'f':
+			coordY = (int) (m_GridHeight*5);
+			break;
+		case 'g':
+			coordY = (int) (m_GridHeight*6);
+			break;
+		case 'h':
+			coordY = (int) (m_GridHeight*7);
+			break;
+		case 'i':
+			coordY = (int) (m_GridHeight*8);
+			break;
+		case 'j':
+			coordY = (int) (m_GridHeight*9);
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -103,8 +196,8 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
         //Draw The rows
         for(float iRow=0;iRow<=m_NoOfRows;iRow++)
         {
-                canvas.drawLine(X, Y,X+ this.m_width* this.m_NoOfCols,Y, paint);
-                Y=Y+ m_Height;
+                canvas.drawLine(X, Y,X+ this.m_GridWidth* this.m_NoOfCols,Y, paint);
+                Y=Y+ m_GridHeight;
 
         }
         
@@ -114,8 +207,8 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
         Y=DEFAULT_Y_OFFSET;
         for(float iColumn=0;iColumn<=m_NoOfCols;iColumn++)
         {
-                canvas.drawLine(X, Y,X,Y+this.m_Height*this.m_NoOfRows,paint );
-                X=X+ this.m_width;
+                canvas.drawLine(X, Y,X,Y+this.m_GridHeight*this.m_NoOfRows,paint );
+                X=X+ this.m_GridWidth;
         }
 		
 	}
