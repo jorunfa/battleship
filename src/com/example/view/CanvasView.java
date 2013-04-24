@@ -110,24 +110,30 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawChangingPlayersScreen() {
-		System.out.println("in drawChangingPlayersScreen");
+		drawTitleAndSubTitle("Change player", "Press bottom 1/3 of screen to continue");
+	}
+
+	private void drawTitleAndSubTitle(String title, String subTitle) {
 		float size = paint.getTextSize();
 		paint.setTextSize(80);
 		drawBlank();
-		canvas.drawText("Change player", 100, 100, paint);
+		canvas.drawText(title, 100, 100, paint);
 		paint.setTextSize(20);
-		canvas.drawText("Press lower half of screen to continue", 100, 150, paint);
+		canvas.drawText(subTitle, 100, 150, paint);
 		paint.setTextSize(size);
 	}
-
+	
 	private void drawOwnShips() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	private void drawGameOver() {
-		// TODO Auto-generated method stub
-		
+		String winnerString;
+		Player winner = model.getWinner();
+		if (winner == Player.PLAYER1) winnerString = "PLAYER1!";
+		else winnerString = "PLAYER2!";
+		drawTitleAndSubTitle("GAME OVER", "The winner is: " + winner);
 	}
 
 	private void drawPlacingBombs() {

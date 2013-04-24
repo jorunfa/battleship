@@ -103,7 +103,7 @@ public class ModelImplementation extends Model {
 	}
 	
 	private void setShowChangingPlayersScreen() {
-		showChangingPlayersScreen = true;
+		showChangingPlayersScreen = false;
 	}
 
 	private boolean isPlayersTurnToPlaceBomb(Player player) {
@@ -206,5 +206,10 @@ public class ModelImplementation extends Model {
 	@Override
 	public boolean bombHitShip(Bomb bomb) {
 		return gameOverChecker.bombHitShip(bomb);
+	}
+
+	@Override
+	public Player getWinner() {
+		return gameOverChecker.getWinner();
 	}
 }
