@@ -75,7 +75,7 @@ public class Boat {
 		Direction direction = orientation.getDirection();
 		
 		if (direction == Direction.RIGHT) return row;
-		else return (char) (row - boatLength - 1);
+		else return (char) (row - boatLength + 1);
 	}
 	
 	public ArrayList<Position> getBoatPositions() {
