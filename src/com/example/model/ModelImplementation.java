@@ -32,12 +32,10 @@ public class ModelImplementation extends Model {
 	@Override
 	public void update(Observable observable, Object data) {
 		System.out.println("update recieved");
-		if (data instanceof Position) {
-			System.out.println("Position update");
+		if (data instanceof Position && !showChangingPlayersScreen) {
 			handleUpdateTypePosistion((Position) data);
 		}
 		else if (data instanceof Button) {
-			System.out.println("Button update");
 			handleUpdateTypeButton((Button) data);
 		}
 		setCorrectState();
@@ -105,7 +103,7 @@ public class ModelImplementation extends Model {
 	}
 	
 	private void setShowChangingPlayersScreen() {
-		showChangingPlayersScreen = false;
+		showChangingPlayersScreen = true;
 	}
 
 	private boolean isPlayersTurnToPlaceBomb(Player player) {

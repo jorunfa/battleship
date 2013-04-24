@@ -13,13 +13,14 @@ import com.example.model.Model;
 import com.example.model.ModelImplementation;
 import com.example.view.CanvasView;
 
-public class SurfaceViewActivity extends Activity implements OnTouchListener{
+public class SurfaceViewActivity extends Activity implements OnTouchListener {
     private Model model;
     private CanvasView view;
     private Controller controller;
     private static Context context;
     private boolean isSetUp = false;
-
+    private long timeSinceLastTouch;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,7 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 	        instantiateClasses();
 	        setUpListeners();
 	        setContentView(view);
+	        timeSinceLastTouch = System.currentTimeMillis();
         }
     }
 
@@ -51,10 +53,12 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		controller.gridGotTouched((int)event.getX(), (int)event.getX() - 40);
-		return false;
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			controller.gridGotTouched((int)event.getX(), (int)event.getY() - 120);
+		}
+		return super.onTouchEvent(event);
 	}
-	
+
 
 	@Override
 	public boolean onTouch(android.view.View v, MotionEvent event) {
