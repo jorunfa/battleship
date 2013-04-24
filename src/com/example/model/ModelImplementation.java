@@ -108,8 +108,11 @@ public class ModelImplementation extends Model {
 
 	private boolean isPlayersTurnToPlaceBomb(Player player) {
 		if (stage == Stage.PLACE_BOMB) {
-			if (!(turn == player)) {
-				if (!(bombsHandler.lastBombPlacedBy() == player)) return true;
+			if (turn != player) {
+				if (bombsHandler.lastBombPlacedBy() != player) {
+					if (bombsHandler.lastBombPlacedBy() != null)
+						return true;
+				}
 			}
 		}
 		return false;
