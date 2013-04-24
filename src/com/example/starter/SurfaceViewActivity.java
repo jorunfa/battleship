@@ -47,8 +47,8 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		controller.gridGotTouched((int)event.getX(), (int)event.getY() - 40);
-		return true;
+		controller.gridGotTouched((int)event.getX(), (int)event.getX() - 40);
+		return false;
 	}
 	
 
