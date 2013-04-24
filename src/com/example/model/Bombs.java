@@ -15,9 +15,12 @@ public class Bombs {
 		placedBombs.add(bomb);
 	}
 
-	public boolean leagalPlacementOfBomb(Position position, Player player) {
-		Bomb testBomb = new Bomb(position, player);
-		return !placedBombs.contains(testBomb);
+	public boolean leagalPlacementOfBomb(Position position, Player firedAt) {
+		Bomb testBomb = new Bomb(position, firedAt);
+		for (Bomb bomb : getPlacedBombs()) {
+			if (bomb.equals(testBomb)) return false;
+		}
+		return true;
 	}
 	
 	public ArrayList<Bomb> getPlacedBombs() {

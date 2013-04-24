@@ -20,8 +20,8 @@ public class BombsHandler {
 		
 	}
 
-	public boolean leagalPlacementOfBomb(Position position, Player turn) {
-		return bombs.leagalPlacementOfBomb(position, turn);
+	public boolean leagalPlacementOfBomb(Position position, Player playerFiredAt) {
+		return bombs.leagalPlacementOfBomb(position, playerFiredAt);
 	}
 
 	public Player lastBombPlacedBy() {

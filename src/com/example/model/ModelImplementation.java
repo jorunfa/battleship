@@ -179,7 +179,10 @@ public class ModelImplementation extends Model {
 	}
 
 	public boolean legalPlacementOfBomb(Position position) {
-		return bombsHandler.leagalPlacementOfBomb(position, getTurn());
+		Player firedAt;
+		if (getTurn() == Player.PLAYER1) firedAt = Player.PLAYER2;
+		else firedAt = Player.PLAYER1;
+		return bombsHandler.leagalPlacementOfBomb(position, firedAt);
 	}
 
 	private void placeBomb(Position position) {
