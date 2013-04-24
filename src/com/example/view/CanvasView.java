@@ -32,6 +32,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
     public float m_XOffset;
     public float m_YOffset;
 	private Model model;
+	private Canvas canvas;
     public static final float DEFAULT_X_OFFSET= 0;
     public static final float DEFAULT_Y_OFFSET= 0;
     public static final float DEFAULT_NO_ROWS = 10;
@@ -46,8 +47,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		m_GridHeight = dispWidth/10;
 		surface = this.getHolder();
 		getHolder().addCallback(this);
-		initializeValues();
-		System.out.println("Er i canvas view");	
+		initializeValues();	
 	}
 	
 	private void initializeValues() {
@@ -163,27 +163,24 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 
 	@Override
 	public void run() {
-		Canvas c;
-	    while (true) {
-	        c = null;
-			try {
-	            c = surface.lockCanvas(null);
-	            synchronized (surface) {
-	                draw(c);
-	            }
-	        } finally {
-	            // do this in a finally so that if an exception is thrown
-	            // during the above, we don't leave the Surface in an
-	            // inconsistent state
-	            if (c != null) {
-	                surface.unlockCanvasAndPost(c);
-	            }
-	        }
-	    }	
+		canvas = null;
+		try {
+            canvas = surface.lockCanvas(null);
+            synchronized (surface) {
+                draw();
+            }
+        } finally {
+            if (canvas != null) {
+                surface.unlockCanvasAndPost(canvas);
+            }
+        }
 	}
 	
-	public void draw(Canvas canvas) {
-		
+	public void draw() {
+		drawGrid();
+	}
+
+	private void drawGrid() {
 		paint.setColor(Color.RED);
         float X=DEFAULT_X_OFFSET;
         float Y=DEFAULT_Y_OFFSET;
@@ -194,7 +191,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
                 Y=Y+ m_GridHeight;
         }
         
-
         //Draw The Cols
         X=DEFAULT_X_OFFSET;
         Y=DEFAULT_Y_OFFSET;
@@ -203,6 +199,5 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
                 canvas.drawLine(X, Y,X,Y+this.m_GridHeight*this.m_NoOfRows,paint );
                 X=X+ this.m_GridWidth;
         }
-		
 	}
 }
