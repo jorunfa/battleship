@@ -322,8 +322,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		paint.setTextSize(20);
 		int y = (int) (dispHight * (2.0/3.0));
 		int x = (int) (dispWidth * (1.0/4.0));
-		System.out.println("dispHight " + dispHight);
-		System.out.println("y " + y);
 		canvas.drawText("Press her to change boat placing direction", x, y, paint);
 		paint.setTextSize(size);
 	}
