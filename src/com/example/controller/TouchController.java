@@ -58,6 +58,7 @@ public class TouchController extends Controller {
 			notifyObservers(returnCoord(realX, realY));
 		}
 		else{
+			setChanged();
 			notifyObservers(Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 			System.out.println("Utenfor grid");
 		}
