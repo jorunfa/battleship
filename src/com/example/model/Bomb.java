@@ -14,8 +14,8 @@ public class Bomb {
 	public boolean equals(Object object) {
 		if (!(object instanceof Bomb)) return false;
 		Bomb bomb = (Bomb) object;
-		if (bomb.getPosition() != getPosition()) return false;
-		if (bomb.getPlayerFiredAt() != getPlayerFiredAt()) return false;
+		if (!bomb.getPosition().equals(this.getPosition())) return false;
+		if (!bomb.getPlayerFiredAt().equals(this.getPlayerFiredAt())) return false;
 		return true;
 	}
 	

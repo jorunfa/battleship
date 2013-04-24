@@ -68,25 +68,20 @@ public class ModelImplementation extends Model {
 
 	private void setCorrectState() {
 		if (playerFinishedPlacingBoats(Player.PLAYER1)) {
-			System.out.println("Player 1 finished with boats");
 			transitToPlayersTurn(Player.PLAYER2);
 		}
 		else if (playerFinishedPlacingBoats(Player.PLAYER2)) {
-			System.out.println("Player 2 finished with boats");
 			this.stage = Stage.PLACE_BOMB;
-			transitToPlayersTurn(Player.PLAYER1);
-		}
-		else if (isPlayersTurnToPlaceBomb(Player.PLAYER2)) {
-			System.out.println("player 2s turn to place bomb");
-			transitToPlayersTurn(Player.PLAYER2);
-		}
-		else if (isPlayersTurnToPlaceBomb(Player.PLAYER1)) {
-			System.out.println("player 1s turn to place bomb");
 			transitToPlayersTurn(Player.PLAYER1);
 		}
 		else if (gameIsOver()) {
 			transitToGameOver();
-			System.out.println("game over");
+		}
+		else if (isPlayersTurnToPlaceBomb(Player.PLAYER2)) {
+			transitToPlayersTurn(Player.PLAYER2);
+		}
+		else if (isPlayersTurnToPlaceBomb(Player.PLAYER1)) {
+			transitToPlayersTurn(Player.PLAYER1);
 		}
 	}
 
