@@ -52,6 +52,15 @@ public class GameOverChecker {
 	}
 
 	public boolean bombHitShip(Bomb bomb) {
-		return thereExistsABombAtThisPositionFiredAtPlayer(bomb.getPosition(), bomb.getPlayerFiredAt());
+		for (Boat boat : boats.getBoats()) {
+			if (boat.getPlayer().equals(bomb.getPlayerFiredAt())) {
+				for (Position position : boat.getBoatPositions()) {
+					if (position.equals(bomb.getPosition())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

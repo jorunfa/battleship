@@ -138,6 +138,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	private void drawAllYourPlacedBombs() {
 		for (Bomb bomb : model.getPlacedBombs()) {
 			if (bomb.getPlayerFiredAt() == model.getTurn()) continue;
+			System.out.println("model.bombHitShip(bomb) " + model.bombHitShip(bomb));
 			if (model.bombHitShip(bomb)) {
 				drawBombThatHit(bomb);
 			}
