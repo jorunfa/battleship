@@ -3,14 +3,22 @@ package com.example.view;
 import java.util.Observable;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
+import com.example.battleship.R;
+import com.example.model.Boat;
+import com.example.model.BoatType;
+import com.example.model.Direction;
 import com.example.model.Model;
 import com.example.model.Player;
 import com.example.model.Position;
@@ -93,21 +101,78 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawPlacingBoats() {
+		tryToDrawGrid();
+		drawAllYourPlacedBoats();
+		drawNextBoatToPlace();
+	}
+
+	private void drawAllYourPlacedBoats() {
+		drawAllBoatsForPlayer(model.getTurn());
+	}
+	
+	private void drawAllBoatsForPlayer(Player player) {
+		for (Boat boat : model.getBoats()) {
+			if (!boat.isPlaced()) continue;
+			if (boat.getPlayer() != player) continue;
+			drawBoat(boat);
+		}
+	}
+
+	private void drawBoat(Boat boat) {
+		Position position = boat.getPosition();
+		BoatType type = boat.getType();
+		Direction direction = boat.getDirection();
+		Bitmap boatBitmap = getBoatBitmap(type);
+		Rect destinationToDrawTo = calculateDestinationRect(position, type, direction);
+		
+		tryToDrawBitmap(boatBitmap, null, destinationToDrawTo, null);
+	}
+
+	private Bitmap getBoatBitmap(BoatType type) {
+		Resources res = getResources();
+		if (type == BoatType.AIRCRAFT_CARRIER)
+			return BitmapFactory.decodeResource(res, R.drawable.aircraft_carrier);
+		if (type == BoatType.BATTLESHIP)
+			return BitmapFactory.decodeResource(res, R.drawable.battleship);
+		if (type == BoatType.DESTROYER)
+			return BitmapFactory.decodeResource(res, R.drawable.destroyer);
+		if (type == BoatType.PATROL_BOAT)
+			return BitmapFactory.decodeResource(res, R.drawable.patrolboat);
+		if (type == BoatType.SUBMARINE)
+			return BitmapFactory.decodeResource(res, R.drawable.submarine);
+		else return null;
+	}
+	
+	private Rect calculateDestinationRect(Position position, BoatType type,	Direction direction) {
+		//return new Rect(left, top, right, bottom);
+		// TODO make correct rect
+		return new Rect(100, 200, 200, 100);
+	}
+	
+	private void tryToDrawBitmap(Bitmap bitmap, Rect src, Rect dst, Paint paint) {
+		canvas = null;
+		try {
+            canvas = surface.lockCanvas(null);
+            synchronized (surface) {
+                canvas.drawBitmap(bitmap, src, dst, paint);
+            }
+        } finally {
+            if (canvas != null) {
+                surface.unlockCanvasAndPost(canvas);
+            }
+        }
+	}
+
+	private void drawNextBoatToPlace() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		System.out.println("Changed...");
-		
-		
-	}
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		System.out.println("er i surface created");
 		Thread drawThread = new Thread(this);
 	    drawThread.start();
 		
@@ -163,11 +228,15 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 
 	@Override
 	public void run() {
+		tryToDrawGrid();
+	}
+	
+	private void tryToDrawGrid() {
 		canvas = null;
 		try {
             canvas = surface.lockCanvas(null);
             synchronized (surface) {
-                draw();
+                drawGrid();
             }
         } finally {
             if (canvas != null) {
@@ -175,18 +244,13 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
             }
         }
 	}
-	
-	public void draw() {
-		drawGrid();
-	}
 
 	private void drawGrid() {
 		paint.setColor(Color.RED);
         float X=DEFAULT_X_OFFSET;
         float Y=DEFAULT_Y_OFFSET;
         //Draw The rows
-        for(float iRow=0;iRow<=m_NoOfRows;iRow++)
-        {
+        for(float iRow=0;iRow<=m_NoOfRows;iRow++) {
                 canvas.drawLine(X, Y,X+ this.m_GridWidth* this.m_NoOfCols,Y, paint);
                 Y=Y+ m_GridHeight;
         }
@@ -194,8 +258,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
         //Draw The Cols
         X=DEFAULT_X_OFFSET;
         Y=DEFAULT_Y_OFFSET;
-        for(float iColumn=0;iColumn<=m_NoOfCols;iColumn++)
-        {
+        for(float iColumn=0;iColumn<=m_NoOfCols;iColumn++) {
                 canvas.drawLine(X, Y,X,Y+this.m_GridHeight*this.m_NoOfRows,paint );
                 X=X+ this.m_GridWidth;
         }
