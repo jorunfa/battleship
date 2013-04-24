@@ -31,7 +31,6 @@ public class ModelImplementation extends Model {
 
 	@Override
 	public void update(Observable observable, Object data) {
-		System.out.println("update recieved");
 		if (data instanceof Position && !showChangingPlayersScreen) {
 			handleUpdateTypePosistion((Position) data);
 		}
@@ -174,17 +173,17 @@ public class ModelImplementation extends Model {
 	}
 
 	public boolean legalPlacementOfBomb(Position position) {
-		Player firedAt;
-		if (getTurn() == Player.PLAYER1) firedAt = Player.PLAYER2;
-		else firedAt = Player.PLAYER1;
+		Player firedAt = getPlayerWhichTurnItIsnt();
 		return bombsHandler.leagalPlacementOfBomb(position, firedAt);
 	}
 
+	private Player getPlayerWhichTurnItIsnt() {
+		if (getTurn() == Player.PLAYER1) return Player.PLAYER2;
+		else return Player.PLAYER1;
+	}
+
 	private void placeBomb(Position position) {
-		if (turn == Player.PLAYER1)
-			bombsHandler.placeBomb(position, Player.PLAYER2);
-		else
-			bombsHandler.placeBomb(position, Player.PLAYER1);
+		bombsHandler.placeBomb(position, getPlayerWhichTurnItIsnt());
 	}
 
 	public ArrayList<Boat> getBoats() {

@@ -26,7 +26,7 @@ public class Boats {
 	
 	public Boat getBoat(BoatType boatType, Player player) {
 		for (Boat boat : boats) {
-			if (boat.getType() == boatType && boat.getPlayer() == player) {
+			if (boat.getType().equals(boatType) && boat.getPlayer().equals(player)) {
 				return boat;
 			}
 		}
@@ -46,7 +46,7 @@ public class Boats {
 
 	public boolean allBoatsPlacedForPlayer(Player player) {
 		for (Boat boat : getBoats()) {
-			if (boat.getPlayer() != player) continue;
+			if (!boat.getPlayer().equals(player)) continue;
 			if (!boat.isPlaced()) return false;
 		}
 		return true;

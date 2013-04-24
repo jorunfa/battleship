@@ -14,8 +14,8 @@ public class BoatCollisionChecker {
 		Boat testBoat = new Boat(boatToCheck.getType(), boatToCheck.getPlayer());
 		testBoat.placeBoat(orientation);
 		for (Boat boat : stateLogic.getBoats()) {
-			if (!boat.isPlaced()) break;
-			if (testBoat.getPlayer() != boat.getPlayer()) break;
+			if (!boat.isPlaced()) continue;
+			if (!testBoat.getPlayer().equals(boat.getPlayer())) continue;
 			if (areColliding(testBoat, boat)) return false;
 		}
 		return true;
