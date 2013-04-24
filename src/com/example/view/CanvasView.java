@@ -59,7 +59,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 	
 	private void initializeValues() {
-        //Put all the default values
        m_NoOfRows=DEFAULT_NO_ROWS;
        m_NoOfCols=DEFAULT_NO_COLS;
        m_XOffset=DEFAULT_X_OFFSET;
@@ -68,16 +67,29 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if (arg0 instanceof Model) this.model = (Model) arg0;
-		drawModel();
+		if (arg0 instanceof Model) {
+			this.model = (Model) arg0;
+			tryToDrawModel();
+		}
 	}
 
-	private void drawModel() {
-		if (model.showChangingPlayersScreen()) drawChangingPlayersScreen();
-		else if (model.viewOwnShips()) drawOwnShips();
-		else if (model.getStage() == Stage.GAME_OVER) drawGameOver();
-		else if (model.getStage() == Stage.PLACE_BOMB) drawPlacingBombs();
-		else if (model.getStage() == Stage.PLACE_BOATS) drawPlacingBoats();
+	private void tryToDrawModel() {
+		canvas = null;
+		try {
+            canvas = surface.lockCanvas(null);
+            synchronized (surface) {
+            	drawGrid();
+        		if (model.showChangingPlayersScreen()) drawChangingPlayersScreen();
+        		else if (model.viewOwnShips()) drawOwnShips();
+        		else if (model.getStage() == Stage.GAME_OVER) drawGameOver();
+        		else if (model.getStage() == Stage.PLACE_BOMB) drawPlacingBombs();
+        		else if (model.getStage() == Stage.PLACE_BOATS) drawPlacingBoats();
+            }
+        } finally {
+            if (canvas != null) {
+                surface.unlockCanvasAndPost(canvas);
+            }
+        }
 	}
 
 	private void drawChangingPlayersScreen() {
@@ -101,7 +113,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawPlacingBoats() {
-		tryToDrawGrid();
 		drawAllYourPlacedBoats();
 		drawNextBoatToPlace();
 	}
@@ -124,8 +135,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		Direction direction = boat.getDirection();
 		Bitmap boatBitmap = getBoatBitmap(type);
 		Rect destinationToDrawTo = calculateDestinationRect(position, type, direction);
-		
-		tryToDrawBitmap(boatBitmap, null, destinationToDrawTo, null);
+		canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, null);
 	}
 
 	private Bitmap getBoatBitmap(BoatType type) {
@@ -146,21 +156,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	private Rect calculateDestinationRect(Position position, BoatType type,	Direction direction) {
 		//return new Rect(left, top, right, bottom);
 		// TODO make correct rect
-		return new Rect(100, 200, 200, 100);
-	}
-	
-	private void tryToDrawBitmap(Bitmap bitmap, Rect src, Rect dst, Paint paint) {
-		canvas = null;
-		try {
-            canvas = surface.lockCanvas(null);
-            synchronized (surface) {
-                canvas.drawBitmap(bitmap, src, dst, paint);
-            }
-        } finally {
-            if (canvas != null) {
-                surface.unlockCanvasAndPost(canvas);
-            }
-        }
+		return new Rect(0, 0, 978, 264);
 	}
 
 	private void drawNextBoatToPlace() {
