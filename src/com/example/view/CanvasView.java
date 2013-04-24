@@ -26,7 +26,7 @@ import com.example.model.Position;
 import com.example.model.Stage;
 import com.example.starter.SurfaceViewActivity;
 
-public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callback, Runnable {
+public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callback {
 	
 	SurfaceHolder surface;
 	static Context context = SurfaceViewActivity.getAppContext();
@@ -89,6 +89,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawModel() {
+		drawBlank();
     	if (model == null) drawGrid();
     	else if (model.showChangingPlayersScreen()) drawChangingPlayersScreen();
 		else if (model.viewOwnShips()) drawOwnShips();
@@ -97,10 +98,15 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		else if (model.getStage() == Stage.PLACE_BOATS) drawPlacingBoats();
 	}
 
+	private void drawBlank() {
+		canvas.drawRGB(0, 0, 0);
+	}
+
 	private void drawChangingPlayersScreen() {
+		System.out.println("in drawChangingPlayersScreen");
 		float size = paint.getTextSize();
 		paint.setTextSize(80);
-		canvas.drawRGB(0, 0, 0);
+		drawBlank();
 		canvas.drawText("Change player", 100, 100, paint);
 		paint.setTextSize(20);
 		canvas.drawText("Press lower half of screen to continue", 100, 150, paint);
@@ -252,20 +258,13 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		Thread drawThread = new Thread(this);
-	    drawThread.start();
-		
+	    tryToDrawModel();
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void run() {
-		tryToDrawModel();
 	}
 
 	private void drawGrid() {

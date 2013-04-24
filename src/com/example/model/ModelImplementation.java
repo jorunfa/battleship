@@ -61,7 +61,6 @@ public class ModelImplementation extends Model {
 		else if (button == Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT) {
 			showChangingPlayersScreen = false;
 			setChanged();
-			System.out.println("In button == Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT");
 		}
 		else if (button == Button.RESTART) {
 			initializeEverythingToStart();
@@ -71,10 +70,11 @@ public class ModelImplementation extends Model {
 
 	private void setCorrectState() {
 		if (playerFinishedPlacingBoats(Player.PLAYER1)) {
-			transitToPlayerTwosTurnToPlaceBoats();
+			transitToPlayersTurn(Player.PLAYER2);
 		}
 		else if (playerFinishedPlacingBoats(Player.PLAYER2)) {
-			transitToPlayerOnesTurnToPlaceBombs();
+			this.stage = Stage.PLACE_BOMB;
+			transitToPlayersTurn(Player.PLAYER1);
 		}
 		else if (isPlayersTurnToPlaceBomb(Player.PLAYER2)) {
 			transitToPlayersTurn(Player.PLAYER2);
@@ -91,21 +91,14 @@ public class ModelImplementation extends Model {
 				(stage == Stage.PLACE_BOATS));
 	}
 	
-	private void transitToPlayerTwosTurnToPlaceBoats() {
-		this.turn = Player.PLAYER2;
+	private void transitToPlayersTurn(Player player) {
+		this.turn = player;
 		setShowChangingPlayersScreen();
 		setChanged();
 	}
 	
 	private void setShowChangingPlayersScreen() {
 		showChangingPlayersScreen = true;
-		setChanged();
-	}
-	
-	private void transitToPlayerOnesTurnToPlaceBombs() {
-		this.stage = Stage.PLACE_BOMB;
-		this.turn = Player.PLAYER1;
-		setShowChangingPlayersScreen();
 		setChanged();
 	}
 
@@ -116,12 +109,6 @@ public class ModelImplementation extends Model {
 			}
 		}
 		return false;
-	}
-
-	private void transitToPlayersTurn(Player player) {
-		this.turn = player;
-		setShowChangingPlayersScreen();
-		setChanged();
 	}
 
 	private boolean gameIsOver() {
