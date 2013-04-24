@@ -20,6 +20,7 @@ import com.example.model.Boat;
 import com.example.model.BoatType;
 import com.example.model.Direction;
 import com.example.model.Model;
+import com.example.model.Orientation;
 import com.example.model.Player;
 import com.example.model.Position;
 import com.example.model.Stage;
@@ -78,18 +79,22 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		try {
             canvas = surface.lockCanvas(null);
             synchronized (surface) {
-            	drawGrid();
-        		if (model.showChangingPlayersScreen()) drawChangingPlayersScreen();
-        		else if (model.viewOwnShips()) drawOwnShips();
-        		else if (model.getStage() == Stage.GAME_OVER) drawGameOver();
-        		else if (model.getStage() == Stage.PLACE_BOMB) drawPlacingBombs();
-        		else if (model.getStage() == Stage.PLACE_BOATS) drawPlacingBoats();
+            	drawModel();
             }
         } finally {
             if (canvas != null) {
                 surface.unlockCanvasAndPost(canvas);
             }
         }
+	}
+
+	private void drawModel() {
+    	if (model == null) drawGrid();
+    	else if (model.showChangingPlayersScreen()) drawChangingPlayersScreen();
+		else if (model.viewOwnShips()) drawOwnShips();
+		else if (model.getStage() == Stage.GAME_OVER) drawGameOver();
+		else if (model.getStage() == Stage.PLACE_BOMB) drawPlacingBombs();
+		else if (model.getStage() == Stage.PLACE_BOATS) drawPlacingBoats();
 	}
 
 	private void drawChangingPlayersScreen() {
@@ -113,6 +118,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawPlacingBoats() {
+		drawGrid();
 		drawAllYourPlacedBoats();
 		drawNextBoatToPlace();
 	}
@@ -130,11 +136,9 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawBoat(Boat boat) {
-		Position position = boat.getPosition();
 		BoatType type = boat.getType();
-		Direction direction = boat.getDirection();
 		Bitmap boatBitmap = getBoatBitmap(type);
-		Rect destinationToDrawTo = calculateDestinationRect(position, type, direction);
+		Rect destinationToDrawTo = calculateDestinationRect(boat.getOrientation(), type.getLength());
 		canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, null);
 	}
 
@@ -153,39 +157,44 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		else return null;
 	}
 	
-	private Rect calculateDestinationRect(Position position, BoatType type,	Direction direction) {
-		//return new Rect(left, top, right, bottom);
-		// TODO make correct rect
-		return new Rect(0, 0, 978, 264);
+	private Rect calculateDestinationRect(Orientation orientation, int length) {
+		if (orientation.getDirection() == Direction.RIGHT) {
+			System.out.println("makeRightRect(orientation.getPosistion(), length) "
+					+ makeRightRect(orientation.getPosistion(), length));
+			return makeRightRect(orientation.getPosistion(), length);
+		}
+		else {
+			//fix this
+			return makeRightRect(orientation.getPosistion(), length);
+		}
 	}
 
-	private void drawNextBoatToPlace() {
+	private Rect makeRightRect(Position position, int length) {
+		int left = getGridLeftCoordinate(position);
+		int top = getGridTopCoordinate(position);
+		
+		int posistionColumn = position.getColumn();
+		int rightMostColumn = posistionColumn + length - 1;
+		Position rightMostPosition = new Position(rightMostColumn, position.getRow());
+		int right = getGridRightCoordinate(rightMostPosition);
+		
+		int bottom = getGridBottomCoordinate(position);
+		
+		return new Rect(left, top, right, bottom);
+	}
+
+	private Rect makeDownwardRect(Position posistion, int length) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
-	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
-
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		Thread drawThread = new Thread(this);
-	    drawThread.start();
-		
-	}
-
-	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		
+	private int getGridLeftCoordinate(Position position){
+		int column = position.getColumn(); 
+		return (int) (m_GridWidth * (column-1));
 	}
 	
-	public void getCorrectGridCoordinates(Position position){
-		int coordX;
-		int coordY;
-		int column = position.getColumn(); 
-		coordX = (int) (m_GridWidth * (column-1));
-		
+	private int getGridTopCoordinate(Position position) {
+		int coordY = -1;
 		switch (position.getRow()) {
 		case 'a':
 			coordY = 0;
@@ -220,25 +229,41 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		default:
 			break;
 		}
+		return coordY;
+	}
+	
+	private int getGridRightCoordinate(Position position) {
+		return (int) (getGridLeftCoordinate(position) + m_GridWidth);
+	}
+	
+	private int getGridBottomCoordinate(Position position) {
+		return (int) (getGridTopCoordinate(position) + m_GridHeight);
+	}
+
+	private void drawNextBoatToPlace() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		Thread drawThread = new Thread(this);
+	    drawThread.start();
+		
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void run() {
-		tryToDrawGrid();
-	}
-	
-	private void tryToDrawGrid() {
-		canvas = null;
-		try {
-            canvas = surface.lockCanvas(null);
-            synchronized (surface) {
-                drawGrid();
-            }
-        } finally {
-            if (canvas != null) {
-                surface.unlockCanvasAndPost(canvas);
-            }
-        }
+		tryToDrawModel();
 	}
 
 	private void drawGrid() {
