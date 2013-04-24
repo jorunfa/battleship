@@ -34,8 +34,6 @@ public class TouchController extends Controller {
 			this.gridWidth = 480;
 			this.gridHeight = 480;
 		}
-		System.out.println("Window width: " + gridWidth + "Window height: "
-				+ gridHeight);
 	}
 	
 	
@@ -50,7 +48,6 @@ public class TouchController extends Controller {
 	public void gridGotTouched(int x, int y) {
 		double realX = (x / gridWidth) * 100;
 		double realY = (y / gridHeight) * 100;
-		System.out.println("RealX: " + realX + " RealY: " + realY);
 		
 		/*
 		 * sends the Position that was touched to the Model
@@ -60,7 +57,7 @@ public class TouchController extends Controller {
 			notifyObservers(returnCoord(realX, realY));
 		}
 		else{
-			System.out.println("Noe fornuftig");
+			System.out.println("Utenfor grid");
 		}
 	}
 

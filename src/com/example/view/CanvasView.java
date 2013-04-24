@@ -98,8 +98,9 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawChangingPlayersScreen() {
-		// TODO Auto-generated method stub
-		
+		paint.setTextSize(80);
+		canvas.drawRGB(0, 0, 0);
+		canvas.drawText("Change player", 100, 100, paint);
 	}
 
 	private void drawOwnShips() {
@@ -159,8 +160,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	
 	private Rect calculateDestinationRect(Orientation orientation, int length) {
 		if (orientation.getDirection() == Direction.RIGHT) {
-			System.out.println("makeRightRect(orientation.getPosistion(), length) "
-					+ makeRightRect(orientation.getPosistion(), length));
 			return makeRightRect(orientation.getPosistion(), length);
 		}
 		else {
