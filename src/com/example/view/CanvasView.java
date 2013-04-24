@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import com.example.battleship.R;
 import com.example.model.Boat;
 import com.example.model.BoatType;
+import com.example.model.Bomb;
 import com.example.model.Direction;
 import com.example.model.Model;
 import com.example.model.Orientation;
@@ -124,8 +125,27 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawPlacingBombs() {
-		// TODO Auto-generated method stub
-		
+		drawGrid();
+		drawAllYourPlacedBombs();
+	}
+
+	private void drawAllYourPlacedBombs() {
+		for (Bomb bomb : model.getPlacedBombs()) {
+			if (bomb.getPlayerFiredAt() == model.getTurn()) continue;
+			drawBomb(bomb);
+		}
+	}
+
+	private void drawBomb(Bomb bomb) {
+		Bitmap boatBitmap = getBombBitmap();
+		Orientation orientation = new Orientation(bomb.getPosition(), Direction.RIGHT);
+		Rect destinationToDrawTo = calculateDestinationRect(orientation, 1);
+		canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, paint);
+	}
+
+	private Bitmap getBombBitmap() {
+		Resources res = getResources();
+		return BitmapFactory.decodeResource(res, R.drawable.explosion);
 	}
 
 	private void drawPlacingBoats() {
