@@ -47,6 +47,8 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
     public static final float DEFAULT_Y_OFFSET= 0;
     public static final float DEFAULT_NO_ROWS = 10;
     public static final float DEFAULT_NO_COLS=  10;
+    private Bitmap explosion;
+    private Bitmap hitWater;
     
     public CanvasView(){
 		super(context);
@@ -57,7 +59,11 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		m_GridHeight = dispWidth/10;
 		surface = this.getHolder();
 		getHolder().addCallback(this);
-		initializeValues();	
+		initializeValues();
+		
+		Resources res = getResources();
+		explosion = BitmapFactory.decodeResource(res, R.drawable.explosion);
+		hitWater = 	BitmapFactory.decodeResource(res, R.drawable.water);
 	}
 	
 	private void initializeValues() {
@@ -140,31 +146,19 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 			}
 		}
 	}
-
+	
 	private void drawBombThatHit(Bomb bomb) {
-		Bitmap boatBitmap = getBombThatHitBitmap();
-		drawBombFromBitmap(bomb, boatBitmap);
+		drawBombFromBitmap(bomb, explosion);
 	}
 	
-	private Bitmap getBombThatHitBitmap() {
-		Resources res = getResources();
-		return BitmapFactory.decodeResource(res, R.drawable.explosion);
+	private void drawBombThatMissed(Bomb bomb) {
+		drawBombFromBitmap(bomb, hitWater);
 	}
 	
 	private void drawBombFromBitmap(Bomb bomb, Bitmap boatBitmap) {
 		Orientation orientation = new Orientation(bomb.getPosition(), Direction.RIGHT);
 		Rect destinationToDrawTo = calculateDestinationRect(orientation, 1);
 		canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, paint);
-	}
-	
-	private void drawBombThatMissed(Bomb bomb) {
-		Bitmap boatBitmap = getBombThatMissedBitmap();
-		drawBombFromBitmap(bomb, boatBitmap);
-	}
-
-	private Bitmap getBombThatMissedBitmap() {
-		Resources res = getResources();
-		return BitmapFactory.decodeResource(res, R.drawable.water);
 	}
 
 	private void drawPlacingBoats() {
