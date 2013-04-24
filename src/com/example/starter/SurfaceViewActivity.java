@@ -9,6 +9,7 @@ import android.view.View.OnTouchListener;
 
 import com.example.controller.Controller;
 import com.example.controller.TouchController;
+import com.example.model.Button;
 import com.example.model.Model;
 import com.example.model.ModelImplementation;
 import com.example.view.CanvasView;

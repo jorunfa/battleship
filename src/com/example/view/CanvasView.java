@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.Display;
@@ -143,7 +144,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 
 	private void drawAllYourPlacedBombs() {
 		for (Bomb bomb : model.getPlacedBombs()) {
-			if (bomb.getPlayerFiredAt() == model.getTurn()) continue;
+			if (bomb.getPlayerFiredAt().equals(model.getTurn())) continue;
 			if (model.bombHitShip(bomb)) {
 				drawBombThatHit(bomb);
 			}
@@ -189,7 +190,16 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		BoatType type = boat.getType();
 		Bitmap boatBitmap = getBoatBitmap(type);
 		Rect destinationToDrawTo = calculateDestinationRect(boat.getOrientation(), type.getLength());
-		canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, null);
+		if (boat.getDirection() == Direction.RIGHT)
+			canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, null);
+		else {
+			Matrix matrix = new Matrix();
+			matrix.postRotate(90);
+			Bitmap rotated = Bitmap.createBitmap(boatBitmap, 0, 0, 
+			                              boatBitmap.getWidth(), boatBitmap.getHeight(), 
+			                              matrix, true);
+			canvas.drawBitmap(rotated, null, destinationToDrawTo, null);
+		}
 	}
 
 	private Bitmap getBoatBitmap(BoatType type) {
@@ -220,8 +230,8 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		int left = getGridLeftCoordinate(position);
 		int top = getGridTopCoordinate(position);
 		
-		int posistionColumn = position.getColumn();
-		int rightMostColumn = posistionColumn + length - 1;
+		int positionColumn = position.getColumn();
+		int rightMostColumn = positionColumn + length - 1;
 		Position rightMostPosition = new Position(rightMostColumn, position.getRow());
 		int right = getGridRightCoordinate(rightMostPosition);
 		
@@ -230,9 +240,17 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		return new Rect(left, top, right, bottom);
 	}
 
-	private Rect makeDownwardRect(Position posistion, int length) {
-		// TODO Auto-generated method stub
-		return null;
+	private Rect makeDownwardRect(Position position, int length) {
+		int left = getGridLeftCoordinate(position);
+		int bottom = getGridBottomCoordinate(position);
+		int right = getGridRightCoordinate(position);
+		
+		char positionRow = position.getRow();
+		char topMostColumn = (char) (positionRow - length + 1);
+		Position topMostPosition = new Position(position.getColumn(), topMostColumn);
+		int top = getGridTopCoordinate(topMostPosition);
+		
+		return new Rect(left, top, right, bottom);
 	}
 
 	private int getGridLeftCoordinate(Position position){

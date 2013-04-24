@@ -97,7 +97,6 @@ public class ModelImplementation extends Model {
 	}
 	
 	private void setShowChangingPlayersScreen() {
-		// TODO is false for debugging.
 		showChangingPlayersScreen = true;
 	}
 
