@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.Display;
 import android.view.SurfaceHolder;
@@ -36,6 +37,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	Paint paint = new Paint();
 	private Display disp;
 	private float dispWidth;
+	private float dispHight;
 	public float m_GridWidth;
     public float m_GridHeight;
     public float m_NoOfRows;
@@ -56,6 +58,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		disp = wm.getDefaultDisplay();
 		dispWidth = disp.getWidth();
+		dispHight = disp.getHeight();
 		m_GridWidth = dispWidth/10;
 		m_GridHeight = dispWidth/10;
 		surface = this.getHolder();
@@ -98,7 +101,10 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 
 	private void drawModel() {
 		drawBlank();
-    	if (model == null) drawGrid();
+    	if (model == null) {
+    		drawGrid();
+    		drawChangeDirectionButton();
+    	}
     	else if (model.showChangingPlayersScreen()) drawChangingPlayersScreen();
 		else if (model.viewOwnShips()) drawOwnShips();
 		else if (model.getStage() == Stage.GAME_OVER) drawGameOver();
@@ -172,6 +178,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		drawGrid();
 		drawAllYourPlacedBoats();
 		drawNextBoatToPlace();
+		drawChangeDirectionButton();
 	}
 
 	private void drawAllYourPlacedBoats() {
@@ -308,6 +315,17 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	private void drawNextBoatToPlace() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void drawChangeDirectionButton() {
+		float size = paint.getTextSize();
+		paint.setTextSize(20);
+		int y = (int) (dispHight * (2.0/3.0));
+		int x = (int) (dispWidth * (1.0/4.0));
+		System.out.println("dispHight " + dispHight);
+		System.out.println("y " + y);
+		canvas.drawText("Press her to change boat placing direction", x, y, paint);
+		paint.setTextSize(size);
 	}
 
 	@Override
