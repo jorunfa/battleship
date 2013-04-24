@@ -98,9 +98,13 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawChangingPlayersScreen() {
+		float size = paint.getTextSize();
 		paint.setTextSize(80);
 		canvas.drawRGB(0, 0, 0);
 		canvas.drawText("Change player", 100, 100, paint);
+		paint.setTextSize(20);
+		canvas.drawText("Press lower half of screen to continue", 100, 150, paint);
+		paint.setTextSize(size);
 	}
 
 	private void drawOwnShips() {
@@ -163,8 +167,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 			return makeRightRect(orientation.getPosistion(), length);
 		}
 		else {
-			//fix this
-			return makeRightRect(orientation.getPosistion(), length);
+			return makeDownwardRect(orientation.getPosistion(), length);
 		}
 	}
 

@@ -31,10 +31,13 @@ public class ModelImplementation extends Model {
 
 	@Override
 	public void update(Observable observable, Object data) {
+		System.out.println("update recieved");
 		if (data instanceof Position) {
+			System.out.println("Position update");
 			handleUpdateTypePosistion((Position) data);
 		}
 		else if (data instanceof Button) {
+			System.out.println("Button update");
 			handleUpdateTypeButton((Button) data);
 		}
 		setCorrectState();
@@ -57,6 +60,8 @@ public class ModelImplementation extends Model {
 		}
 		else if (button == Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT) {
 			showChangingPlayersScreen = false;
+			setChanged();
+			System.out.println("In button == Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT");
 		}
 		else if (button == Button.RESTART) {
 			initializeEverythingToStart();

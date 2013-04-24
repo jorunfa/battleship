@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.example.model.Button;
 import com.example.model.Position;
 import com.example.starter.SurfaceViewActivity;
 
@@ -57,6 +58,7 @@ public class TouchController extends Controller {
 			notifyObservers(returnCoord(realX, realY));
 		}
 		else{
+			notifyObservers(Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 			System.out.println("Utenfor grid");
 		}
 	}
