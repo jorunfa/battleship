@@ -191,4 +191,27 @@ public class ModelTest extends TestCase {
 		model.update(null, tooCloseToWall);
 		assertFalse(battleship.isPlaced());
 	}
+	
+	public void testAttemptToPlaceBoatShouldWork() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		Boat boat = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
+		Position pos = new Position(5, 'e');
+		Orientation orientation = new Orientation(pos, Direction.RIGHT);
+		model.attemptToPlaceBoat(boat, orientation);
+		assertTrue(boat.isPlaced());
+	}
+	
+	public void testRestartButtonShouldRestartTheGame() throws Throwable {
+		ModelImplementation model = new ModelImplementation();
+		Position aircraftCarrierPosition = new Position(1, 'j');
+		Boat aircraftCarrier = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
+		assertFalse(aircraftCarrier.isPlaced());
+		model.update(null, aircraftCarrierPosition);
+		assertTrue(aircraftCarrier.isPlaced());
+		
+		model.update(null, Button.RESTART);
+		
+		Boat freshAircraftCarrier = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
+		assertFalse(freshAircraftCarrier.isPlaced());
+	}
 }

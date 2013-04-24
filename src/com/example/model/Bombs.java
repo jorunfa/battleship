@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class Bombs {
 
-	private ArrayList<Bomb> bombs;
+	private ArrayList<Bomb> placedBombs;
 	
 	public Bombs() {
-		bombs = new ArrayList<Bomb>();
+		placedBombs = new ArrayList<Bomb>();
 	}
 
 	public void placeBomb(Position position, Player player) {
 		Bomb bomb = new Bomb(position, player);
-		bombs.add(bomb);
+		placedBombs.add(bomb);
 	}
 
 	public boolean leagalPlacementOfBomb(Position position, Player player) {
 		Bomb testBomb = new Bomb(position, player);
-		return !bombs.contains(testBomb);
+		return !placedBombs.contains(testBomb);
 	}
 	
-	public ArrayList<Bomb> getBombs() {
-		return bombs;
+	public ArrayList<Bomb> getPlacedBombs() {
+		return placedBombs;
 	}
 }

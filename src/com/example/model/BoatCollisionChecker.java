@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class BoatCollisionChecker {
 	
-	private StateLogic stateLogic;
+	private ModelImplementation stateLogic;
 	
-	public BoatCollisionChecker(StateLogic stateLogic) {
+	public BoatCollisionChecker(ModelImplementation stateLogic) {
 		this.stateLogic = stateLogic;
 	}
 	

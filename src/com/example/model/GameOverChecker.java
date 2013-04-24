@@ -32,7 +32,7 @@ public class GameOverChecker {
 	}
 
 	public boolean thereExistsABombAtThisPositionBelongingToPlayer(Position position, Player player) {
-		for (Bomb bomb : bombs.getBombs()) {
+		for (Bomb bomb : bombs.getPlacedBombs()) {
 			if (bomb.getPosition().equals(position)) {
 				if (bomb.getPlayerFiredAt().equals(player))
 					return true;
