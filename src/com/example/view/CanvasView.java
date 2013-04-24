@@ -2,24 +2,20 @@ package com.example.view;
 
 import java.util.Observable;
 
-import com.example.model.Model;
-import com.example.model.ModelImplementation;
-import com.example.model.Player;
-import com.example.model.Position;
-import com.example.model.Stage;
-import com.example.starter.SurfaceViewActivity;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View.OnTouchListener;
 import android.view.WindowManager;
+
+import com.example.model.Model;
+import com.example.model.Player;
+import com.example.model.Position;
+import com.example.model.Stage;
+import com.example.starter.SurfaceViewActivity;
 
 public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callback, Runnable {
 	
@@ -27,7 +23,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	static Context context = SurfaceViewActivity.getAppContext();
 	
 	Paint paint = new Paint();
-	ModelImplementation model;
 	private Display disp;
 	private float dispWidth;
 	public float m_GridWidth;
@@ -36,14 +31,14 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
     public float m_NoOfCols;
     public float m_XOffset;
     public float m_YOffset;
+	private Model model;
     public static final float DEFAULT_X_OFFSET= 0;
     public static final float DEFAULT_Y_OFFSET= 0;
     public static final float DEFAULT_NO_ROWS = 10;
     public static final float DEFAULT_NO_COLS=  10;
     
-    public CanvasView(ModelImplementation model){
+    public CanvasView(){
 		super(context);
-		this.model = model;
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		disp = wm.getDefaultDisplay();
 		dispWidth = disp.getWidth();
@@ -51,24 +46,55 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		m_GridHeight = dispWidth/10;
 		surface = this.getHolder();
 		getHolder().addCallback(this);
-		InitializeValues();
-		System.out.println("Er i canvas view");
-		
-		
+		initializeValues();
+		System.out.println("Er i canvas view");	
 	}
 	
+	private void initializeValues() {
+        //Put all the default values
+       m_NoOfRows=DEFAULT_NO_ROWS;
+       m_NoOfCols=DEFAULT_NO_COLS;
+       m_XOffset=DEFAULT_X_OFFSET;
+       m_YOffset=DEFAULT_Y_OFFSET;
+   }
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if (model.getStage() == Stage.PLACE_BOATS) {
-			if(model.getTurn() == Player.PLAYER1){
-				System.out.println("PLAYER ONES TUUUURN");
-			}
-			else if (model.getTurn() == Player.PLAYER2) {
-				System.out.println("PLAYER TWOS TUUUUUURN");
-			}
-		}
-		else System.out.println("DIDNT WORK");
+		if (arg0 instanceof Model) this.model = (Model) arg0;
+		drawModel();
+	}
+
+	private void drawModel() {
+		if (model.showChangingPlayersScreen()) drawChangingPlayersScreen();
+		else if (model.viewOwnShips()) drawOwnShips();
+		else if (model.getStage() == Stage.GAME_OVER) drawGameOver();
+		else if (model.getStage() == Stage.PLACE_BOMB) drawPlacingBombs();
+		else if (model.getStage() == Stage.PLACE_BOATS) drawPlacingBoats();
+	}
+
+	private void drawChangingPlayersScreen() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void drawOwnShips() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void drawGameOver() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void drawPlacingBombs() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void drawPlacingBoats() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -96,40 +122,8 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	public void getCorrectGridCoordinates(Position position){
 		int coordX;
 		int coordY;
-		switch (position.getColumn()) {
-		case 1:
-			coordX = 0;
-			break;
-		case 2:
-			coordX = (int) m_GridWidth;
-			break;
-		case 3:
-			coordX = (int) (m_GridWidth*2);
-			break;
-		case 4:
-			coordX = (int) (m_GridWidth*3);
-			break;
-		case 5:
-			coordX = (int) (m_GridWidth*4);
-			break;
-		case 6:
-			coordX = (int) (m_GridWidth*5);
-			break;
-		case 7:
-			coordX = (int) (m_GridWidth*6);
-			break;
-		case 8:
-			coordX = (int) (m_GridWidth*7);
-			break;
-		case 9:
-			coordX = (int) (m_GridWidth*8);
-			break;
-		case 10:
-			coordX = (int) (m_GridWidth*9);
-			break;
-		default:
-			break;
-		}
+		int column = position.getColumn(); 
+		coordX = (int) (m_GridWidth * (column-1));
 		
 		switch (position.getRow()) {
 		case 'a':
@@ -188,7 +182,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	    }	
 	}
 	
-	public void draw(Canvas canvas){
+	public void draw(Canvas canvas) {
 		
 		paint.setColor(Color.RED);
         float X=DEFAULT_X_OFFSET;
@@ -198,7 +192,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
         {
                 canvas.drawLine(X, Y,X+ this.m_GridWidth* this.m_NoOfCols,Y, paint);
                 Y=Y+ m_GridHeight;
-
         }
         
 
@@ -212,15 +205,4 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
         }
 		
 	}
-	
-	private void InitializeValues()
-    {
-         //Put all the default values
-        m_NoOfRows=DEFAULT_NO_ROWS;
-        m_NoOfCols=DEFAULT_NO_COLS;
-        m_XOffset=DEFAULT_X_OFFSET;
-        m_YOffset=DEFAULT_Y_OFFSET;
-    }
-
-
 }

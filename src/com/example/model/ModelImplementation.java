@@ -197,4 +197,10 @@ public class ModelImplementation extends Model {
 	public ArrayList<Bomb> getPlacedBombs() {
 		return bombsHandler.getBombs().getPlacedBombs();
 	}
+
+	@Override
+	public boolean viewOwnShips() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

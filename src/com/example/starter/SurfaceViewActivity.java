@@ -1,26 +1,22 @@
 package com.example.starter;
 
 
-import com.example.battleship.R;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.MotionEvent;
-import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 
 import com.example.controller.Controller;
 import com.example.controller.TouchController;
-import com.example.model.ModelImplementation;
 import com.example.model.Model;
+import com.example.model.ModelImplementation;
 import com.example.view.CanvasView;
-import com.example.view.View;
 
 public class SurfaceViewActivity extends Activity implements OnTouchListener{
-    Model model;
-    CanvasView view;
-    Controller controller;
+    private Model model;
+    private CanvasView view;
+    private Controller controller;
     private static Context context;
    
 
@@ -37,26 +33,17 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 	private void instantiateClasses() {
 		controller = new TouchController();
 		model = new ModelImplementation();
-		view = new CanvasView((ModelImplementation) model);
+		view = new CanvasView();
 	}
 	
 	private void setUpListeners() {
-		//this is a comment.
 		model.addObserver(view);
 		controller.addObserver(model);
-		
 	}
 		
 	public static Context getAppContext() {
 		return context;
-	}
-
-	
-	
-	public Controller getController(){
-		return this.controller;
-	}
-
+	}	
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -65,7 +52,6 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
 		controller.gridGotTouched((int)event.getX(), (int)event.getY() - 40);
 		return false;
 	}
-
 	
 
 	@Override
