@@ -24,10 +24,10 @@ public class GameOverCheckerTest extends TestCase {
 		Player notPlayer = Player.PLAYER2;
 		bombs.placeBomb(placeABomb, player);
 		
-		assertTrue(gameOverChecker.thereExistsABombAtThisPositionBelongingToPlayer(placeABomb, player));
-		assertFalse(gameOverChecker.thereExistsABombAtThisPositionBelongingToPlayer(nothing, player));
-		assertFalse(gameOverChecker.thereExistsABombAtThisPositionBelongingToPlayer(placeABomb, notPlayer));
-		assertFalse(gameOverChecker.thereExistsABombAtThisPositionBelongingToPlayer(nothing, notPlayer));
+		assertTrue(gameOverChecker.thereExistsABombAtThisPositionFiredAtPlayer(placeABomb, player));
+		assertFalse(gameOverChecker.thereExistsABombAtThisPositionFiredAtPlayer(nothing, player));
+		assertFalse(gameOverChecker.thereExistsABombAtThisPositionFiredAtPlayer(placeABomb, notPlayer));
+		assertFalse(gameOverChecker.thereExistsABombAtThisPositionFiredAtPlayer(nothing, notPlayer));
 	}
 	
 	public void testBoatIsSunkFunction() throws Throwable {

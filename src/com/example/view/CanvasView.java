@@ -132,20 +132,39 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	private void drawAllYourPlacedBombs() {
 		for (Bomb bomb : model.getPlacedBombs()) {
 			if (bomb.getPlayerFiredAt() == model.getTurn()) continue;
-			drawBomb(bomb);
+			if (model.bombHitShip(bomb)) {
+				drawBombThatHit(bomb);
+			}
+			else {
+				drawBombThatMissed(bomb);
+			}
 		}
 	}
 
-	private void drawBomb(Bomb bomb) {
-		Bitmap boatBitmap = getBombBitmap();
+	private void drawBombThatHit(Bomb bomb) {
+		Bitmap boatBitmap = getBombThatHitBitmap();
+		drawBombFromBitmap(bomb, boatBitmap);
+	}
+	
+	private Bitmap getBombThatHitBitmap() {
+		Resources res = getResources();
+		return BitmapFactory.decodeResource(res, R.drawable.explosion);
+	}
+	
+	private void drawBombFromBitmap(Bomb bomb, Bitmap boatBitmap) {
 		Orientation orientation = new Orientation(bomb.getPosition(), Direction.RIGHT);
 		Rect destinationToDrawTo = calculateDestinationRect(orientation, 1);
 		canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, paint);
 	}
+	
+	private void drawBombThatMissed(Bomb bomb) {
+		Bitmap boatBitmap = getBombThatMissedBitmap();
+		drawBombFromBitmap(bomb, boatBitmap);
+	}
 
-	private Bitmap getBombBitmap() {
+	private Bitmap getBombThatMissedBitmap() {
 		Resources res = getResources();
-		return BitmapFactory.decodeResource(res, R.drawable.explosion);
+		return BitmapFactory.decodeResource(res, R.drawable.water);
 	}
 
 	private void drawPlacingBoats() {

@@ -105,7 +105,7 @@ public class ModelImplementation extends Model {
 	}
 	
 	private void setShowChangingPlayersScreen() {
-		showChangingPlayersScreen = true;
+		showChangingPlayersScreen = false;
 	}
 
 	private boolean isPlayersTurnToPlaceBomb(Player player) {
@@ -200,5 +200,10 @@ public class ModelImplementation extends Model {
 	public boolean viewOwnShips() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean bombHitShip(Bomb bomb) {
+		return gameOverChecker.bombHitShip(bomb);
 	}
 }

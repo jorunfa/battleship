@@ -18,15 +18,19 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener{
     private CanvasView view;
     private Controller controller;
     private static Context context;
-   
+    private boolean isSetUp = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getApplicationContext();
-        instantiateClasses();
-        setUpListeners();
-        setContentView(view);	   
+        if (isSetUp);
+        else {
+        	isSetUp = true;
+	        context = getApplicationContext();
+	        instantiateClasses();
+	        setUpListeners();
+	        setContentView(view);
+        }
     }
 
 

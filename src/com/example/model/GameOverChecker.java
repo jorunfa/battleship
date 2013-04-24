@@ -26,15 +26,15 @@ public class GameOverChecker {
 	private boolean boatIsSunk(Boat boat) {
 		Player player = boat.getPlayer();
 		for (Position position : boat.getBoatPositions()) {
-			if (!thereExistsABombAtThisPositionBelongingToPlayer(position, player)) return false;	
+			if (!thereExistsABombAtThisPositionFiredAtPlayer(position, player)) return false;	
 		}
 		return true;
 	}
 
-	public boolean thereExistsABombAtThisPositionBelongingToPlayer(Position position, Player player) {
+	public boolean thereExistsABombAtThisPositionFiredAtPlayer(Position position, Player firedAt) {
 		for (Bomb bomb : bombs.getPlacedBombs()) {
 			if (bomb.getPosition().equals(position)) {
-				if (bomb.getPlayerFiredAt().equals(player))
+				if (bomb.getPlayerFiredAt().equals(firedAt))
 					return true;
 			}
 		}
@@ -49,5 +49,9 @@ public class GameOverChecker {
 		else if (playerOnesBoatsSunk) return Player.PLAYER2;
 		else if (playerTwosBoatsSunk) return Player.PLAYER1;
 		else return null;
+	}
+
+	public boolean bombHitShip(Bomb bomb) {
+		return thereExistsABombAtThisPositionFiredAtPlayer(bomb.getPosition(), bomb.getPlayerFiredAt());
 	}
 }
