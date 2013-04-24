@@ -29,8 +29,10 @@ public class BoatCollisionChecker {
 	}
 	
 	public boolean listsContainsIdenticalPoints(ArrayList<Position> list1, ArrayList<Position> list2) {
-		for (Position position : list1) {
-			if (list2.contains(position)) return true;
+		for (Position position1 : list1) {
+			for (Position position2 : list2) {
+				if (position1.equals(position2)) return true;
+			}
 		}
 		return false;
 	}

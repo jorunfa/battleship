@@ -110,7 +110,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawChangingPlayersScreen() {
-		drawTitleAndSubTitle("Change player", "Press bottom 1/3 of screen to continue");
+		drawTitleAndSubTitle(model.getTurn().toString()+"'s turn", "Press bottom 1/3 of screen to continue");
 	}
 
 	private void drawTitleAndSubTitle(String title, String subTitle) {
@@ -144,7 +144,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	private void drawAllYourPlacedBombs() {
 		for (Bomb bomb : model.getPlacedBombs()) {
 			if (bomb.getPlayerFiredAt() == model.getTurn()) continue;
-			System.out.println("model.bombHitShip(bomb) " + model.bombHitShip(bomb));
 			if (model.bombHitShip(bomb)) {
 				drawBombThatHit(bomb);
 			}

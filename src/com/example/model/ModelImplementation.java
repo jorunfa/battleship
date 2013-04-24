@@ -103,7 +103,8 @@ public class ModelImplementation extends Model {
 	}
 	
 	private void setShowChangingPlayersScreen() {
-		showChangingPlayersScreen = false;
+		// TODO is false for debugging.
+		showChangingPlayersScreen = true;
 	}
 
 	private boolean isPlayersTurnToPlaceBomb(Player player) {
@@ -182,7 +183,10 @@ public class ModelImplementation extends Model {
 	}
 
 	private void placeBomb(Position position) {
-		bombsHandler.placeBomb(position, getTurn());
+		if (turn == Player.PLAYER1)
+			bombsHandler.placeBomb(position, Player.PLAYER2);
+		else
+			bombsHandler.placeBomb(position, Player.PLAYER1);
 	}
 
 	public ArrayList<Boat> getBoats() {

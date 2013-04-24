@@ -11,7 +11,13 @@ public class BombsHandler {
 	
 	public void placeBomb(Position position, Player player) {
 		bombs.placeBomb(position, player);
-		lastBombPlacedBy = player;
+		if (player == Player.PLAYER1) {
+			lastBombPlacedBy = Player.PLAYER2;
+		}
+		else {
+			lastBombPlacedBy = Player.PLAYER1;
+		}
+		
 	}
 
 	public boolean leagalPlacementOfBomb(Position position, Player turn) {
