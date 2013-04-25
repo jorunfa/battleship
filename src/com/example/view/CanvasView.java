@@ -109,7 +109,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
     		drawChangeDirectionButton();
     	}
     	else if (model.showChangingPlayersScreen()) drawChangingPlayersScreen();
-		else if (model.viewOwnShips()) drawOwnShips();
+		else if (model.viewOwnBoard()) drawOwnBoard();
 		else if (model.getStage() == Stage.GAME_OVER) drawGameOver();
 		else if (model.getStage() == Stage.PLACE_BOMB) drawPlacingBombs();
 		else if (model.getStage() == Stage.PLACE_BOATS) drawPlacingBoats();
@@ -134,9 +134,20 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		paint.setTextSize(size);
 	}
 	
-	private void drawOwnShips() {
-		// TODO Auto-generated method stub
-		
+	private void drawOwnBoard() {
+		drawGrid();
+		drawAllYourPlacedBoats();
+		drawAllBombsFiredAtYou();
+		drawCloseOwnViewButton();
+	}
+
+	private void drawAllBombsFiredAtYou() {
+		drawAllBombsFiredAt(model.getTurn());
+	}
+
+	private void drawCloseOwnViewButton() {
+		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.close_own_board_button);
+		drawBitmapToGrid(buttonBitmap, 4, 'l', Direction.RIGHT, 4);	
 	}
 
 	private void drawGameOver() {
@@ -150,11 +161,16 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	private void drawPlacingBombs() {
 		drawGrid();
 		drawAllYourPlacedBombs();
+		drawShowOwnBoardButton();
 	}
 
 	private void drawAllYourPlacedBombs() {
+		drawAllBombsFiredAt(model.getPlayerWhichTurnItIsnt());
+	}
+	
+	private void drawAllBombsFiredAt(Player playerFiredAt) {
 		for (Bomb bomb : model.getPlacedBombs()) {
-			if (bomb.getPlayerFiredAt().equals(model.getTurn())) continue;
+			if (!bomb.getPlayerFiredAt().equals(playerFiredAt)) continue;
 			if (model.bombHitShip(bomb)) {
 				drawBombThatHit(bomb);
 			}
@@ -162,6 +178,11 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 				drawBombThatMissed(bomb);
 			}
 		}
+	}
+
+	private void drawShowOwnBoardButton() {
+		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.see_own_board_button);
+		drawBitmapToGrid(buttonBitmap, 4, 'l', Direction.RIGHT, 4);
 	}
 	
 	private void drawBombThatHit(Bomb bomb) {
@@ -229,7 +250,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 	
 	private void drawChangeDirectionButton() {
-		Resources res = getResources();
 		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.direction_button);
 		drawBitmapToGrid(buttonBitmap, 4, 'l', Direction.RIGHT, 4);
 	}

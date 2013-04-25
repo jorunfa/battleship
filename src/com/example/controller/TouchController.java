@@ -60,6 +60,8 @@ public class TouchController extends Controller {
 			notifyObservers(Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 			setChanged();
 			notifyObservers(Button.CHANGE_DIRECTION);
+			setChanged();
+			notifyObservers(Button.SHOW_OWN_BOARD_FLIP);
 		}
 	}
 

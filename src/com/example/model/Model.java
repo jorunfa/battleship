@@ -14,7 +14,8 @@ public abstract class Model extends Observable implements Observer {
 	abstract public Player getTurn();
 	abstract public Stage getStage();
 	abstract public boolean showChangingPlayersScreen();
-	abstract public boolean viewOwnShips();
+	abstract public boolean viewOwnBoard();
 	abstract public boolean bombHitShip(Bomb bomb);
 	abstract public Player getWinner();
+	abstract public Player getPlayerWhichTurnItIsnt();
 }

@@ -11,6 +11,7 @@ public class ModelImplementation extends Model {
 	private Stage stage;
 	private Direction direction;
 	private boolean showChangingPlayersScreen;
+	private boolean showOwnBoard;
 	private GameOverChecker gameOverChecker;
 	private BoatCollisionChecker boatCollisionChecker;
 	
@@ -25,6 +26,7 @@ public class ModelImplementation extends Model {
 		stage = Stage.PLACE_BOATS;
 		direction = Direction.RIGHT;
 		showChangingPlayersScreen = false;
+		showOwnBoard = false;
 		gameOverChecker = new GameOverChecker(bombsHandler.getBombs(), boats);
 		boatCollisionChecker = new BoatCollisionChecker(this);
 	}
@@ -63,6 +65,14 @@ public class ModelImplementation extends Model {
 			initializeEverythingToStart();
 			setChanged();
 		}
+		else if (button == Button.SHOW_OWN_BOARD_FLIP) {
+			flipShowOwnBoard();
+		}
+	}
+	
+	private void flipShowOwnBoard() {
+		showOwnBoard = !showOwnBoard;
+		setChanged();
 	}
 
 	private void setCorrectState() {
@@ -176,7 +186,7 @@ public class ModelImplementation extends Model {
 		return bombsHandler.leagalPlacementOfBomb(position, firedAt);
 	}
 
-	private Player getPlayerWhichTurnItIsnt() {
+	public Player getPlayerWhichTurnItIsnt() {
 		if (getTurn() == Player.PLAYER1) return Player.PLAYER2;
 		else return Player.PLAYER1;
 	}
@@ -198,9 +208,8 @@ public class ModelImplementation extends Model {
 	}
 
 	@Override
-	public boolean viewOwnShips() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean viewOwnBoard() {
+		return showOwnBoard;
 	}
 
 	@Override
