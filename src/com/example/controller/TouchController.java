@@ -37,14 +37,6 @@ public class TouchController extends Controller {
 		}
 	}
 	
-	
-
-	public void viewSwitchButtonPressed() {
-		
-		// TODO: Send statechange to model.
-
-	}
-
 	// Must be from touch listener in Activity
 	public void gridGotTouched(int x, int y) {
 		double realX = (x / gridWidth) * 100;
