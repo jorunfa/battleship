@@ -165,6 +165,7 @@ public class ModelTest extends TestCase {
 	public void testFailingToPlacingABombShouldNotChangeWhichPlayersTurnItIs() throws Throwable {
 		ModelImplementation model = new ModelImplementation();
 		goToBombingFace(model);
+		assertTrue(model.getStage() == Stage.PLACE_BOMB);
 		Position p1 = new Position(1, 'j');
 		assertEquals(Player.PLAYER1, model.getTurn());
 		model.update(null, p1);
