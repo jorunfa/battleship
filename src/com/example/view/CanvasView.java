@@ -122,11 +122,12 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 
 	private void drawTitleAndSubTitle(String title, String subTitle) {
 		float size = paint.getTextSize();
-		paint.setTextSize(80);
+		int x =(int) (dispWidth * (1.0/10.0));
+		paint.setTextSize(50);
 		drawBlank();
-		canvas.drawText(title, 100, 100, paint);
+		canvas.drawText(title, x, 100, paint);
 		paint.setTextSize(20);
-		canvas.drawText(subTitle, 100, 150, paint);
+		canvas.drawText(subTitle, x, 150, paint);
 		paint.setTextSize(size);
 	}
 	
@@ -321,7 +322,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		float size = paint.getTextSize();
 		paint.setTextSize(20);
 		int y = (int) (dispHight * (2.0/3.0));
-		int x = (int) (dispWidth * (1.0/4.0));
+		int x = (int) (dispWidth * (1.0/10.0));
 		canvas.drawText("Press her to change boat placing direction", x, y, paint);
 		paint.setTextSize(size);
 	}
