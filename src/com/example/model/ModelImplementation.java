@@ -33,7 +33,7 @@ public class ModelImplementation extends Model {
 
 	@Override
 	public void update(Observable observable, Object data) {
-		if (data instanceof Position && !showChangingPlayersScreen) {
+		if (data instanceof Position && !showChangingPlayersScreen && !showOwnBoard) {
 			handleUpdateTypePosistion((Position) data);
 		}
 		else if (data instanceof Button) {
@@ -54,7 +54,7 @@ public class ModelImplementation extends Model {
 	}
 	
 	private void handleUpdateTypeButton(Button button) {
-		if (button == Button.CHANGE_DIRECTION) {
+		if (button == Button.CHANGE_DIRECTION && stage == Stage.PLACE_BOATS) {
 			flipDirection();
 		}
 		else if (button == Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT) {
@@ -65,7 +65,7 @@ public class ModelImplementation extends Model {
 			initializeEverythingToStart();
 			setChanged();
 		}
-		else if (button == Button.SHOW_OWN_BOARD_FLIP) {
+		else if (button == Button.SHOW_OWN_BOARD_FLIP && !showChangingPlayersScreen && stage == Stage.PLACE_BOMB) {
 			flipShowOwnBoard();
 		}
 	}

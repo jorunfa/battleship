@@ -225,7 +225,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	private void drawBoat(Boat boat, int column, char row, Direction direction) {
 		BoatType type = boat.getType();
 		Bitmap boatBitmap = boatBitmaps.getBoatBitmap(type);
-		System.out.println("boatBitmap " + boatBitmap);
 		if (direction == Direction.RIGHT)
 			drawBitmapToGrid(boatBitmap, column, row, direction, boat.getLength());
 		else {
