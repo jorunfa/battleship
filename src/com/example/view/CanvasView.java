@@ -165,7 +165,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		Player winner = model.getWinner();
 		if (winner == Player.PLAYER1) winnerString = "PLAYER1!";
 		else winnerString = "PLAYER2!";
-		drawTitleAndSubTitle("GAME OVER", "The winner is: " + winner);
+		drawTitleAndSubTitle("GAME OVER", "The winner is: " + winnerString);
 		drawRestartButton();
 	}
 
