@@ -56,14 +56,22 @@ public class TouchController extends Controller {
 			notifyObservers(returnCoord(realX, realY));
 		}
 		else{
-			setChanged();
-			notifyObservers(Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
-			setChanged();
-			notifyObservers(Button.CHANGE_DIRECTION);
-			setChanged();
-			notifyObservers(Button.SHOW_OWN_BOARD_FLIP);
+			sendAllButton();
 		}
 	}
+
+	private void sendAllButton() {
+		setChanged();
+		notifyObservers(Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+		setChanged();
+		notifyObservers(Button.CHANGE_DIRECTION);
+		setChanged();
+		notifyObservers(Button.SHOW_OWN_BOARD_FLIP);
+		setChanged();
+		notifyObservers(Button.RESTART);
+	}
+
+
 
 	public Position returnCoord(double realX, double realY) {
 		int row = 0;

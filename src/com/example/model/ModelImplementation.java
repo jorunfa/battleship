@@ -61,7 +61,7 @@ public class ModelImplementation extends Model {
 			showChangingPlayersScreen = false;
 			setChanged();
 		}
-		else if (button == Button.RESTART) {
+		else if (button == Button.RESTART && stage == Stage.GAME_OVER) {
 			initializeEverythingToStart();
 			setChanged();
 		}
