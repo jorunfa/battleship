@@ -122,6 +122,7 @@ public class ModelTest extends TestCase {
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
 		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 		sendUpdateOnFiveDifferentPlacesOnGrid(model);
+		model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 	}
 	
 	public void testPlacingAllBoatsShouldSetTurnToPlayerOne() throws Throwable {
