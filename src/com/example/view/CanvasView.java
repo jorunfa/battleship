@@ -120,7 +120,17 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawChangingPlayersScreen() {
-		drawTitleAndSubTitle(model.getTurn().toString()+"'s turn", "Press bottom 1/3 of screen to continue");
+		drawTitleAndSubTitle(model.getTurn().toString()+"'s turn", "");
+		drawContinueButton();
+	}
+
+	private void drawContinueButton() {
+		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.continue_button);
+		drawButtonBitmap(buttonBitmap);
+	}
+
+	private void drawButtonBitmap(Bitmap buttonBitmap) {
+		drawBitmapToGrid(buttonBitmap, 4, 'l', Direction.RIGHT, 4);
 	}
 
 	private void drawTitleAndSubTitle(String title, String subTitle) {
@@ -147,7 +157,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 
 	private void drawCloseOwnViewButton() {
 		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.close_own_board_button);
-		drawBitmapToGrid(buttonBitmap, 4, 'l', Direction.RIGHT, 4);	
+		drawButtonBitmap(buttonBitmap);	
 	}
 
 	private void drawGameOver() {
@@ -182,7 +192,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 
 	private void drawShowOwnBoardButton() {
 		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.see_own_board_button);
-		drawBitmapToGrid(buttonBitmap, 4, 'l', Direction.RIGHT, 4);
+		drawButtonBitmap(buttonBitmap);
 	}
 	
 	private void drawBombThatHit(Bomb bomb) {
@@ -250,7 +260,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	
 	private void drawChangeDirectionButton() {
 		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.direction_button);
-		drawBitmapToGrid(buttonBitmap, 4, 'l', Direction.RIGHT, 4);
+		drawButtonBitmap(buttonBitmap);
 	}
 
 	private void drawBitmapToGrid(Bitmap bitmap, int column, char row, Direction direction, int length) {
