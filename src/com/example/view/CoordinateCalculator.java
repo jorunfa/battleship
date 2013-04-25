@@ -47,7 +47,7 @@ public class CoordinateCalculator {
 		return makeDownwardRect(position.getColumn(), position.getRow(), length);
 	}
 	
-	private Rect makeDownwardRect(int column, char row, int length) {
+	public Rect makeDownwardRect(int column, char row, int length) {
 		int left = getGridLeftCoordinate(column);
 		int bottom = getGridBottomCoordinate(row);
 		int right = getGridRightCoordinate(column);

@@ -10,7 +10,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -116,7 +118,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawBlank() {
-		canvas.drawRGB(0, 0, 0);
+		canvas.drawRGB(138, 196, 234);
 	}
 
 	private void drawChangingPlayersScreen() {
@@ -125,12 +127,30 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawContinueButton() {
-		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.continue_button);
-		drawButtonBitmap(buttonBitmap);
+		drawButton("Next player ready");
 	}
 
-	private void drawButtonBitmap(Bitmap buttonBitmap) {
-		drawBitmapToGrid(buttonBitmap, 4, 'l', Direction.RIGHT, 4);
+	private void drawButton(String buttonText) {
+		drawRoundedRectangle();
+		drawTextToButton(buttonText);
+	}
+
+	private void drawRoundedRectangle() {
+		int cornerRadius = 40;
+		paint.setARGB(255, 234, 225, 138);
+		Rect whereToDraw = coordinateCalculator.calculateDestinationRect(4, 'l', Direction.RIGHT, 4);
+		RectF rectF = new RectF(whereToDraw);
+		canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
+	}
+	
+	private void drawTextToButton(String buttonText) {
+		Path path = new Path();
+		int cornerRadius = 40;
+		paint.setTextSize(60);
+		Rect whereToDraw = coordinateCalculator.calculateDestinationRect(4, 'l', Direction.RIGHT, 4);
+		RectF rectF = new RectF(whereToDraw);
+		path.addRoundRect(rectF, cornerRadius, cornerRadius, android.graphics.Path.Direction.CW);
+		canvas.drawTextOnPath(buttonText, path, 0, 0, paint);
 	}
 
 	private void drawTitleAndSubTitle(String title, String subTitle) {
@@ -156,8 +176,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawCloseOwnViewButton() {
-		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.close_own_board_button);
-		drawButtonBitmap(buttonBitmap);	
+		drawButton("Close own board");
 	}
 
 	private void drawGameOver() {
@@ -170,7 +189,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawRestartButton() {
-		drawButtonBitmap(BitmapFactory.decodeResource(res, R.drawable.restart_button));
+		drawButton("Play another...");
 	}
 
 	private void drawPlacingBombs() {
@@ -196,8 +215,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawShowOwnBoardButton() {
-		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.see_own_board_button);
-		drawButtonBitmap(buttonBitmap);
+		drawButton("Show own board");
 	}
 	
 	private void drawBombThatHit(Bomb bomb) {
@@ -264,8 +282,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 	
 	private void drawChangeDirectionButton() {
-		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.direction_button);
-		drawButtonBitmap(buttonBitmap);
+		drawButton("Change boat direction");
 	}
 
 	private void drawBitmapToGrid(Bitmap bitmap, int column, char row, Direction direction, int length) {

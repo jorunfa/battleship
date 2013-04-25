@@ -13,10 +13,11 @@ import com.example.model.Button;
 import com.example.model.Model;
 import com.example.model.ModelImplementation;
 import com.example.view.CanvasView;
+import com.example.view.View;
 
 public class SurfaceViewActivity extends Activity implements OnTouchListener {
     private Model model;
-    private CanvasView view;
+    private View view;
     private Controller controller;
     private static Context context;
     
@@ -26,7 +27,7 @@ public class SurfaceViewActivity extends Activity implements OnTouchListener {
         context = getApplicationContext();
         instantiateClasses();
         setUpListeners();
-        setContentView(view);
+        setContentView((CanvasView)view);
     }
 
 
