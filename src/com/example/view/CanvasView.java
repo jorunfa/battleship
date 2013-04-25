@@ -24,7 +24,6 @@ import com.example.model.Direction;
 import com.example.model.Model;
 import com.example.model.Orientation;
 import com.example.model.Player;
-import com.example.model.Position;
 import com.example.model.Stage;
 import com.example.starter.SurfaceViewActivity;
 
@@ -52,6 +51,8 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
     private Bitmap explosion;
     private Bitmap hitWater;
     private CoordinateCalculator coordinateCalculator;
+    private Resources res;
+    private BoatBitmaps boatBitmaps;
     
     public CanvasView(){
 		super(context);
@@ -65,8 +66,9 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		getHolder().addCallback(this);
 		initializeValues();
 		coordinateCalculator = new CoordinateCalculator(m_GridWidth, m_GridHeight);
+		res = getResources();
+		boatBitmaps = new BoatBitmaps(res);
 		
-		Resources res = getResources();
 		explosion = BitmapFactory.decodeResource(res, R.drawable.explosion);
 		hitWater = 	BitmapFactory.decodeResource(res, R.drawable.water);
 	}
@@ -201,7 +203,8 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 
 	private void drawBoat(Boat boat, int column, char row, Direction direction) {
 		BoatType type = boat.getType();
-		Bitmap boatBitmap = getBoatBitmap(type);
+		Bitmap boatBitmap = boatBitmaps.getBoatBitmap(type);
+		System.out.println("boatBitmap " + boatBitmap);
 		if (direction == Direction.RIGHT)
 			drawBitmapToGrid(boatBitmap, column, row, direction, boat.getLength());
 		else {
@@ -209,21 +212,6 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 					row, direction, boat.getLength());
 			drawFLipped(boatBitmap, destinationToDrawTo);
 		}
-	}
-
-	private Bitmap getBoatBitmap(BoatType type) {
-		Resources res = getResources();
-		if (type == BoatType.AIRCRAFT_CARRIER)
-			return BitmapFactory.decodeResource(res, R.drawable.aircraft_carrier);
-		if (type == BoatType.BATTLESHIP)
-			return BitmapFactory.decodeResource(res, R.drawable.battleship);
-		if (type == BoatType.DESTROYER)
-			return BitmapFactory.decodeResource(res, R.drawable.destroyer);
-		if (type == BoatType.PATROL_BOAT)
-			return BitmapFactory.decodeResource(res, R.drawable.patrolboat);
-		if (type == BoatType.SUBMARINE)
-			return BitmapFactory.decodeResource(res, R.drawable.submarine);
-		else return null;
 	}
 	
 	private void drawFLipped(Bitmap bitmap, Rect destinationToDrawTo) {
