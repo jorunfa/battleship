@@ -10,7 +10,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.Display;
 import android.view.SurfaceHolder;
@@ -31,7 +30,7 @@ import com.example.starter.SurfaceViewActivity;
 
 public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callback {
 	
-	SurfaceHolder surface;
+	private SurfaceHolder surface;
 	static Context context = SurfaceViewActivity.getAppContext();
 	
 	Paint paint = new Paint();
@@ -52,6 +51,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
     public static final float DEFAULT_NO_COLS=  10;
     private Bitmap explosion;
     private Bitmap hitWater;
+    private CoordinateCalculator coordinateCalculator;
     
     public CanvasView(){
 		super(context);
@@ -64,6 +64,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		surface = this.getHolder();
 		getHolder().addCallback(this);
 		initializeValues();
+		coordinateCalculator = new CoordinateCalculator(m_GridWidth, m_GridHeight);
 		
 		Resources res = getResources();
 		explosion = BitmapFactory.decodeResource(res, R.drawable.explosion);
@@ -171,7 +172,7 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	
 	private void drawBombFromBitmap(Bomb bomb, Bitmap boatBitmap) {
 		Orientation orientation = new Orientation(bomb.getPosition(), Direction.RIGHT);
-		Rect destinationToDrawTo = calculateDestinationRect(orientation, 1);
+		Rect destinationToDrawTo = coordinateCalculator.calculateDestinationRect(orientation, 1);
 		canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, paint);
 	}
 
@@ -195,18 +196,18 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 
 	private void drawBoat(Boat boat) {
+		drawBoat(boat, boat.getPosition().getColumn(), boat.getPosition().getRow(), boat.getDirection());
+	}
+
+	private void drawBoat(Boat boat, int column, char row, Direction direction) {
 		BoatType type = boat.getType();
 		Bitmap boatBitmap = getBoatBitmap(type);
-		Rect destinationToDrawTo = calculateDestinationRect(boat.getOrientation(), type.getLength());
-		if (boat.getDirection() == Direction.RIGHT)
+		Rect destinationToDrawTo = coordinateCalculator.calculateDestinationRect(column,
+				row, direction, boat.getLength());
+		if (direction == Direction.RIGHT)
 			canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, null);
 		else {
-			Matrix matrix = new Matrix();
-			matrix.postRotate(90);
-			Bitmap rotated = Bitmap.createBitmap(boatBitmap, 0, 0, 
-			                              boatBitmap.getWidth(), boatBitmap.getHeight(), 
-			                              matrix, true);
-			canvas.drawBitmap(rotated, null, destinationToDrawTo, null);
+			drawFLipped(boatBitmap, destinationToDrawTo);
 		}
 	}
 
@@ -225,97 +226,18 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 		else return null;
 	}
 	
-	private Rect calculateDestinationRect(Orientation orientation, int length) {
-		if (orientation.getDirection() == Direction.RIGHT) {
-			return makeRightRect(orientation.getPosistion(), length);
-		}
-		else {
-			return makeDownwardRect(orientation.getPosistion(), length);
-		}
-	}
-
-	private Rect makeRightRect(Position position, int length) {
-		int left = getGridLeftCoordinate(position);
-		int top = getGridTopCoordinate(position);
-		
-		int positionColumn = position.getColumn();
-		int rightMostColumn = positionColumn + length - 1;
-		Position rightMostPosition = new Position(rightMostColumn, position.getRow());
-		int right = getGridRightCoordinate(rightMostPosition);
-		
-		int bottom = getGridBottomCoordinate(position);
-		
-		return new Rect(left, top, right, bottom);
-	}
-
-	private Rect makeDownwardRect(Position position, int length) {
-		int left = getGridLeftCoordinate(position);
-		int bottom = getGridBottomCoordinate(position);
-		int right = getGridRightCoordinate(position);
-		
-		char positionRow = position.getRow();
-		char topMostColumn = (char) (positionRow - length + 1);
-		Position topMostPosition = new Position(position.getColumn(), topMostColumn);
-		int top = getGridTopCoordinate(topMostPosition);
-		
-		return new Rect(left, top, right, bottom);
-	}
-
-	private int getGridLeftCoordinate(Position position){
-		int column = position.getColumn(); 
-		return (int) (m_GridWidth * (column-1));
-	}
-	
-	private int getGridTopCoordinate(Position position) {
-		int coordY = -1;
-		switch (position.getRow()) {
-		case 'a':
-			coordY = 0;
-			break;
-		case 'b':
-			coordY = (int) m_GridHeight;
-			break;
-		case 'c':
-			coordY = (int) (m_GridHeight*2);
-			break;
-		case 'd':
-			coordY = (int) (m_GridHeight*3);
-			break;
-		case 'e':
-			coordY = (int) (m_GridHeight*4);
-			break;
-		case 'f':
-			coordY = (int) (m_GridHeight*5);
-			break;
-		case 'g':
-			coordY = (int) (m_GridHeight*6);
-			break;
-		case 'h':
-			coordY = (int) (m_GridHeight*7);
-			break;
-		case 'i':
-			coordY = (int) (m_GridHeight*8);
-			break;
-		case 'j':
-			coordY = (int) (m_GridHeight*9);
-			break;
-		default:
-			break;
-		}
-		return coordY;
-	}
-	
-	private int getGridRightCoordinate(Position position) {
-		return (int) (getGridLeftCoordinate(position) + m_GridWidth);
-	}
-	
-	private int getGridBottomCoordinate(Position position) {
-		return (int) (getGridTopCoordinate(position) + m_GridHeight);
+	private void drawFLipped(Bitmap bitmap, Rect destinationToDrawTo) {
+		Matrix matrix = new Matrix();
+		matrix.postRotate(90);
+		Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, 
+				bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		canvas.drawBitmap(rotated, null, destinationToDrawTo, null);
 	}
 
 	private void drawNextBoatToPlace() {
-		// TODO Auto-generated method stub
-		
+		Boat boat = model.getNextBoatToPlace();
+		Direction direction = model.getDirection();
+		drawBoat(boat, 1, 'o', direction);
 	}
 	
 	private void drawChangeDirectionButton() {
