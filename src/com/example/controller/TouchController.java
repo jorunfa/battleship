@@ -50,10 +50,7 @@ public class TouchController extends Controller {
 		double realX = (x / gridWidth) * 100;
 		double realY = (y / gridHeight) * 100;
 		
-		/*
-		 * sends the Position that was touched to the Model
-		 */
-		if(realY <=100){
+		if (realY <= 100){
 			setChanged();
 			System.out.println("returnCoord(realX, realY) " + returnCoord(realX, realY));
 			notifyObservers(returnCoord(realX, realY));
@@ -63,7 +60,6 @@ public class TouchController extends Controller {
 			notifyObservers(Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 			setChanged();
 			notifyObservers(Button.CHANGE_DIRECTION);
-			System.out.println("Utenfor grid");
 		}
 	}
 

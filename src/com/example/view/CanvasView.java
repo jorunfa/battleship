@@ -202,11 +202,11 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	private void drawBoat(Boat boat, int column, char row, Direction direction) {
 		BoatType type = boat.getType();
 		Bitmap boatBitmap = getBoatBitmap(type);
-		Rect destinationToDrawTo = coordinateCalculator.calculateDestinationRect(column,
-				row, direction, boat.getLength());
 		if (direction == Direction.RIGHT)
-			canvas.drawBitmap(boatBitmap, null, destinationToDrawTo, null);
+			drawBitmapToGrid(boatBitmap, column, row, direction, boat.getLength());
 		else {
+			Rect destinationToDrawTo = coordinateCalculator.calculateDestinationRect(column,
+					row, direction, boat.getLength());
 			drawFLipped(boatBitmap, destinationToDrawTo);
 		}
 	}
@@ -241,14 +241,17 @@ public class CanvasView extends SurfaceView implements View, SurfaceHolder.Callb
 	}
 	
 	private void drawChangeDirectionButton() {
-		float size = paint.getTextSize();
-		paint.setTextSize(20);
-		int y = (int) (dispHight * (2.0/3.0));
-		int x = (int) (dispWidth * (1.0/10.0));
-		canvas.drawText("Press her to change boat placing direction", x, y, paint);
-		paint.setTextSize(size);
+		Resources res = getResources();
+		Bitmap buttonBitmap = BitmapFactory.decodeResource(res, R.drawable.direction_button);
+		drawBitmapToGrid(buttonBitmap, 4, 'l', Direction.RIGHT, 4);
 	}
 
+	private void drawBitmapToGrid(Bitmap bitmap, int column, char row, Direction direction, int length) {
+		Rect destinationToDrawTo = coordinateCalculator.calculateDestinationRect(column,
+				row, direction, length);
+		canvas.drawBitmap(bitmap, null, destinationToDrawTo, null);
+	}
+	
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
 
