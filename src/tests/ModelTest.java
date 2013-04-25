@@ -144,6 +144,7 @@ public class ModelTest extends TestCase {
 				pos = new Position(column, row);
 				model.update(null, pos);
 				model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+				model.update(null, Button.SHOW_OWN_BOARD_FLIP);
 				model.update(null, pos);
 			}
 		}
@@ -203,7 +204,7 @@ public class ModelTest extends TestCase {
 		assertTrue(boat.isPlaced());
 	}
 	
-	public void testRestartButtonShouldRestartTheGame() throws Throwable {
+	public void testRestartButtonShouldNotRestartTheGameIfNotGameOver() throws Throwable {
 		ModelImplementation model = new ModelImplementation();
 		Position aircraftCarrierPosition = new Position(1, 'j');
 		Boat aircraftCarrier = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
@@ -214,6 +215,6 @@ public class ModelTest extends TestCase {
 		model.update(null, Button.RESTART);
 		
 		Boat freshAircraftCarrier = model.getBoat(BoatType.AIRCRAFT_CARRIER, Player.PLAYER1);
-		assertFalse(freshAircraftCarrier.isPlaced());
+		assertTrue(freshAircraftCarrier.isPlaced());
 	}
 }

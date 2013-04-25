@@ -52,7 +52,6 @@ public class TouchController extends Controller {
 		
 		if (realY <= 100){
 			setChanged();
-			System.out.println("returnCoord(realX, realY) " + returnCoord(realX, realY));
 			notifyObservers(returnCoord(realX, realY));
 		}
 		else{
@@ -70,8 +69,6 @@ public class TouchController extends Controller {
 		setChanged();
 		notifyObservers(Button.RESTART);
 	}
-
-
 
 	public Position returnCoord(double realX, double realY) {
 		int row = 0;
