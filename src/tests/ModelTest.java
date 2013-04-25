@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 import com.example.model.Boat;
 import com.example.model.BoatType;
+import com.example.model.Bomb;
 import com.example.model.Button;
 import com.example.model.Direction;
 import com.example.model.Model;
@@ -143,13 +144,16 @@ public class ModelTest extends TestCase {
 		for (char row : rows) {
 			for (int column = 1; column < 11; column++) {
 				pos = new Position(column, row);
+				model.update(null, Button.SHOW_OWN_BOARD_FLIP);
 				model.update(null, pos);
 				model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
 				model.update(null, Button.SHOW_OWN_BOARD_FLIP);
 				model.update(null, pos);
+				model.update(null, Button.CHANGING_PLAYERS_PAUSESCREEN_NEXT);
+				if (model.getStage() == Stage.GAME_OVER)
+					assertSame(Stage.GAME_OVER, model.getStage());
 			}
 		}
-		assertSame(Stage.GAME_OVER, model.getStage());
 	}
 	
 	public void testPlacingABombShouldChangeWhichPlayersTurnItIs() throws Throwable {
